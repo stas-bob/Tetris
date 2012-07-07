@@ -4,9 +4,9 @@ c:\users\bline\documents\visual studio 2010\Projects\TetrisHTW\TetrisHTW\Bin\Deb
 c:\users\bline\documents\visual studio 2010\Projects\TetrisHTW\TetrisHTW\Bin\Debug\TetrisHTW.xap
 c:\users\bline\documents\visual studio 2010\Projects\TetrisHTW\TetrisHTW\Bin\Debug\TetrisHTWTestPage.html
 c:\users\bline\documents\visual studio 2010\Projects\TetrisHTW\TetrisHTW\obj\Debug\ResolveAssemblyReference.cache
-c:\users\bline\documents\visual studio 2010\Projects\TetrisHTW\TetrisHTW\obj\Debug\App.g.i.cs
-c:\users\bline\documents\visual studio 2010\Projects\TetrisHTW\TetrisHTW\obj\Debug\MainPage.g.i.cs
 c:\users\bline\documents\visual studio 2010\Projects\TetrisHTW\TetrisHTW\obj\Debug\TetrisHTW.g.resources
 c:\users\bline\documents\visual studio 2010\Projects\TetrisHTW\TetrisHTW\obj\Debug\TetrisHTW.dll
 c:\users\bline\documents\visual studio 2010\Projects\TetrisHTW\TetrisHTW\obj\Debug\TetrisHTW.pdb
 c:\users\bline\documents\visual studio 2010\Projects\TetrisHTW\TetrisHTW\obj\Debug\XapCacheFile.xml
+C:\Users\bline\Documents\Visual Studio 2010\Projects\TetrisHTW\TetrisHTW\obj\Debug\View\MainPage.g.i.cs
+C:\Users\bline\Documents\Visual Studio 2010\Projects\TetrisHTW\TetrisHTW\obj\Debug\App.g.i.cs
