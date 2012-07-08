@@ -21,11 +21,17 @@ namespace TetrisHTW
 
         private BoardModel boardModel;
         private FallWorker fallWorker;
+        private App app;
 
         public MainPage(BoardModel boardModel, FallWorker fallWorker)
         {
-            this.boardModel = boardModel;
-            this.fallWorker = fallWorker;
+
+        }
+
+        public MainPage(App app)
+        {
+            this.app = app;
+            this.boardModel = app.getBoardModel();
             InitializeComponent();
             this.KeyDown += new KeyEventHandler(Page_KeyDown);
         }
@@ -55,12 +61,32 @@ namespace TetrisHTW
                     s += "\n";
                 }
                 label1.Content = s;
+                label2.Content = boardModel.getScore();
             });
             
         }
 
+        public void gameOver()
+        {
+            Dispatcher.BeginInvoke(delegate
+            {
+                Debug.WriteLine("game over");
+                fallWorker.RequestStop();
+            });
+        }
+
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+            if (fallWorker != null)
+            {
+                fallWorker.RequestStop();
+            }
+            
+            fallWorker = new FallWorker(app);
+            boardModel.clearBoard();
+            boardModel.generateRandomFigure();
+            boardModel.getCurrentFigure().newOnBoard(app);
+            
             new Thread(fallWorker.InvokeFalling).Start();
         }
     }

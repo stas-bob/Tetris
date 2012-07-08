@@ -13,7 +13,7 @@ namespace TetrisHTW.Figures
 {
     public class Bar: Figure
     {
-        public Bar(Model.BoardModel boardModel) : base(boardModel)
+        public Bar(Model.DefaultBoardModel boardModel) : base(boardModel)
         {
             color = Color.FromArgb(255, 255, 0, 0);
             points[0] = new Point(3, 0);

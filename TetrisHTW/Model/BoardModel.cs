@@ -13,136 +13,39 @@ using TetrisHTW.tools;
 
 namespace TetrisHTW.Model
 {
-    public class BoardModel
+    public interface BoardModel
     {
         
-        private Color boardColor = Color.FromArgb(255, 200, 200, 200);
-        private int score;
-        private Figure currentFigure;
-        private const int columns = 7;
-        private const int rows = 15;
-        private Color[,] board = new Color[columns, rows];
+        event EventHandler BoardChanged;
 
-        public event EventHandler BoardChanged;
+         void collapse(int[] linesToRemove);
 
-        public BoardModel()
-        {
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    board[j, i] = boardColor;
-                }
-            }
-        }
+         bool isCellColored(int x, int y);
 
-        public void collapse(int[] linesToRemove)
-        {
-            Array.Sort(linesToRemove);
-            for (int i = 0; i < linesToRemove.Length; i++)
-            {
-                if (linesToRemove[i] != -1)
-                {
-                    shiftToLine(linesToRemove[i]);
-                }
-            }
-            NotifyBoardChanged();
-        }
+         int getColumns();
 
-        public bool isCellColored(int x, int y)
-        {
-            return board[x, y] != boardColor;
-        }
+         int getRows();
 
-        public int getColumns()
-        {
-            return columns;
-        }
+         void NotifyBoardChanged();
 
-        public int getRows()
-        {
-            return rows;
-        }
-        public void NotifyBoardChanged()
-        {
-            if (BoardChanged != null)
-                BoardChanged(this, EventArgs.Empty);
-        }
+         void registerView(BoardView v);
 
+         void writeCell(Point[] points, Color c);
 
-        public void registerView(BoardView v)
-        {
-            BoardChanged += new EventHandler(delegate
-            {
-                v.updateBoard();
-            });
-        }
+         Color[,] getBoardData();
 
-        public void writeCell(Point[] points, Color c)
-        {
-            for (int i = 0; i < points.Length; i++)
-            {
-                board[(int)points[i].X, (int)points[i].Y] = c;
-            }
-            NotifyBoardChanged();
-        }
+         Figure getCurrentFigure();
 
-        public Color[,] getBoardData()
-        {
-            return board;
-        }
+         int getScore();
 
-        public Figure getCurrentFigure()
-        {
-            return currentFigure;
-        }
+         void setScore(int score);
 
-        public int getScore()
-        {
-            return score;
-        }
+         void generateRandomFigure();
 
-        public void setScore(int score)
-        {
-            this.score = score;
-            NotifyBoardChanged();
-        }
+         void clearPoints(Point[] points);
 
-        public void generateRandomFigure()
-        {
-            int random = new Random().Next(2);
-            Figure figure = null;
-            switch (random)
-            {
-                case 0: figure = new Square(this); break;
-                case 1: figure = new Bar(this); break;
-            }
-            this.currentFigure = figure;
-        }
+         void shiftToLine(int y);
 
-        public void clearPoints(Point[] points)
-        {
-            for (int i = 0; i < points.Length; i++)
-            {
-                board[(int)points[i].X, (int)points[i].Y] = boardColor;
-            }
-        }
-
-        public void shiftToLine(int y)
-        {
-            for (int i = y; i > 0; i--)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    board[j, i] = board[j, i - 1];
-                }
-            }
-            for (int i = 0; i < columns; i++)
-            {
-                board[i, 0] = boardColor;
-            }
-        }
-
-        
+         void clearBoard();
     }
 }

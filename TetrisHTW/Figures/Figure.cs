@@ -14,11 +14,11 @@ namespace TetrisHTW.Figures
 {
     public abstract class Figure
     {
-        protected BoardModel board;
+        protected DefaultBoardModel board;
         protected Color color;
         protected Point[] points = new Point[4];
         protected int rotateState;
-        public Figure(BoardModel boardModel)
+        public Figure(DefaultBoardModel boardModel)
         {
             this.board = boardModel;
         }
@@ -63,6 +63,15 @@ namespace TetrisHTW.Figures
                 {
                     int[] linesToRemove = getLinesToRemove();
                     board.collapse(linesToRemove);
+                    int score = 0;
+                    for (int i = 0; i < linesToRemove.Length; i++)
+                    {
+                        if (linesToRemove[i] != -1)
+                        {
+                            score++;
+                        }
+                    }
+                    board.setScore(board.getScore() + score);
                     board.generateRandomFigure();
                     board.getCurrentFigure().newOnBoard(app);
                 }
@@ -171,12 +180,10 @@ namespace TetrisHTW.Figures
         {
             lock (App.myLock)
             {
+                
                 bool fitsOnBoard = doPointsFit(points);
-                if (fitsOnBoard)
-                {
-                    board.writeCell(points, color);
-                }
-                else
+                board.writeCell(points, color);
+                if (!fitsOnBoard)
                 {
                     app.gameOver();
                 }

@@ -24,12 +24,17 @@ namespace TetrisHTW
 
         public void InvokeFalling()
         {
+            shouldStop = false;
             while (!shouldStop)
             {
                 Thread.Sleep(500);
+
                 lock (App.myLock)
                 {
-                    Debug.WriteLine("fall()");
+                    if (shouldStop)
+                    {
+                        break;
+                    }
                     app.getBoardModel().getCurrentFigure().fall(app);
                 }
 

@@ -12,16 +12,15 @@ using System.Windows.Shapes;
 using TetrisHTW.Model;
 using System.Threading;
 using System.Diagnostics;
+using TetrisHTW.View;
 
 namespace TetrisHTW
 {
     public partial class App : Application
     {
         public static Lock myLock = new Lock();
-        private BoardModel boardModel = new BoardModel();
-        private FallWorker fallWorker;
-        delegate void RunMethod();
-
+        private BoardModel boardModel = new DefaultBoardModel();
+        private BoardView v;
         public App()
         {
             this.Startup += this.Application_Startup;
@@ -29,7 +28,7 @@ namespace TetrisHTW
             this.UnhandledException += this.Application_UnhandledException;
 
             InitializeComponent();
-
+            
 
         }
 
@@ -40,20 +39,16 @@ namespace TetrisHTW
 
         public void gameOver()
         {
-            Debug.WriteLine("Game Over");
-            fallWorker.RequestStop();
+            v.gameOver();
         }
 
         
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            
-            fallWorker = new FallWorker(this);
-            this.RootVisual = new MainPage(boardModel, fallWorker);
+            this.RootVisual = new MainPage(this);
+            v = (BoardView)this.RootVisual;
             boardModel.registerView((MainPage)this.RootVisual);
-            boardModel.generateRandomFigure();
-            boardModel.getCurrentFigure().newOnBoard(this);
         }
 
         private void Application_Exit(object sender, EventArgs e)

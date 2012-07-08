@@ -14,5 +14,7 @@ namespace TetrisHTW.View
     public interface BoardView
     {
         void updateBoard();
+
+        void gameOver();
     }
 }
