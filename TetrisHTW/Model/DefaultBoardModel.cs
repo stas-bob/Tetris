@@ -19,11 +19,13 @@ namespace TetrisHTW.Model
         private Color boardColor = Color.FromArgb(255, 200, 200, 200);
         private int score;
         private Figure currentFigure;
+        private Figure previewFigure;
         private const int columns = 7;
         private const int rows = 15;
         private volatile Color[,] board = new Color[columns, rows];
 
         public event EventHandler BoardChanged;
+
 
         public void clearBoard()
         {
@@ -114,7 +116,7 @@ namespace TetrisHTW.Model
             NotifyBoardChanged();
         }
 
-        public void generateRandomFigure()
+        public Figure generateRandomFigure()
         {
             int random = new Random().Next(2);
             Figure figure = null;
@@ -123,6 +125,18 @@ namespace TetrisHTW.Model
                 case 0: figure = new Square(this); break;
                 case 1: figure = new Bar(this); break;
             }
+            return figure;
+        }
+
+
+        public void setPreviewFigure(Figure figure)
+        {
+            this.previewFigure = figure;
+        }
+
+
+        public void setCurrentFigure(Figure figure)
+        {
             this.currentFigure = figure;
         }
 
@@ -132,6 +146,11 @@ namespace TetrisHTW.Model
             {
                 board[(int)points[i].X, (int)points[i].Y] = boardColor;
             }
+        }
+
+        public Figure getPreviewFigure()
+        {
+            return previewFigure;
         }
 
         public void shiftToLine(int y)

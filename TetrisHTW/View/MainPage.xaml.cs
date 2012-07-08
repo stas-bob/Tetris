@@ -13,6 +13,7 @@ using TetrisHTW.Model;
 using System.Threading;
 using System.Diagnostics;
 using TetrisHTW.View;
+using TetrisHTW.Figures;
 
 namespace TetrisHTW
 {
@@ -62,6 +63,7 @@ namespace TetrisHTW
                 }
                 label1.Content = s;
                 label2.Content = boardModel.getScore();
+                label3.Content = boardModel.getPreviewFigure().toString();
             });
             
         }
@@ -84,7 +86,12 @@ namespace TetrisHTW
             
             fallWorker = new FallWorker(app);
             boardModel.clearBoard();
-            boardModel.generateRandomFigure();
+            Figure preview = boardModel.generateRandomFigure();
+            Figure current = boardModel.generateRandomFigure();
+
+            boardModel.setCurrentFigure(current);
+            boardModel.setPreviewFigure(preview);
+
             boardModel.getCurrentFigure().newOnBoard(app);
             
             new Thread(fallWorker.InvokeFalling).Start();

@@ -71,6 +71,10 @@ namespace TetrisHTW.Figures
             }
             board.writeCell(points, color);
         }
-        
+
+        public override string toString()
+        {
+            return "bar";
+        }
     }
 }

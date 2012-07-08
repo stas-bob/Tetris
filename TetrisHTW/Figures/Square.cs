@@ -22,5 +22,10 @@ namespace TetrisHTW.Figures
             points[2] = new Point(4, 0);
             points[3] = new Point(4, 1);
         }
+
+        public override string toString()
+        {
+            return "square";
+        }
     }
 }

@@ -36,11 +36,17 @@ namespace TetrisHTW.Model
 
          Figure getCurrentFigure();
 
+         Figure getPreviewFigure();
+
          int getScore();
 
          void setScore(int score);
 
-         void generateRandomFigure();
+         Figure generateRandomFigure();
+
+         void setPreviewFigure(Figure figure);
+
+         void setCurrentFigure(Figure figure);
 
          void clearPoints(Point[] points);
 

@@ -72,7 +72,8 @@ namespace TetrisHTW.Figures
                         }
                     }
                     board.setScore(board.getScore() + score);
-                    board.generateRandomFigure();
+                    board.setCurrentFigure(board.getPreviewFigure());
+                    board.setPreviewFigure(board.generateRandomFigure());
                     board.getCurrentFigure().newOnBoard(app);
                 }
             }
@@ -100,6 +101,7 @@ namespace TetrisHTW.Figures
                     if (linesToRemove[m] == y)
                     {
                         containsY = true;
+                        break;
                     }
                 }
                 if (containsY)
@@ -203,5 +205,7 @@ namespace TetrisHTW.Figures
         {
 
         }
+
+        public abstract string toString();
     }
 }
