@@ -9,11 +9,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using TetrisHTW.Model;
+using System.Threading;
+using System.Diagnostics;
 
 namespace TetrisHTW
 {
     public partial class App : Application
     {
+        public static Lock myLock = new Lock();
+        private BoardModel boardModel = new BoardModel();
+        private FallWorker fallWorker;
+        delegate void RunMethod();
 
         public App()
         {
@@ -22,11 +29,31 @@ namespace TetrisHTW
             this.UnhandledException += this.Application_UnhandledException;
 
             InitializeComponent();
+
+
         }
+
+        public BoardModel getBoardModel()
+        {
+            return boardModel;
+        }
+
+        public void gameOver()
+        {
+            Debug.WriteLine("Game Over");
+            fallWorker.RequestStop();
+        }
+
+        
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.RootVisual = new MainPage();
+            
+            fallWorker = new FallWorker(this);
+            this.RootVisual = new MainPage(boardModel, fallWorker);
+            boardModel.registerView((MainPage)this.RootVisual);
+            boardModel.generateRandomFigure();
+            boardModel.getCurrentFigure().newOnBoard(this);
         }
 
         private void Application_Exit(object sender, EventArgs e)
