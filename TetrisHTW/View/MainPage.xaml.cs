@@ -89,7 +89,7 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
-                label2.Content = boardModel.getScore();
+                label2.Content = bea.score;
             });
             
         }
