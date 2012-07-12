@@ -45,15 +45,6 @@ namespace TetrisHTW
         }
 
 
-        public void gameOver()
-        {
-            Dispatcher.BeginInvoke(delegate
-            {
-                Debug.WriteLine("game over");
-                fallWorker.RequestStop();
-            });
-        }
-
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             if (fallWorker != null)
@@ -107,7 +98,8 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
-                label2.Content = "Game Over";
+                Debug.WriteLine("game over");
+                fallWorker.RequestStop();
             });
 
         }
