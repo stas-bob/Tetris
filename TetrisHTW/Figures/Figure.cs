@@ -56,7 +56,6 @@ namespace TetrisHTW.Figures
                     {
                         gameOver = true;
                         app.gameOver();
-
                     }
                 }
                 if (!gameOver)

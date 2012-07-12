@@ -77,14 +77,16 @@
     <Compile Include="Figures\Bar.cs" />
     <Compile Include="Figures\Figure.cs" />
     <Compile Include="Figures\Square.cs" />
+    <Compile Include="Model\BoardEventArgs.cs" />
     <Compile Include="Model\BoardModel.cs" />
+    <Compile Include="Model\GameOverEventArgs.cs" />
+    <Compile Include="Model\ScoreEventArgs.cs" />
     <Compile Include="tools\Point.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\DefaultBoardModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\BoardView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

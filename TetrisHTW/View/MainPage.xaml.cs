@@ -12,22 +12,16 @@ using System.Windows.Shapes;
 using TetrisHTW.Model;
 using System.Threading;
 using System.Diagnostics;
-using TetrisHTW.View;
 using TetrisHTW.Figures;
 
 namespace TetrisHTW
 {
-    public partial class MainPage : UserControl, BoardView
+    public partial class MainPage : UserControl
     {
 
         private BoardModel boardModel;
         private FallWorker fallWorker;
         private App app;
-
-        public MainPage(BoardModel boardModel, FallWorker fallWorker)
-        {
-
-        }
 
         public MainPage(App app)
         {
@@ -35,6 +29,9 @@ namespace TetrisHTW
             this.boardModel = app.getBoardModel();
             InitializeComponent();
             this.KeyDown += new KeyEventHandler(Page_KeyDown);
+            boardModel.BoardChanged += new BoardEventArgs.BoardChangedEventHandler(BoardChanged);
+            boardModel.ScoreChanged += new ScoreEventArgs.ScoreChangedEventHandler(ScoreChanged);
+            app.GameOverEvent += new GameOverEventArgs.GameOverEventHandler(GameOver);
         }
 
         void Page_KeyDown(object sender, KeyEventArgs e)
@@ -47,26 +44,6 @@ namespace TetrisHTW
             }
         }
 
-        public void updateBoard()
-        {
-            Dispatcher.BeginInvoke(delegate
-            {
-                string s = "";
-                Color[,] data = boardModel.getBoardData();
-                for (int i = 0; i < boardModel.getRows(); i++)
-                {
-                    for (int j = 0; j < boardModel.getColumns(); j++)
-                    {
-                        s += boardModel.isCellColored(j, i) ? " # " : " ‒ ";
-                    }
-                    s += "\n";
-                }
-                label1.Content = s;
-                label2.Content = boardModel.getScore();
-                label3.Content = boardModel.getPreviewFigure().toString();
-            });
-            
-        }
 
         public void gameOver()
         {
@@ -96,5 +73,44 @@ namespace TetrisHTW
             
             new Thread(fallWorker.InvokeFalling).Start();
         }
+
+
+        public void BoardChanged(object sender, BoardEventArgs bea)
+        {
+            Dispatcher.BeginInvoke(delegate
+            {
+                string s = "";
+                Color[,] data = boardModel.getBoardData();
+                for (int i = 0; i < boardModel.getRows(); i++)
+                {
+                    for (int j = 0; j < boardModel.getColumns(); j++)
+                    {
+                        s += boardModel.isCellColored(j, i) ? " # " : " ‒ ";
+                    }
+                    s += "\n";
+                }
+                label1.Content = s;
+                label3.Content = boardModel.getPreviewFigure().toString();
+            });
+        }
+
+        public void ScoreChanged(object sender, ScoreEventArgs bea)
+        {
+            Dispatcher.BeginInvoke(delegate
+            {
+                label2.Content = boardModel.getScore();
+            });
+            
+        }
+
+        public void GameOver(object sender, GameOverEventArgs goea)
+        {
+            Dispatcher.BeginInvoke(delegate
+            {
+                label2.Content = "Game Over";
+            });
+
+        }
+
     }
 }

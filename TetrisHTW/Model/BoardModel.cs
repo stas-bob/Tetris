@@ -8,50 +8,53 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using TetrisHTW.Figures;
-using TetrisHTW.View;
 using TetrisHTW.tools;
 
 namespace TetrisHTW.Model
 {
+
+
+
     public interface BoardModel
     {
-        
-        event EventHandler BoardChanged;
 
-         void collapse(int[] linesToRemove);
+        event TetrisHTW.Model.BoardEventArgs.BoardChangedEventHandler BoardChanged;
+        event TetrisHTW.Model.ScoreEventArgs.ScoreChangedEventHandler ScoreChanged;
 
-         bool isCellColored(int x, int y);
+        void collapse(int[] linesToRemove);
 
-         int getColumns();
+        bool isCellColored(int x, int y);
 
-         int getRows();
+        int getColumns();
 
-         void NotifyBoardChanged();
+        int getRows();
 
-         void registerView(BoardView v);
+        void NotifyBoardChanged(BoardEventArgs bea);
 
-         void writeCell(Point[] points, Color c);
+        void NotifyScoreChanged(ScoreEventArgs bea);
 
-         Color[,] getBoardData();
+        void writeCell(Point[] points, Color c);
 
-         Figure getCurrentFigure();
+        Color[,] getBoardData();
 
-         Figure getPreviewFigure();
+        Figure getCurrentFigure();
 
-         int getScore();
+        Figure getPreviewFigure();
 
-         void setScore(int score);
+        int getScore();
 
-         Figure generateRandomFigure();
+        void setScore(int score);
 
-         void setPreviewFigure(Figure figure);
+        Figure generateRandomFigure();
 
-         void setCurrentFigure(Figure figure);
+        void setPreviewFigure(Figure figure);
 
-         void clearPoints(Point[] points);
+        void setCurrentFigure(Figure figure);
 
-         void shiftToLine(int y);
+        void clearPoints(Point[] points);
 
-         void clearBoard();
+        void shiftToLine(int y);
+
+        void clearBoard();
     }
 }

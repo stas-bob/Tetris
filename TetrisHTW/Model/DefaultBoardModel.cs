@@ -8,7 +8,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using TetrisHTW.Figures;
-using TetrisHTW.View;
 using TetrisHTW.tools;
 
 namespace TetrisHTW.Model
@@ -24,8 +23,8 @@ namespace TetrisHTW.Model
         private const int rows = 15;
         private volatile Color[,] board = new Color[columns, rows];
 
-        public event EventHandler BoardChanged;
-
+        public event TetrisHTW.Model.BoardEventArgs.BoardChangedEventHandler BoardChanged;
+        public event TetrisHTW.Model.ScoreEventArgs.ScoreChangedEventHandler ScoreChanged;
 
         public void clearBoard()
         {
@@ -54,7 +53,10 @@ namespace TetrisHTW.Model
                     shiftToLine(linesToRemove[i]);
                 }
             }
-            NotifyBoardChanged();
+            BoardEventArgs bae = new BoardEventArgs();
+            bae.removedLines = linesToRemove;
+            bae.collapse = true;
+            NotifyBoardChanged(bae);
         }
 
         public bool isCellColored(int x, int y)
@@ -71,19 +73,18 @@ namespace TetrisHTW.Model
         {
             return rows;
         }
-        public void NotifyBoardChanged()
+        public void NotifyBoardChanged(BoardEventArgs bea)
         {
             if (BoardChanged != null)
-                BoardChanged(this, EventArgs.Empty);
+                BoardChanged(this, bea);
         }
 
-
-        public void registerView(BoardView v)
+        public void NotifyScoreChanged(ScoreEventArgs sea)
         {
-            BoardChanged += new EventHandler(delegate
+            if (ScoreChanged != null)
             {
-                v.updateBoard();
-            });
+                ScoreChanged(this, sea);
+            }
         }
 
         public void writeCell(Point[] points, Color c)
@@ -92,7 +93,7 @@ namespace TetrisHTW.Model
             {
                 board[(int)points[i].X, (int)points[i].Y] = c;
             }
-            NotifyBoardChanged();
+            NotifyBoardChanged(new BoardEventArgs());
         }
 
         public Color[,] getBoardData()
@@ -113,7 +114,9 @@ namespace TetrisHTW.Model
         public void setScore(int score)
         {
             this.score = score;
-            NotifyBoardChanged();
+            ScoreEventArgs sea = new ScoreEventArgs();
+            sea.score = score;
+            NotifyScoreChanged(sea);
         }
 
         public Figure generateRandomFigure()

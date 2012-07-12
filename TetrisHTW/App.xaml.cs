@@ -12,7 +12,6 @@ using System.Windows.Shapes;
 using TetrisHTW.Model;
 using System.Threading;
 using System.Diagnostics;
-using TetrisHTW.View;
 
 namespace TetrisHTW
 {
@@ -20,7 +19,9 @@ namespace TetrisHTW
     {
         public static Lock myLock = new Lock();
         private BoardModel boardModel = new DefaultBoardModel();
-        private BoardView v;
+
+        public event GameOverEventArgs.GameOverEventHandler GameOverEvent;
+
         public App()
         {
             this.Startup += this.Application_Startup;
@@ -39,16 +40,15 @@ namespace TetrisHTW
 
         public void gameOver()
         {
-            v.gameOver();
+            if (GameOverEvent != null)
+            {
+                GameOverEvent(this, new GameOverEventArgs());
+            }
         }
-
-        
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             this.RootVisual = new MainPage(this);
-            v = (BoardView)this.RootVisual;
-            boardModel.registerView((MainPage)this.RootVisual);
         }
 
         private void Application_Exit(object sender, EventArgs e)
