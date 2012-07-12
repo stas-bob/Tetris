@@ -13,7 +13,7 @@ namespace TetrisHTW.Model
 {
     public class ScoreEventArgs: EventArgs
     {
-        public delegate void ScoreChangedEventHandler(object sender, ScoreEventArgs e);
+        
         public int score { get; set; }
     }
 }

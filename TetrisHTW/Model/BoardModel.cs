@@ -18,8 +18,8 @@ namespace TetrisHTW.Model
     public interface BoardModel
     {
 
-        event TetrisHTW.Model.BoardEventArgs.BoardChangedEventHandler BoardChanged;
-        event TetrisHTW.Model.ScoreEventArgs.ScoreChangedEventHandler ScoreChanged;
+        event BoardChangedEventHandler BoardChanged;
+        event ScoreChangedEventHandler ScoreChanged;
 
         void collapse(int[] linesToRemove);
 

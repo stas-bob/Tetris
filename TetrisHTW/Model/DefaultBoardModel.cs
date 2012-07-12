@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using TetrisHTW.Figures;
 using TetrisHTW.tools;
+using TetrisHTW;
 
 namespace TetrisHTW.Model
 {
@@ -22,9 +23,9 @@ namespace TetrisHTW.Model
         private const int columns = 7;
         private const int rows = 15;
         private volatile Color[,] board = new Color[columns, rows];
-
-        public event TetrisHTW.Model.BoardEventArgs.BoardChangedEventHandler BoardChanged;
-        public event TetrisHTW.Model.ScoreEventArgs.ScoreChangedEventHandler ScoreChanged;
+        
+        public event BoardChangedEventHandler BoardChanged;
+        public event ScoreChangedEventHandler ScoreChanged;
 
         public void clearBoard()
         {

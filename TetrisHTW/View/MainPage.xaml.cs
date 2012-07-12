@@ -29,9 +29,9 @@ namespace TetrisHTW
             this.boardModel = app.getBoardModel();
             InitializeComponent();
             this.KeyDown += new KeyEventHandler(Page_KeyDown);
-            boardModel.BoardChanged += new BoardEventArgs.BoardChangedEventHandler(BoardChanged);
-            boardModel.ScoreChanged += new ScoreEventArgs.ScoreChangedEventHandler(ScoreChanged);
-            app.GameOverEvent += new GameOverEventArgs.GameOverEventHandler(GameOver);
+            boardModel.BoardChanged += new BoardChangedEventHandler(BoardChanged);
+            boardModel.ScoreChanged += new ScoreChangedEventHandler(ScoreChanged);
+            app.GameOverEvent += new GameOverEventHandler(GameOver);
         }
 
         void Page_KeyDown(object sender, KeyEventArgs e)

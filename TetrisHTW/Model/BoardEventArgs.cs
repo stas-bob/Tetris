@@ -18,7 +18,7 @@ namespace TetrisHTW.Model
             removedLines = new int[0];
         }
 
-        public delegate void BoardChangedEventHandler(object sender, BoardEventArgs e);
+        
         public int[] removedLines { get; set; }
         public bool collapse { get; set; }
     }

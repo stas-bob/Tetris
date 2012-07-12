@@ -13,6 +13,6 @@ namespace TetrisHTW.Model
 {
     public class GameOverEventArgs: EventArgs
     {
-        public delegate void GameOverEventHandler(object sender, GameOverEventArgs e);
+        
     }
 }
