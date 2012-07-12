@@ -74,7 +74,7 @@ namespace TetrisHTW.Figures
 
         public override string toString()
         {
-            return "I";
+            return "bar";
         }
     }
 }

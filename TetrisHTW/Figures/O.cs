@@ -25,7 +25,7 @@ namespace TetrisHTW.Figures
 
         public override string toString()
         {
-            return "O";
+            return "square";
         }
     }
 }

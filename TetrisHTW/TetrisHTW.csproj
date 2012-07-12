@@ -79,9 +79,9 @@
     <Compile Include="Figures\T.cs" />
     <Compile Include="Figures\Z.cs" />
     <Compile Include="Lock.cs" />
-    <Compile Include="Figures\Bar.cs" />
+    <Compile Include="Figures\I.cs" />
     <Compile Include="Figures\Figure.cs" />
-    <Compile Include="Figures\Square.cs" />
+    <Compile Include="Figures\O.cs" />
     <Compile Include="Model\BoardEventArgs.cs" />
     <Compile Include="Model\BoardModel.cs" />
     <Compile Include="Model\GameOverEventArgs.cs" />
