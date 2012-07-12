@@ -20,7 +20,7 @@ namespace TetrisHTW.Model
         private int score;
         private Figure currentFigure;
         private Figure previewFigure;
-        private const int columns = 7;
+        private const int columns = 10;
         private const int rows = 15;
         private volatile Color[,] board = new Color[columns, rows];
         
@@ -122,12 +122,17 @@ namespace TetrisHTW.Model
 
         public Figure generateRandomFigure()
         {
-            int random = new Random().Next(2);
+            int random = new Random().Next(7);
             Figure figure = null;
             switch (random)
             {
                 case 0: figure = new Square(this); break;
                 case 1: figure = new Bar(this); break;
+                case 2: figure = new L(this); break;
+                case 3: figure = new J(this); break;
+                case 4: figure = new S(this); break;
+                case 5: figure = new Z(this); break;
+                case 6: figure = new T(this); break;
             }
             return figure;
         }
