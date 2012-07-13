@@ -17,10 +17,10 @@ namespace TetrisHTW.Figures
             : base(boardModel)
         {
             color = Color.FromArgb(255, 255, 0, 0);
-            points[0] = new Point(3, 0);
-            points[1] = new Point(3, 1);
-            points[2] = new Point(3, 2);
-            points[3] = new Point(2, 2);
+            points[0] = new Point(boardModel.getColumns() / 2, 0);
+            points[1] = new Point(boardModel.getColumns() / 2, 1);
+            points[2] = new Point(boardModel.getColumns() / 2, 2);
+            points[3] = new Point(boardModel.getColumns() / 2 - 1, 2);
         }
 
         public override void doRotate()
