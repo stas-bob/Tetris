@@ -18,18 +18,19 @@ namespace TetrisHTW
     public delegate void BoardChangedEventHandler(object sender, BoardEventArgs e);
     public delegate void ScoreChangedEventHandler(object sender, ScoreEventArgs e);
     public delegate void GameOverEventHandler(object sender, GameOverEventArgs e);
-
     public partial class App : Application
     {
         public static Lock myLock = new Lock();
         private BoardModel boardModel = new DefaultBoardModel();
         
+        private static App instance;
 
 
         public event GameOverEventHandler GameOverEvent;
 
         public App()
         {
+            instance = this;
             this.Startup += this.Application_Startup;
             this.Exit += this.Application_Exit;
             this.UnhandledException += this.Application_UnhandledException;
@@ -37,6 +38,11 @@ namespace TetrisHTW
             InitializeComponent();
             
 
+        }
+
+        public static App getInstance()
+        {
+            return instance;
         }
 
         public BoardModel getBoardModel()
@@ -54,7 +60,7 @@ namespace TetrisHTW
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.RootVisual = new MainPage(this);
+            this.RootVisual = new MainPage();
         }
 
         private void Application_Exit(object sender, EventArgs e)

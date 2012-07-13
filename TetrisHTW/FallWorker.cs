@@ -15,19 +15,13 @@ namespace TetrisHTW
 {
     public class FallWorker
     {
-        private App app;
-
-        public FallWorker(App app)
-        {
-            this.app = app;
-        }
 
         public void InvokeFalling()
         {
             shouldStop = false;
             while (!shouldStop)
             {
-                Thread.Sleep(500);
+                Thread.Sleep(400);
 
                 lock (App.myLock)
                 {
@@ -35,7 +29,7 @@ namespace TetrisHTW
                     {
                         break;
                     }
-                    app.getBoardModel().getCurrentFigure().fall(app);
+                    App.getInstance().getBoardModel().getCurrentFigure().fall();
                 }
 
             }

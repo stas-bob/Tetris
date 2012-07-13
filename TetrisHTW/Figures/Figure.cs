@@ -18,6 +18,8 @@ namespace TetrisHTW.Figures
         protected Color color;
         protected Point[] points = new Point[4];
         protected int rotateState;
+
+
         public Figure(DefaultBoardModel boardModel)
         {
             this.board = boardModel;
@@ -36,7 +38,7 @@ namespace TetrisHTW.Figures
         }
 
         
-        public void fall(App app)
+        public void fall()
         {
             Point[] newPoints = new Point[4];
             board.clearPoints(points);
@@ -55,7 +57,7 @@ namespace TetrisHTW.Figures
                     if (newPoints[i].Y < 0)
                     {
                         gameOver = true;
-                        app.gameOver();
+                        App.getInstance().gameOver();
                     }
                 }
                 if (!gameOver)
@@ -73,7 +75,7 @@ namespace TetrisHTW.Figures
                     board.setScore(board.getScore() + score);
                     board.setCurrentFigure(board.getPreviewFigure());
                     board.setPreviewFigure(board.generateRandomFigure());
-                    board.getCurrentFigure().newOnBoard(app);
+                    board.getCurrentFigure().newOnBoard();
                 }
             }
             else
@@ -138,7 +140,7 @@ namespace TetrisHTW.Figures
             }
         }
 
-        public void left()
+        public bool left()
         {
             lock (App.myLock)
             {
@@ -154,10 +156,11 @@ namespace TetrisHTW.Figures
                     points = newPoints;
                 }
                 board.writeCell(points, color);
+                return doFit;
             }
         }
 
-        public void right()
+        public bool right()
         {
             lock (App.myLock)
             {
@@ -173,11 +176,12 @@ namespace TetrisHTW.Figures
                     points = newPoints;
                 }
                 board.writeCell(points, color);
+                return doFit;
             }
         }
 
         
-        public void newOnBoard(App app)
+        public void newOnBoard()
         {
             lock (App.myLock)
             {
@@ -186,23 +190,23 @@ namespace TetrisHTW.Figures
                 board.writeCell(points, color);
                 if (!fitsOnBoard)
                 {
-                    app.gameOver();
+                    App.getInstance().gameOver();
                 }
             }
         }
 
-        public void rotate()
+        public bool rotate()
         {
             //Wegen Fallthread
             lock (App.myLock)
             {
-                doRotate();
+                return doRotate();
             }
         }
 
-        public virtual void doRotate()
+        public virtual bool doRotate()
         {
-
+            return false;
         }
 
         public abstract string toString();

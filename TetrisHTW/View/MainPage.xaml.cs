@@ -21,17 +21,15 @@ namespace TetrisHTW
 
         private BoardModel boardModel;
         private FallWorker fallWorker;
-        private App app;
 
-        public MainPage(App app)
+        public MainPage()
         {
-            this.app = app;
-            this.boardModel = app.getBoardModel();
+            this.boardModel = App.getInstance().getBoardModel();
             InitializeComponent();
             this.KeyDown += new KeyEventHandler(Page_KeyDown);
             boardModel.BoardChanged += new BoardChangedEventHandler(BoardChanged);
             boardModel.ScoreChanged += new ScoreChangedEventHandler(ScoreChanged);
-            app.GameOverEvent += new GameOverEventHandler(GameOver);
+            App.getInstance().GameOverEvent += new GameOverEventHandler(GameOver);
         }
 
         void Page_KeyDown(object sender, KeyEventArgs e)
@@ -52,7 +50,7 @@ namespace TetrisHTW
                 fallWorker.RequestStop();
             }
             
-            fallWorker = new FallWorker(app);
+            fallWorker = new FallWorker();
             boardModel.clearBoard();
             Figure preview = boardModel.generateRandomFigure();
             Figure current = boardModel.generateRandomFigure();
@@ -60,7 +58,7 @@ namespace TetrisHTW
             boardModel.setCurrentFigure(current);
             boardModel.setPreviewFigure(preview);
 
-            boardModel.getCurrentFigure().newOnBoard(app);
+            boardModel.getCurrentFigure().newOnBoard();
             
             new Thread(fallWorker.InvokeFalling).Start();
         }

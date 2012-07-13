@@ -126,13 +126,13 @@ namespace TetrisHTW.Model
             Figure figure = null;
             switch (random)
             {
-                case 0: figure = new O(this); break;
-                case 1: figure = new I(this); break;
-                case 2: figure = new L(this); break;
-                case 3: figure = new J(this); break;
+                case 0: figure = new I(this); break;
+                case 1: figure = new O(this); break;
+                case 2: figure = new T(this); break;
+                case 3: figure = new Z(this); break;
                 case 4: figure = new S(this); break;
-                case 5: figure = new Z(this); break;
-                case 6: figure = new T(this); break;
+                case 5: figure = new J(this); break;
+                case 6: figure = new L(this); break;
             }
             return figure;
         }
