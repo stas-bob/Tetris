@@ -39,6 +39,8 @@ namespace TetrisHTW
                 case Key.Left: boardModel.getCurrentFigure().left(); break;
                 case Key.Right: boardModel.getCurrentFigure().right(); break;
                 case Key.Up: boardModel.getCurrentFigure().rotate(); break;
+                case Key.Down: boardModel.getCurrentFigure().fall(); break;
+                case Key.Space: boardModel.getCurrentFigure().fallCompletely(); break;
             }
         }
 
@@ -49,7 +51,6 @@ namespace TetrisHTW
             {
                 fallWorker.RequestStop();
             }
-            
             fallWorker = new FallWorker();
             boardModel.clearBoard();
             Figure preview = boardModel.generateRandomFigure();

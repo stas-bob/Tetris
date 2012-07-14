@@ -37,16 +37,9 @@ namespace TetrisHTW.Figures
             return true;
         }
 
-        
-        public void fall()
+        private void checkAfterFall(Point[] newPoints)
         {
-            Point[] newPoints = new Point[4];
             board.clearPoints(points);
-            for (int i = 0; i < points.Length; i++)
-            {
-                newPoints[i] = new Point(points[i].X, points[i].Y + 1);
-            }
-            
             bool fits = doPointsFit(newPoints);
             if (!fits)
             {
@@ -83,7 +76,16 @@ namespace TetrisHTW.Figures
                 points = newPoints;
                 board.writeCell(points, color);
             }
+        }
+        public void fall()
+        {
+            Point[] newPoints = new Point[4];
             
+            for (int i = 0; i < points.Length; i++)
+            {
+                newPoints[i] = new Point(points[i].X, points[i].Y + 1);
+            }
+            checkAfterFall(newPoints);
         }
 
         private int[] getLinesToRemove()
@@ -126,18 +128,41 @@ namespace TetrisHTW.Figures
             return linesToRemove;
         }
 
-        public void fallFaster()
-        {
-            lock (App.myLock)
-            {
-            }
-        }
-
         public void fallCompletely()
         {
             lock (App.myLock)
             {
+                board.clearPoints(points);
+                Point[] fallenPoints = simulatedFall();
+                checkAfterFall(fallenPoints);
             }
+        }
+
+        private Point[] simulatedFall()
+        {
+            Point[] newPoints = new Point[4];
+            
+            for (int i = 0; i < points.Length; i++)
+            {
+                newPoints[i] = new Point(points[i].X, points[i].Y + 1);
+            }
+            for (int i = 0; i < App.getInstance().getBoardModel().getRows(); i++)
+            {
+                for (int j = 0; j < newPoints.Length; j++)
+                {
+                    newPoints[j].Y += 1;
+                }
+                bool fit = doPointsFit(newPoints);
+                if (!fit)
+                {
+                    for (int j = 0; j < newPoints.Length; j++)
+                    {
+                        newPoints[j].Y -= 1;
+                    }
+                    break;
+                }
+            }
+            return newPoints;
         }
 
         public bool left()
