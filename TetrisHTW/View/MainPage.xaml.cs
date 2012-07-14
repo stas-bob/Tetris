@@ -26,10 +26,35 @@ namespace TetrisHTW
         {
             this.boardModel = App.getInstance().getBoardModel();
             InitializeComponent();
+            initBoard();
             this.KeyDown += new KeyEventHandler(Page_KeyDown);
             boardModel.BoardChanged += new BoardChangedEventHandler(BoardChanged);
             boardModel.ScoreChanged += new ScoreChangedEventHandler(ScoreChanged);
             App.getInstance().GameOverEvent += new GameOverEventHandler(GameOver);
+        }
+
+        void initBoard()
+        {
+            for (int i = 0; i < boardModel.getRows(); i++)
+            {
+                for (int j = 0; j < boardModel.getColumns(); j++)
+                {
+                    Rectangle rect = new Rectangle();
+                    rect.SetValue(Grid.RowProperty, i);
+                    rect.SetValue(Grid.ColumnProperty, j);
+                    boardGrid.Children.Add(rect);
+                }
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    Rectangle rect = new Rectangle();
+                    rect.SetValue(Grid.RowProperty, i);
+                    rect.SetValue(Grid.ColumnProperty, j);
+                    previewGrid.Children.Add(rect);
+                }
+            }
         }
 
         void Page_KeyDown(object sender, KeyEventArgs e)
@@ -69,18 +94,84 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
-                string s = "";
                 Color[,] data = boardModel.getBoardData();
-                for (int i = 0; i < boardModel.getRows(); i++)
+                foreach(FrameworkElement frameWorkElement in boardGrid.Children)
                 {
-                    for (int j = 0; j < boardModel.getColumns(); j++)
+                    Rectangle rect = (Rectangle)frameWorkElement;
+                    int x = Grid.GetColumn(frameWorkElement);
+                    int y = Grid.GetRow(frameWorkElement);
+                    if (!data[x, y].Equals(boardModel.getColor()))
                     {
-                        s += boardModel.isCellColored(j, i) ? " # " : " ‒ ";
+                        LinearGradientBrush brush = new LinearGradientBrush();
+                        brush.GradientStops = new GradientStopCollection();
+                        GradientStop gs = new GradientStop();
+                        gs.Color = data[x, y];
+                        gs.Offset = 0;
+                        brush.GradientStops.Add(gs);
+                        GradientStop gs2 = new GradientStop();
+                        gs.Color = Colors.White;
+                        gs.Offset = 0.4;
+                        brush.GradientStops.Add(gs2);
+                        GradientStop gs3 = new GradientStop();
+                        gs.Color = Colors.White;
+                        gs.Offset = 0.45;
+                        brush.GradientStops.Add(gs3);
+                        GradientStop gs4 = new GradientStop();
+                        gs.Color = data[x, y];
+                        gs.Offset = 1;
+                        brush.GradientStops.Add(gs4);
+
+                        rect.Fill = brush;
                     }
-                    s += "\n";
+                    else
+                    {
+                        rect.Fill = new SolidColorBrush(data[x, y]);
+                    }
+
                 }
-                label1.Content = s;
-                label3.Content = boardModel.getPreviewFigure().toString();
+                foreach (FrameworkElement frameWorkElement in previewGrid.Children)
+                {
+                        Rectangle rect = (Rectangle)frameWorkElement;
+                        rect.Fill = new SolidColorBrush(Colors.White);
+                }
+                tools.Point[] previewPoints = boardModel.getPreviewFigure().getPoints();
+                foreach (FrameworkElement frameWorkElement in previewGrid.Children)
+                {
+                    Rectangle rect = (Rectangle)frameWorkElement;
+                    rect.Fill = new SolidColorBrush(Colors.White);
+                }
+                for (int i = 0; i < previewPoints.Length; i++)
+                {
+                    foreach (FrameworkElement frameWorkElement in previewGrid.Children)
+                    {
+                        int x = Grid.GetColumn(frameWorkElement) + 4;
+                        int y = Grid.GetRow(frameWorkElement);
+                        if (previewPoints[i].X == x && previewPoints[i].Y == y)
+                        {
+                            Rectangle rect = (Rectangle)frameWorkElement;
+                            LinearGradientBrush brush = new LinearGradientBrush();
+                            brush.GradientStops = new GradientStopCollection();
+                            GradientStop gs = new GradientStop();
+                            gs.Color = boardModel.getPreviewFigure().getColor();
+                            gs.Offset = 0;
+                            brush.GradientStops.Add(gs);
+                            GradientStop gs2 = new GradientStop();
+                            gs.Color = Colors.White;
+                            gs.Offset = 0.4;
+                            brush.GradientStops.Add(gs2);
+                            GradientStop gs3 = new GradientStop();
+                            gs.Color = Colors.White;
+                            gs.Offset = 0.45;
+                            brush.GradientStops.Add(gs3);
+                            GradientStop gs4 = new GradientStop();
+                            gs.Color = boardModel.getPreviewFigure().getColor();
+                            gs.Offset = 1;
+                            brush.GradientStops.Add(gs4);
+
+                            rect.Fill = brush;
+                        }
+                    }
+                }
             });
         }
 
@@ -88,7 +179,7 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
-                label2.Content = bea.score;
+
             });
             
         }

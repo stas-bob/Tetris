@@ -235,5 +235,15 @@ namespace TetrisHTW.Figures
         }
 
         public abstract string toString();
+
+        public Point[] getPoints()
+        {
+            return points;
+        }
+
+        public Color getColor()
+        {
+            return color;
+        }
     }
 }

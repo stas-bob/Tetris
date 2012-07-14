@@ -39,6 +39,11 @@ namespace TetrisHTW.Model
             score = 0;
         }
 
+        public Color getColor()
+        {
+            return boardColor;
+        }
+
         public DefaultBoardModel()
         {
             clearBoard();

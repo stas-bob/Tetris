@@ -29,6 +29,8 @@ namespace TetrisHTW.Model
 
         int getRows();
 
+        Color getColor();
+
         void NotifyBoardChanged(BoardEventArgs bea);
 
         void NotifyScoreChanged(ScoreEventArgs bea);
