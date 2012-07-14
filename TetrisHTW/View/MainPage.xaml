@@ -6,7 +6,7 @@
     mc:Ignorable="d"
     d:DesignHeight="420" d:DesignWidth="344" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
 
-    <Grid x:Name="LayoutRoot" Background="White" Height="360" Width="285">
+    <Grid x:Name="LayoutRoot" Height="360" Width="285" >
         <Grid.RowDefinitions>
             <RowDefinition Height="72" />
             <RowDefinition Height="72" />
@@ -39,7 +39,7 @@
                 <ColumnDefinition Width="28" />
             </Grid.ColumnDefinitions>
         </Grid>
-        <Grid Name="boardGrid" Grid.Column="0" Grid.RowSpan="4">
+        <Grid Name="boardGrid" Grid.Column="0" Grid.RowSpan="4" Background="{StaticResource BlueprintImageBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -69,6 +69,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+
         </Grid>
+
     </Grid>
 </UserControl>

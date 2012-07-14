@@ -125,7 +125,7 @@ namespace TetrisHTW
                     }
                     else
                     {
-                        rect.Fill = new SolidColorBrush(data[x, y]);
+                        rect.Fill = new SolidColorBrush(Colors.Transparent);
                     }
 
                 }

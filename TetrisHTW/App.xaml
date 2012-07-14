@@ -3,6 +3,6 @@
              x:Class="TetrisHTW.App"
              >
     <Application.Resources>
-        
+        <ImageBrush x:Key="BlueprintImageBrush" ImageSource="Images/himmel.png" Stretch="UniformToFill"/>
     </Application.Resources>
 </Application>
