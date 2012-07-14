@@ -4,5 +4,12 @@
              >
     <Application.Resources>
         <ImageBrush x:Key="BlueprintImageBrush" ImageSource="Images/himmel.png" Stretch="UniformToFill"/>
+        <ImageBrush x:Key="BluePointBrush" ImageSource="Images/point.png" Stretch="UniformToFill"/>
+        <ImageBrush x:Key="OrangePointBrush" ImageSource="Images/orange.png" Stretch="UniformToFill"/>
+        <ImageBrush x:Key="PurplePointBrush" ImageSource="Images/purple.png" Stretch="UniformToFill"/>
+        <ImageBrush x:Key="RedPointBrush" ImageSource="Images/red.png" Stretch="UniformToFill"/>
+        <ImageBrush x:Key="CyanPointBrush" ImageSource="Images/cyan.png" Stretch="UniformToFill"/>
+        <ImageBrush x:Key="YellowPointBrush" ImageSource="Images/yellow.png" Stretch="UniformToFill"/>
+        <ImageBrush x:Key="GreenPointBrush" ImageSource="Images/green.png" Stretch="UniformToFill"/>
     </Application.Resources>
 </Application>

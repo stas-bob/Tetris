@@ -71,6 +71,5 @@
             </Grid.ColumnDefinitions>
 
         </Grid>
-
     </Grid>
 </UserControl>

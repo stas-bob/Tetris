@@ -42,6 +42,8 @@ namespace TetrisHTW
                     Rectangle rect = new Rectangle();
                     rect.SetValue(Grid.RowProperty, i);
                     rect.SetValue(Grid.ColumnProperty, j);
+                    rect.Stroke = new SolidColorBrush(Color.FromArgb(50, 0, 0, 255));
+                    rect.StrokeThickness = 1;
                     boardGrid.Children.Add(rect);
                 }
             }
@@ -87,8 +89,7 @@ namespace TetrisHTW
             boardModel.getCurrentFigure().newOnBoard();
             
             new Thread(fallWorker.InvokeFalling).Start();
-        }
-
+        } 
 
         public void BoardChanged(object sender, BoardEventArgs bea)
         {
@@ -102,26 +103,38 @@ namespace TetrisHTW
                     int y = Grid.GetRow(frameWorkElement);
                     if (!data[x, y].Equals(boardModel.getColor()))
                     {
-                        LinearGradientBrush brush = new LinearGradientBrush();
-                        brush.GradientStops = new GradientStopCollection();
-                        GradientStop gs = new GradientStop();
-                        gs.Color = data[x, y];
-                        gs.Offset = 0;
-                        brush.GradientStops.Add(gs);
-                        GradientStop gs2 = new GradientStop();
-                        gs.Color = Colors.White;
-                        gs.Offset = 0.4;
-                        brush.GradientStops.Add(gs2);
-                        GradientStop gs3 = new GradientStop();
-                        gs.Color = Colors.White;
-                        gs.Offset = 0.45;
-                        brush.GradientStops.Add(gs3);
-                        GradientStop gs4 = new GradientStop();
-                        gs.Color = data[x, y];
-                        gs.Offset = 1;
-                        brush.GradientStops.Add(gs4);
+                        Brush b = null;
+                        if (data[x, y] == Colors.Blue)
+                        {
+                            b = Application.Current.Resources["BluePointBrush"] as Brush;
+                        }
+                        if (data[x, y] == Colors.Yellow)
+                        {
+                            b = Application.Current.Resources["YellowPointBrush"] as Brush;
+                        }
+                        if (data[x, y] == Colors.Green)
+                        {
+                            b = Application.Current.Resources["GreenPointBrush"] as Brush;
+                        }
+                        if (data[x, y] == Colors.Red)
+                        {
+                            b = Application.Current.Resources["RedPointBrush"] as Brush;
+                        }
+                        if (data[x, y] == Colors.Purple)
+                        {
+                            b = Application.Current.Resources["PurplePointBrush"] as Brush;
+                        }
+                        if (data[x, y] == Colors.Cyan)
+                        {
+                            b = Application.Current.Resources["CyanPointBrush"] as Brush;
+                        }
+                        if (data[x, y] == Colors.Orange)
+                        {
+                            b = Application.Current.Resources["OrangePointBrush"] as Brush;
+                        }
+                         
 
-                        rect.Fill = brush;
+                        rect.Fill = b;
                     }
                     else
                     {

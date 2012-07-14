@@ -112,6 +112,17 @@
   <ItemGroup>
     <Resource Include="Images\himmel.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\point.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\cyan.png" />
+    <Resource Include="Images\green.png" />
+    <Resource Include="Images\orange.png" />
+    <Resource Include="Images\purple.png" />
+    <Resource Include="Images\red.png" />
+    <Resource Include="Images\yellow.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
