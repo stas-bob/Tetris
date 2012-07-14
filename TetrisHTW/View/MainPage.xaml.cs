@@ -192,7 +192,7 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
-
+                scoreText.Text = bea.score + "";
             });
             
         }
@@ -203,6 +203,7 @@ namespace TetrisHTW
             {
                 Debug.WriteLine("game over");
                 fallWorker.RequestStop();
+                scoreText.Text = "";
             });
 
         }
