@@ -38,7 +38,6 @@ namespace TetrisHTW
             App.getInstance().GameOverEvent += new GameOverEventHandler(GameOver);
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(FigureFallen);
 
-
             anime.Begin();
         }
 
@@ -54,6 +53,9 @@ namespace TetrisHTW
                     rect.SetValue(Grid.RowProperty, i);
                     rect.SetValue(Grid.ColumnProperty, j);
                     rect.Stroke = new SolidColorBrush(Color.FromArgb(50, 0, 0, 255));
+                    DoubleCollection dc = new DoubleCollection();
+                    dc.Add(10);
+                    rect.StrokeDashArray = dc;
                     rect.StrokeThickness = 1;
                     boardGrid.Children.Add(rect);
                 }

@@ -70,6 +70,18 @@
 
 
                 <Grid Name="boardGrid" Grid.Column="0" Grid.RowSpan="4">
+                <Grid.Background>
+                    <LinearGradientBrush Opacity="0.2">
+                        <LinearGradientBrush.Transform>
+                            <RotateTransform Angle="20"/>
+                        </LinearGradientBrush.Transform>
+                        <GradientStop Color="blue" Offset="0"/>
+                        <GradientStop Color="Green" Offset="0.25"/>
+                        <GradientStop Color="Yellow" Offset="0.5"/>
+                        <GradientStop Color="Red" Offset="0.75"/>
+                        <GradientStop Color="Violet" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
