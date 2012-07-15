@@ -16,6 +16,9 @@ using TetrisHTW.Figures;
 
 namespace TetrisHTW
 {
+   
+
+
     public partial class MainPage : UserControl
     {
 
@@ -33,7 +36,12 @@ namespace TetrisHTW
             boardModel.ScoreChanged += new ScoreChangedEventHandler(ScoreChanged);
             App.getInstance().GameOverEvent += new GameOverEventHandler(GameOver);
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(FigureFallen);
+
+
+            anime.Begin();
         }
+
+
 
         void initBoard()
         {
@@ -59,6 +67,16 @@ namespace TetrisHTW
                     previewGrid.Children.Add(rect);
                 }
             }
+        }
+
+        void AnimCompleted(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            dAnimeX.To = rnd.Next(200);
+            dAnimeY.To = rnd.Next(200);
+            dAnimeX2.To = rnd.Next(200);
+            dAnimeY2.To = rnd.Next(200);
+            anime.Begin();
         }
 
         void Page_KeyDown(object sender, KeyEventArgs e)

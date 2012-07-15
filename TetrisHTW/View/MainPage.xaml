@@ -5,71 +5,94 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="420" d:DesignWidth="344" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
-    <Grid x:Name="LayoutRoot" Height="360" Width="285" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="72" />
-            <RowDefinition Height="72" />
-            <RowDefinition Height="72" />
-            <RowDefinition Height="72" />
-            <RowDefinition Height="72" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
-            <ColumnDefinition Width="85" />
-            <ColumnDefinition Width="59*" />
-        </Grid.ColumnDefinitions>
-
-        <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Start" Height="23" Name="button1" Click="button1_Click" IsTabStop="False" Margin="12,24" />
-        <StackPanel Grid.Column="1">
-            <TextBlock Text="Score" HorizontalAlignment="Center"/>
-            <TextBlock Text="" Name="scoreText" HorizontalAlignment="Center"/>
-        </StackPanel>
-
-        <Grid Name="previewGrid" Grid.Column="1" Grid.Row="1">
+    <Canvas>
+        <Canvas.Resources>
+            <Storyboard x:Name="anime">
+                <DoubleAnimation x:Name="dAnimeX" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeY" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeX2" Storyboard.TargetName="ellipse2" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeY2" Storyboard.TargetName="ellipse2" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
+            </Storyboard>
+        </Canvas.Resources>
+        <Ellipse x:Name="ellipse" Height="100" Width="100" StrokeThickness="20" Canvas.Left="20" Canvas.Top="50">
+            <Ellipse.Stroke>
+                <LinearGradientBrush>
+                    <GradientStop Color="Transparent" Offset="0.1"/>
+                    <GradientStop Color="Red" Offset="0.4"/>
+                    <GradientStop Color="Transparent" Offset="0.9"/>
+                </LinearGradientBrush>
+            </Ellipse.Stroke>
+            <Ellipse.Effect>
+                <BlurEffect Radius="5"/>
+            </Ellipse.Effect>
+        </Ellipse>
+        <Ellipse x:Name="ellipse2" Height="50" Width="50" Stroke="Red" StrokeThickness="5"/>
+            
+        <Grid x:Name="LayoutRoot" Height="360" Width="285" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="18" />
-                <RowDefinition Height="18" />
-                <RowDefinition Height="18" />
-                <RowDefinition Height="18" />
+                <RowDefinition Height="72" />
+                <RowDefinition Height="72" />
+                <RowDefinition Height="72" />
+                <RowDefinition Height="72" />
+                <RowDefinition Height="72" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="28" />
-                <ColumnDefinition Width="29" />
-                <ColumnDefinition Width="28" />
-            </Grid.ColumnDefinitions>
-        </Grid>
-        <Grid Name="boardGrid" Grid.Column="0" Grid.RowSpan="4" Background="{StaticResource BlueprintImageBrush}">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="85" />
+                <ColumnDefinition Width="59*" />
             </Grid.ColumnDefinitions>
 
+            <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Start" Height="23" Name="button1" Click="button1_Click" IsTabStop="False" Margin="12,24" />
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Score" HorizontalAlignment="Center"/>
+                <TextBlock Text="" Name="scoreText" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <Grid Name="previewGrid" Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="18" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="28" />
+                    <ColumnDefinition Width="29" />
+                    <ColumnDefinition Width="28" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <Grid Name="boardGrid" Grid.Column="0" Grid.RowSpan="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+            </Grid>
         </Grid>
-    </Grid>
-    
+    </Canvas>
 </UserControl>
