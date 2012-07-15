@@ -20,24 +20,33 @@
         </Grid.ColumnDefinitions>
 
         <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Start" Height="23" Name="button1" Click="button1_Click" IsTabStop="False" Margin="12,24" />
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" >
             <TextBlock Text="Score" HorizontalAlignment="Center"/>
             <TextBlock Text="" Name="scoreText" HorizontalAlignment="Center"/>
         </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <TextBlock Text="Vorschau" HorizontalAlignment="Center" Height="17"/>
+            <Grid Name="previewGrid" HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="14" />
+                    <RowDefinition Height="14" />
+                    <RowDefinition Height="14" />
+                    <RowDefinition Height="14" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="14" />
+                    <ColumnDefinition Width="14" />
+                    <ColumnDefinition Width="14" />
+                    <ColumnDefinition Width="14" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="2">
+            <TextBlock Text="Level" HorizontalAlignment="Center"/>
+            <TextBlock Text="" Name="levelText" HorizontalAlignment="Center"/>
+        </StackPanel>
 
-        <Grid Name="previewGrid" Grid.Column="1" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="18" />
-                <RowDefinition Height="18" />
-                <RowDefinition Height="18" />
-                <RowDefinition Height="18" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="28" />
-                <ColumnDefinition Width="29" />
-                <ColumnDefinition Width="28" />
-            </Grid.ColumnDefinitions>
-        </Grid>
+
         <Grid Name="boardGrid" Grid.Column="0" Grid.RowSpan="4" Background="{StaticResource BlueprintImageBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -68,8 +77,6 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-
         </Grid>
     </Grid>
-    
 </UserControl>
