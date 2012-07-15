@@ -15,7 +15,7 @@ namespace TetrisHTW.Model
 {
     public class DefaultBoardModel : BoardModel
     {
-        
+        private Random rnd = new Random();
         private Color boardColor = Color.FromArgb(255, 200, 200, 200);
         private int score;
         private Figure currentFigure;
@@ -127,7 +127,7 @@ namespace TetrisHTW.Model
 
         public Figure generateRandomFigure()
         {
-            int random = new Random().Next(7);
+            int random = rnd.Next(7);
             Figure figure = null;
             switch (random)
             {
