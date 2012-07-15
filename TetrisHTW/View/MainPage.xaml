@@ -5,7 +5,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="420" d:DesignWidth="344" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
-
     <Grid x:Name="LayoutRoot" Height="360" Width="285" >
         <Grid.RowDefinitions>
             <RowDefinition Height="72" />
@@ -19,13 +18,13 @@
             <ColumnDefinition Width="85" />
             <ColumnDefinition Width="59*" />
         </Grid.ColumnDefinitions>
-        
+
         <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Start" Height="23" Name="button1" Click="button1_Click" IsTabStop="False" Margin="12,24" />
         <StackPanel Grid.Column="1">
             <TextBlock Text="Score" HorizontalAlignment="Center"/>
             <TextBlock Text="" Name="scoreText" HorizontalAlignment="Center"/>
         </StackPanel>
-        
+
         <Grid Name="previewGrid" Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="18" />
@@ -72,4 +71,5 @@
 
         </Grid>
     </Grid>
+    
 </UserControl>

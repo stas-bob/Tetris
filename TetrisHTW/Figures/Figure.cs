@@ -55,6 +55,7 @@ namespace TetrisHTW.Figures
                 }
                 if (!gameOver)
                 {
+                    App.getInstance().NotifyFigureFallen(points);
                     int[] linesToRemove = getLinesToRemove();
                     board.collapse(linesToRemove);
                     int score = 0;
@@ -135,6 +136,7 @@ namespace TetrisHTW.Figures
                 board.clearPoints(points);
                 Point[] fallenPoints = simulatedFall();
                 checkAfterFall(fallenPoints);
+                fall();
             }
         }
 

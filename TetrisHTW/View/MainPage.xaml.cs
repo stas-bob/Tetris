@@ -19,6 +19,7 @@ namespace TetrisHTW
     public partial class MainPage : UserControl
     {
 
+        private bool gameOver;
         private BoardModel boardModel;
         private FallWorker fallWorker;
 
@@ -31,6 +32,7 @@ namespace TetrisHTW
             boardModel.BoardChanged += new BoardChangedEventHandler(BoardChanged);
             boardModel.ScoreChanged += new ScoreChangedEventHandler(ScoreChanged);
             App.getInstance().GameOverEvent += new GameOverEventHandler(GameOver);
+            App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(FigureFallen);
         }
 
         void initBoard()
@@ -61,13 +63,16 @@ namespace TetrisHTW
 
         void Page_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
+            if (!gameOver)
             {
-                case Key.Left: boardModel.getCurrentFigure().left(); break;
-                case Key.Right: boardModel.getCurrentFigure().right(); break;
-                case Key.Up: boardModel.getCurrentFigure().rotate(); break;
-                case Key.Down: boardModel.getCurrentFigure().fall(); break;
-                case Key.Space: boardModel.getCurrentFigure().fallCompletely(); break;
+                switch (e.Key)
+                {
+                    case Key.Left: boardModel.getCurrentFigure().left(); break;
+                    case Key.Right: boardModel.getCurrentFigure().right(); break;
+                    case Key.Up: boardModel.getCurrentFigure().rotate(); break;
+                    case Key.Down: boardModel.getCurrentFigure().fall(); break;
+                    case Key.Space: boardModel.getCurrentFigure().fallCompletely(); break;
+                }
             }
         }
 
@@ -78,6 +83,7 @@ namespace TetrisHTW
             {
                 fallWorker.RequestStop();
             }
+            gameOver = false;
             fallWorker = new FallWorker();
             boardModel.clearBoard();
             Figure preview = boardModel.generateRandomFigure();
@@ -197,6 +203,52 @@ namespace TetrisHTW
             
         }
 
+        public void FigureFallen(object sender, FigureFallenEventArgs ffea)
+        {
+            Dispatcher.BeginInvoke(delegate
+            {
+                tools.Point[] points = ffea.points;
+                List<Rectangle> rectangles = getBoardRectangles(points);
+                Storyboard sb = new Storyboard();
+                foreach (Rectangle rectangle in rectangles)
+                {
+                    Duration duration = new Duration(TimeSpan.FromMilliseconds(100));
+                    DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+                    myDoubleAnimation.Duration = duration;
+                    myDoubleAnimation.AutoReverse = true;
+                    Storyboard.SetTarget(myDoubleAnimation, rectangle);
+                    Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath("Opacity"));
+                    myDoubleAnimation.To = 0.5;
+                    myDoubleAnimation.From = 1;
+                    sb.Children.Add(myDoubleAnimation);
+                }
+                if (!LayoutRoot.Resources.Contains("unique_id"))
+                {
+                    LayoutRoot.Resources.Add("unique_id", sb);
+                }
+                sb.Begin();
+            });
+
+        }
+
+        public List<Rectangle> getBoardRectangles(tools.Point[] points)
+        {
+            List<Rectangle> rectangles = new List<Rectangle>();
+            foreach (tools.Point point in points)
+            {
+                foreach (FrameworkElement frameWorkElement in boardGrid.Children)
+                {
+                    int xx = Grid.GetColumn(frameWorkElement);
+                    int yy = Grid.GetRow(frameWorkElement);
+                    if (xx == point.X && yy == point.Y)
+                    {
+                        rectangles.Add((Rectangle)frameWorkElement);
+                    }
+                }
+            }
+            return rectangles;
+        }
+
         public void GameOver(object sender, GameOverEventArgs goea)
         {
             Dispatcher.BeginInvoke(delegate
@@ -204,6 +256,7 @@ namespace TetrisHTW
                 Debug.WriteLine("game over");
                 fallWorker.RequestStop();
                 scoreText.Text = "";
+                gameOver = true;
             });
 
         }

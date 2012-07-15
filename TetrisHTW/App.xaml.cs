@@ -18,14 +18,17 @@ namespace TetrisHTW
     public delegate void BoardChangedEventHandler(object sender, BoardEventArgs e);
     public delegate void ScoreChangedEventHandler(object sender, ScoreEventArgs e);
     public delegate void GameOverEventHandler(object sender, GameOverEventArgs e);
+    public delegate void FigureFallenEventHandler(object sender, FigureFallenEventArgs e);
     public partial class App : Application
     {
+        
+
         public static Lock myLock = new Lock();
         private BoardModel boardModel = new DefaultBoardModel();
         
         private static App instance;
 
-
+        public event FigureFallenEventHandler FigureFallenEvent;
         public event GameOverEventHandler GameOverEvent;
 
         public App()
@@ -48,6 +51,15 @@ namespace TetrisHTW
         public BoardModel getBoardModel()
         {
             return boardModel;
+        }
+
+        public void NotifyFigureFallen(tools.Point[] points)
+        {
+            if (FigureFallenEvent != null)
+            {
+                FigureFallenEventArgs ffea = new FigureFallenEventArgs(points);
+                FigureFallenEvent(this, ffea);
+            }
         }
 
         public void gameOver()

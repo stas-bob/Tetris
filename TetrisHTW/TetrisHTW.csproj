@@ -88,6 +88,7 @@
     <Compile Include="Model\BoardEventArgs.cs" />
     <Compile Include="Model\BoardModel.cs" />
     <Compile Include="Model\GameOverEventArgs.cs" />
+    <Compile Include="Model\FigureFallenEventArgs.cs" />
     <Compile Include="Model\ScoreEventArgs.cs" />
     <Compile Include="tools\Point.cs" />
     <Compile Include="View\MainPage.xaml.cs">
