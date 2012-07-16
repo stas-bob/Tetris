@@ -26,13 +26,17 @@ namespace TetrisHTW
         private bool gameOver;
         private BoardModel boardModel;
         private FallWorker fallWorker;
+        private Timer timer;
 
         public MainPage()
         {
+            
             this.boardModel = App.getInstance().getBoardModel();
             InitializeComponent();
             initBoard();
             this.KeyDown += new KeyEventHandler(Page_KeyDown);
+            this.KeyUp += new KeyEventHandler(Page_KeyUp);
+
             boardModel.BoardChanged += new BoardChangedEventHandler(BoardChanged);
             boardModel.ScoreChanged += new ScoreChangedEventHandler(ScoreChanged);
             App.getInstance().GameOverEvent += new GameOverEventHandler(GameOver);
@@ -41,6 +45,7 @@ namespace TetrisHTW
             anime.Begin();
         }
 
+       
 
 
         void initBoard()
@@ -82,21 +87,45 @@ namespace TetrisHTW
             anime.Begin();
         }
 
+        Key lastKey;
         void Page_KeyDown(object sender, KeyEventArgs e)
         {
             if (!gameOver)
             {
                 switch (e.Key)
                 {
-                    case Key.Left: boardModel.getCurrentFigure().left(); break;
-                    case Key.Right: boardModel.getCurrentFigure().right(); break;
                     case Key.Up: boardModel.getCurrentFigure().rotate(); break;
-                    case Key.Down: boardModel.getCurrentFigure().fall(); break;
                     case Key.Space: boardModel.getCurrentFigure().fallCompletely(); break;
+                    default: 
+                        if (timer == null)
+                        {
+                            lastKey = e.Key;
+                            timer = new Timer(CheckStatus, null, 0, 150);
+                        }
+                        break;
                 }
+               
             }
         }
 
+        void Page_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (timer != null)
+            {
+                timer.Dispose();
+                timer = null;
+            }
+        }
+
+        public void CheckStatus(Object stateInfo)
+        {
+            switch (lastKey)
+            {
+                case Key.Left: boardModel.getCurrentFigure().left(); break;
+                case Key.Right: boardModel.getCurrentFigure().right(); break;
+                case Key.Down: boardModel.getCurrentFigure().fall(); break;
+            }
+        }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {

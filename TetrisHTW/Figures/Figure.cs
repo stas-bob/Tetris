@@ -27,6 +27,7 @@ namespace TetrisHTW.Figures
 
         protected bool doPointsFit(Point[] points)
         {
+
             for (int i = 0; i < points.Length; i++)
             {
                 if (points[i].X < 0 || points[i].X >= board.getColumns() || points[i].Y < 0 || points[i].Y >= board.getRows() || board.isCellColored((int)points[i].X, (int)points[i].Y))
@@ -39,94 +40,103 @@ namespace TetrisHTW.Figures
 
         private void checkAfterFall(Point[] newPoints)
         {
-            board.clearPoints(points);
-            bool fits = doPointsFit(newPoints);
-            if (!fits)
+            lock (App.myLock)
             {
-                board.writeCell(points, color);
-                bool gameOver = false;
-                for (int i = 0; i < newPoints.Length; i++)
+                board.clearPoints(points);
+                bool fits = doPointsFit(newPoints);
+                if (!fits)
                 {
-                    if (newPoints[i].Y < 0)
+                    board.writeCell(points, color);
+                    bool gameOver = false;
+                    for (int i = 0; i < newPoints.Length; i++)
                     {
-                        gameOver = true;
-                        App.getInstance().gameOver();
-                    }
-                }
-                if (!gameOver)
-                {
-                    App.getInstance().NotifyFigureFallen(points);
-                    int[] linesToRemove = getLinesToRemove();
-                    board.collapse(linesToRemove);
-                    int score = 0;
-                    for (int i = 0; i < linesToRemove.Length; i++)
-                    {
-                        if (linesToRemove[i] != -1)
+                        if (newPoints[i].Y < 0)
                         {
-                            score++;
+                            gameOver = true;
+                            App.getInstance().gameOver();
                         }
                     }
-                    board.setScore(board.getScore() + score);
-                    board.setCurrentFigure(board.getPreviewFigure());
-                    board.setPreviewFigure(board.generateRandomFigure());
-                    board.getCurrentFigure().newOnBoard();
+                    if (!gameOver)
+                    {
+                        App.getInstance().NotifyFigureFallen(points);
+                        int[] linesToRemove = getLinesToRemove();
+                        board.collapse(linesToRemove);
+                        int score = 0;
+                        for (int i = 0; i < linesToRemove.Length; i++)
+                        {
+                            if (linesToRemove[i] != -1)
+                            {
+                                score++;
+                            }
+                        }
+                        board.setScore(board.getScore() + score);
+                        board.setCurrentFigure(board.getPreviewFigure());
+                        board.setPreviewFigure(board.generateRandomFigure());
+                        board.getCurrentFigure().newOnBoard();
+                    }
+                }
+                else
+                {
+                    points = newPoints;
+                    board.writeCell(points, color);
                 }
             }
-            else
-            {
-                points = newPoints;
-                board.writeCell(points, color);
-            }
         }
-        public void fall()
+        public void fall() 
         {
-            Point[] newPoints = new Point[4];
-            
-            for (int i = 0; i < points.Length; i++)
+            lock (App.myLock)
             {
-                newPoints[i] = new Point(points[i].X, points[i].Y + 1);
+                Point[] newPoints = new Point[4];
+            
+                for (int i = 0; i < points.Length; i++)
+                {
+                    newPoints[i] = new Point(points[i].X, points[i].Y + 1);
+                }
+                checkAfterFall(newPoints);
             }
-            checkAfterFall(newPoints);
         }
 
         private int[] getLinesToRemove()
         {
-            int[] linesToRemove = new int[4];
-            for (int i = 0; i < linesToRemove.Length; i++)
+            lock (App.myLock)
             {
-                linesToRemove[i] = -1;
-            }
-            for (int i = 0; i < points.Length; i++)
-            {
-                int y = points[i].Y;
-                bool containsY = false;
-                for (int m = 0; m < linesToRemove.Length; m++)
+                int[] linesToRemove = new int[4];
+                for (int i = 0; i < linesToRemove.Length; i++)
                 {
-                    if (linesToRemove[m] == y)
+                    linesToRemove[i] = -1;
+                }
+                for (int i = 0; i < points.Length; i++)
+                {
+                    int y = points[i].Y;
+                    bool containsY = false;
+                    for (int m = 0; m < linesToRemove.Length; m++)
                     {
-                        containsY = true;
-                        break;
+                        if (linesToRemove[m] == y)
+                        {
+                            containsY = true;
+                            break;
+                        }
+                    }
+                    if (containsY)
+                    {
+                        continue;
+                    }
+                    Color[,] cells = board.getBoardData();
+                    int cellsColored = 0;
+                    for (int j = 0; j < board.getColumns(); j++)
+                    {
+                        if (board.isCellColored(j, y))
+                        {
+                            cellsColored++;
+                        }
+                    }
+                    if (cellsColored == board.getColumns())
+                    {
+                        linesToRemove[i] = y;
                     }
                 }
-                if (containsY)
-                {
-                    continue;
-                }
-                Color[,] cells = board.getBoardData();
-                int cellsColored = 0;
-                for (int j = 0; j < board.getColumns(); j++)
-                {
-                    if (board.isCellColored(j, y))
-                    {
-                        cellsColored++;
-                    }
-                }
-                if (cellsColored == board.getColumns())
-                {
-                    linesToRemove[i] = y;
-                }
+                return linesToRemove;
             }
-            return linesToRemove;
         }
 
         public void fallCompletely()
@@ -142,6 +152,7 @@ namespace TetrisHTW.Figures
 
         private Point[] simulatedFall()
         {
+
             Point[] newPoints = new Point[4];
             
             for (int i = 0; i < points.Length; i++)
