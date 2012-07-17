@@ -50,6 +50,14 @@ namespace TetrisHTW
 
         void initBoard()
         {
+            for (int i = 0; i < boardModel.getColumns(); i++)
+            {
+                boardGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+            for (int i = 0; i < boardModel.getRows(); i++)
+            {
+                boardGrid.RowDefinitions.Add(new RowDefinition());
+            }
             for (int i = 0; i < boardModel.getRows(); i++)
             {
                 for (int j = 0; j < boardModel.getColumns(); j++)
