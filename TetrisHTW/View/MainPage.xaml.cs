@@ -23,10 +23,11 @@ namespace TetrisHTW
     public partial class MainPage : UserControl
     {
 
-        private bool gameOver;
+        private bool gameStop;
         private BoardModel boardModel;
         private FallWorker fallWorker;
         private Timer timer;
+        private Key lastKey;
 
         public MainPage()
         {
@@ -73,9 +74,9 @@ namespace TetrisHTW
                     boardGrid.Children.Add(rect);
                 }
             }
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < previewGrid.RowDefinitions.Count; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < previewGrid.ColumnDefinitions.Count; j++)
                 {
                     Rectangle rect = new Rectangle();
                     rect.SetValue(Grid.RowProperty, i);
@@ -95,10 +96,10 @@ namespace TetrisHTW
             anime.Begin();
         }
 
-        Key lastKey;
+        
         void Page_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!gameOver)
+            if (!gameStop)
             {
                 switch (e.Key)
                 {
@@ -108,7 +109,7 @@ namespace TetrisHTW
                         if (timer == null)
                         {
                             lastKey = e.Key;
-                            timer = new Timer(CheckStatus, null, 0, 150);
+                            timer = new Timer(MoveFigure, null, 0, 150);
                         }
                         break;
                 }
@@ -125,7 +126,7 @@ namespace TetrisHTW
             }
         }
 
-        public void CheckStatus(Object stateInfo)
+        public void MoveFigure(Object stateInfo)
         {
             switch (lastKey)
             {
@@ -141,7 +142,8 @@ namespace TetrisHTW
             {
                 fallWorker.RequestStop();
             }
-            gameOver = false;
+            boardModel.setScore(0);
+            gameStop = false;
             fallWorker = new FallWorker();
             boardModel.clearBoard();
             Figure preview = boardModel.generateRandomFigure();
@@ -165,38 +167,38 @@ namespace TetrisHTW
                     Rectangle rect = (Rectangle)frameWorkElement;
                     int x = Grid.GetColumn(frameWorkElement);
                     int y = Grid.GetRow(frameWorkElement);
-                    if (!data[x, y].Equals(boardModel.getColor()))
+                    Color currentFigureColor = data[x, y];
+                    if (currentFigureColor != boardModel.getColor())
                     {
                         Brush b = null;
-                        if (data[x, y] == Colors.Blue)
+                        if (currentFigureColor == Colors.Blue)
                         {
                             b = Application.Current.Resources["BluePointBrush"] as Brush;
-                        }
-                        if (data[x, y] == Colors.Yellow)
+                        } 
+                        else if (currentFigureColor == Colors.Yellow)
                         {
                             b = Application.Current.Resources["YellowPointBrush"] as Brush;
-                        }
-                        if (data[x, y] == Colors.Green)
+                        } 
+                        else if (currentFigureColor == Colors.Green)
                         {
                             b = Application.Current.Resources["GreenPointBrush"] as Brush;
-                        }
-                        if (data[x, y] == Colors.Red)
+                        } 
+                        else if (currentFigureColor == Colors.Red)
                         {
                             b = Application.Current.Resources["RedPointBrush"] as Brush;
-                        }
-                        if (data[x, y] == Colors.Purple)
+                        } 
+                        else if (currentFigureColor == Colors.Purple)
                         {
                             b = Application.Current.Resources["PurplePointBrush"] as Brush;
-                        }
-                        if (data[x, y] == Colors.Cyan)
+                        } 
+                        else if (currentFigureColor == Colors.Cyan)
                         {
                             b = Application.Current.Resources["CyanPointBrush"] as Brush;
-                        }
-                        if (data[x, y] == Colors.Orange)
+                        } 
+                        else if (currentFigureColor == Colors.Orange)
                         {
                             b = Application.Current.Resources["OrangePointBrush"] as Brush;
                         }
-                         
 
                         rect.Fill = b;
                     }
@@ -206,48 +208,49 @@ namespace TetrisHTW
                     }
 
                 }
-                foreach (FrameworkElement frameWorkElement in previewGrid.Children)
-                {
-                        Rectangle rect = (Rectangle)frameWorkElement;
-                        rect.Fill = new SolidColorBrush(Colors.White);
-                }
                 tools.Point[] previewPoints = boardModel.getPreviewFigure().getPoints();
+
+                List<Rectangle> previewRectangles = getPreviewBoardRectangles(previewPoints);
+
                 foreach (FrameworkElement frameWorkElement in previewGrid.Children)
                 {
                     Rectangle rect = (Rectangle)frameWorkElement;
-                    rect.Fill = new SolidColorBrush(Colors.White);
+                    rect.Fill = new SolidColorBrush(Colors.Transparent);
                 }
-                for (int i = 0; i < previewPoints.Length; i++)
+                Color currentPreviewFigureColor = boardModel.getPreviewFigure().getColor();
+                foreach (Rectangle rect in previewRectangles)
                 {
-                    foreach (FrameworkElement frameWorkElement in previewGrid.Children)
+                    Brush b = null;
+                    if (currentPreviewFigureColor == Colors.Blue)
                     {
-                        int x = Grid.GetColumn(frameWorkElement) + 4;
-                        int y = Grid.GetRow(frameWorkElement);
-                        if (previewPoints[i].X == x && previewPoints[i].Y == y)
-                        {
-                            Rectangle rect = (Rectangle)frameWorkElement;
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.GradientStops = new GradientStopCollection();
-                            GradientStop gs = new GradientStop();
-                            gs.Color = boardModel.getPreviewFigure().getColor();
-                            gs.Offset = 0;
-                            brush.GradientStops.Add(gs);
-                            GradientStop gs2 = new GradientStop();
-                            gs.Color = Colors.White;
-                            gs.Offset = 0.4;
-                            brush.GradientStops.Add(gs2);
-                            GradientStop gs3 = new GradientStop();
-                            gs.Color = Colors.White;
-                            gs.Offset = 0.45;
-                            brush.GradientStops.Add(gs3);
-                            GradientStop gs4 = new GradientStop();
-                            gs.Color = boardModel.getPreviewFigure().getColor();
-                            gs.Offset = 1;
-                            brush.GradientStops.Add(gs4);
-
-                            rect.Fill = brush;
-                        }
+                        b = Application.Current.Resources["BluePointBrush"] as Brush;
+                    } 
+                    else if (currentPreviewFigureColor == Colors.Yellow)
+                    {
+                        b = Application.Current.Resources["YellowPointBrush"] as Brush;
+                    } 
+                    else  if (currentPreviewFigureColor == Colors.Green)
+                    {
+                        b = Application.Current.Resources["GreenPointBrush"] as Brush;
                     }
+                    else if (currentPreviewFigureColor == Colors.Red)
+                    {
+                        b = Application.Current.Resources["RedPointBrush"] as Brush;
+                    }
+                    else if (currentPreviewFigureColor == Colors.Purple)
+                    {
+                        b = Application.Current.Resources["PurplePointBrush"] as Brush;
+                    }
+                    else if (currentPreviewFigureColor == Colors.Cyan)
+                    {
+                        b = Application.Current.Resources["CyanPointBrush"] as Brush;
+                    }
+                    else if (currentPreviewFigureColor == Colors.Orange)
+                    {
+                        b = Application.Current.Resources["OrangePointBrush"] as Brush;
+                    }
+
+                    rect.Fill = b;
                 }
             });
         }
@@ -265,7 +268,7 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
-                tools.Point[] points = ffea.points;
+                tools.Point[] points = ffea.figurePoints;
                 List<Rectangle> rectangles = getBoardRectangles(points);
                 Storyboard sb = new Storyboard();
                 foreach (Rectangle rectangle in rectangles)
@@ -296,7 +299,25 @@ namespace TetrisHTW
             {
                 foreach (FrameworkElement frameWorkElement in boardGrid.Children)
                 {
-                    int xx = Grid.GetColumn(frameWorkElement);
+                    int xx = Grid.GetColumn(frameWorkElement) ;
+                    int yy = Grid.GetRow(frameWorkElement);
+                    if (xx == point.X && yy == point.Y)
+                    {
+                        rectangles.Add((Rectangle)frameWorkElement);
+                    }
+                }
+            }
+            return rectangles;
+        }
+
+        public List<Rectangle> getPreviewBoardRectangles(tools.Point[] points)
+        {
+            List<Rectangle> rectangles = new List<Rectangle>();
+            foreach (tools.Point point in points)
+            {
+                foreach (FrameworkElement frameWorkElement in previewGrid.Children)
+                {
+                    int xx = Grid.GetColumn(frameWorkElement) + (boardGrid.ColumnDefinitions.Count/2 - previewGrid.ColumnDefinitions.Count/2);
                     int yy = Grid.GetRow(frameWorkElement);
                     if (xx == point.X && yy == point.Y)
                     {
@@ -312,11 +333,15 @@ namespace TetrisHTW
             Dispatcher.BeginInvoke(delegate
             {
                 Debug.WriteLine("game over");
-                fallWorker.RequestStop();
-                scoreText.Text = "";
-                gameOver = true;
+                scoreText.Text = "game over";
+                StopGame();
             });
+        }
 
+        public void StopGame()
+        {
+            fallWorker.RequestStop();
+            gameStop = true;
         }
 
     }

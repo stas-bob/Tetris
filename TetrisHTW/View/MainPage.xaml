@@ -59,8 +59,7 @@
                             <ColumnDefinition Width="14" />
                             <ColumnDefinition Width="14" />
                             <ColumnDefinition Width="14" />
-                            <ColumnDefinition Width="14" />
-                        </Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>
                     </Grid>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="2">

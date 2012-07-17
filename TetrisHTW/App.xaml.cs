@@ -19,6 +19,7 @@ namespace TetrisHTW
     public delegate void ScoreChangedEventHandler(object sender, ScoreEventArgs e);
     public delegate void GameOverEventHandler(object sender, GameOverEventArgs e);
     public delegate void FigureFallenEventHandler(object sender, FigureFallenEventArgs e);
+
     public partial class App : Application
     {
         

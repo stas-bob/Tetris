@@ -61,15 +61,7 @@ namespace TetrisHTW.Figures
                         App.getInstance().NotifyFigureFallen(points);
                         int[] linesToRemove = getLinesToRemove();
                         board.collapse(linesToRemove);
-                        int score = 0;
-                        for (int i = 0; i < linesToRemove.Length; i++)
-                        {
-                            if (linesToRemove[i] != -1)
-                            {
-                                score++;
-                            }
-                        }
-                        board.setScore(board.getScore() + score);
+
                         board.setCurrentFigure(board.getPreviewFigure());
                         board.setPreviewFigure(board.generateRandomFigure());
                         board.getCurrentFigure().newOnBoard();

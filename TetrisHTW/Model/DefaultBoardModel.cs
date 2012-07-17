@@ -59,10 +59,17 @@ namespace TetrisHTW.Model
                     shiftToLine(linesToRemove[i]);
                 }
             }
+            for (int i = 0; i < linesToRemove.Length; i++)
+            {
+                if (linesToRemove[i] != -1)
+                {
+                    score++;
+                }
+            }
             BoardEventArgs bae = new BoardEventArgs();
             bae.removedLines = linesToRemove;
-            bae.collapse = true;
             NotifyBoardChanged(bae);
+            setScore(score);
         }
 
         public bool isCellColored(int x, int y)

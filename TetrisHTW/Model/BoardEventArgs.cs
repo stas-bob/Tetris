@@ -20,6 +20,5 @@ namespace TetrisHTW.Model
 
         
         public int[] removedLines { get; set; }
-        public bool collapse { get; set; }
     }
 }

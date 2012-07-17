@@ -15,10 +15,10 @@ namespace TetrisHTW.Model
     {
         public FigureFallenEventArgs(tools.Point[] points)
         {
-            this.points = points;
+            this.figurePoints = points;
         }
 
 
-        public tools.Point[] points { get; set; }
+        public tools.Point[] figurePoints { get; set; }
     }
 }
