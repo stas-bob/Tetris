@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
 
 namespace TetrisHTW.Model
 {
@@ -15,10 +16,10 @@ namespace TetrisHTW.Model
     {
         public BoardEventArgs()
         {
-            removedLines = new int[0];
+            removedLines = new List<int>();
         }
 
         
-        public int[] removedLines { get; set; }
+        public List<int> removedLines { get; set; }
     }
 }

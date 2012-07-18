@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using TetrisHTW.Model;
 using TetrisHTW.tools;
+using System.Collections.Generic;
 
 namespace TetrisHTW.Figures
 {
@@ -59,7 +60,7 @@ namespace TetrisHTW.Figures
                     if (!gameOver)
                     {
                         App.getInstance().NotifyFigureFallen(points);
-                        int[] linesToRemove = getLinesToRemove();
+                        List<int> linesToRemove = getLinesToRemove();
                         board.collapse(linesToRemove);
 
                         board.setCurrentFigure(board.getPreviewFigure());
@@ -88,20 +89,16 @@ namespace TetrisHTW.Figures
             }
         }
 
-        private int[] getLinesToRemove()
+        private List<int> getLinesToRemove()
         {
             lock (App.myLock)
             {
-                int[] linesToRemove = new int[4];
-                for (int i = 0; i < linesToRemove.Length; i++)
-                {
-                    linesToRemove[i] = -1;
-                }
+                List<int> linesToRemove = new List<int>();
                 for (int i = 0; i < points.Length; i++)
                 {
                     int y = points[i].Y;
                     bool containsY = false;
-                    for (int m = 0; m < linesToRemove.Length; m++)
+                    for (int m = 0; m < linesToRemove.Count; m++)
                     {
                         if (linesToRemove[m] == y)
                         {
@@ -124,7 +121,7 @@ namespace TetrisHTW.Figures
                     }
                     if (cellsColored == board.getColumns())
                     {
-                        linesToRemove[i] = y;
+                        linesToRemove.Add(y);
                     }
                 }
                 return linesToRemove;

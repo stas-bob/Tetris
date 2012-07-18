@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using TetrisHTW.Figures;
 using TetrisHTW.tools;
+using System.Collections.Generic;
 
 namespace TetrisHTW.Model
 {
@@ -21,7 +22,7 @@ namespace TetrisHTW.Model
         event BoardChangedEventHandler BoardChanged;
         event ScoreChangedEventHandler ScoreChanged;
 
-        void collapse(int[] linesToRemove);
+        void collapse(List<int> linesToRemove);
 
         bool isCellColored(int x, int y);
 

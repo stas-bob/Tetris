@@ -10,6 +10,7 @@ using System.Windows.Shapes;
 using TetrisHTW.Figures;
 using TetrisHTW.tools;
 using TetrisHTW;
+using System.Collections.Generic;
 
 namespace TetrisHTW.Model
 {
@@ -49,17 +50,16 @@ namespace TetrisHTW.Model
             clearBoard();
         }
 
-        public void collapse(int[] linesToRemove)
+        public void collapse(List<int> linesToRemove)
         {
-            Array.Sort(linesToRemove);
-            for (int i = 0; i < linesToRemove.Length; i++)
+            for (int i = 0; i < linesToRemove.Count; i++)
             {
                 if (linesToRemove[i] != -1)
                 {
                     shiftToLine(linesToRemove[i]);
                 }
             }
-            for (int i = 0; i < linesToRemove.Length; i++)
+            for (int i = 0; i < linesToRemove.Count; i++)
             {
                 if (linesToRemove[i] != -1)
                 {
