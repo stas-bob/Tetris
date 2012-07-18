@@ -43,6 +43,7 @@ namespace TetrisHTW
             App.getInstance().GameOverEvent += new GameOverEventHandler(GameOver);
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(FigureFallen);
 
+            /*Circles Background*/
             anime.Begin();
         }
 
@@ -86,6 +87,7 @@ namespace TetrisHTW
             }
         }
 
+        /*Circles Background*/
         void AnimCompleted(object sender, EventArgs e)
         {
             Random rnd = new Random();
@@ -138,13 +140,9 @@ namespace TetrisHTW
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            if (fallWorker != null)
-            {
-                fallWorker.RequestStop();
-            }
+            StopGame();
             boardModel.setScore(0);
-            gameStop = false;
-            fallWorker = new FallWorker();
+            
             boardModel.clearBoard();
             Figure preview = boardModel.generateRandomFigure();
             Figure current = boardModel.generateRandomFigure();
@@ -153,8 +151,8 @@ namespace TetrisHTW
             boardModel.setPreviewFigure(preview);
 
             boardModel.getCurrentFigure().newOnBoard();
-            
-            new Thread(fallWorker.InvokeFalling).Start();
+
+            GameStart();
         } 
 
         public void BoardChanged(object sender, BoardEventArgs bea)
@@ -340,9 +338,18 @@ namespace TetrisHTW
 
         public void StopGame()
         {
-            fallWorker.RequestStop();
+            if (fallWorker != null)
+            {
+                fallWorker.RequestStop();
+            }
             gameStop = true;
         }
 
+        public void GameStart()
+        {
+            gameStop = false;
+            fallWorker = new FallWorker();
+            new Thread(fallWorker.InvokeFalling).Start();
+        }
     }
 }

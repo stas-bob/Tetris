@@ -22,7 +22,7 @@ namespace TetrisHTW.Figures
             points[3] = new Point(boardModel.getColumns() / 2 + 1, 2);
         }
 
-        public override bool doRotate()
+        protected override bool doRotate()
         {
 
             Point[] newPoints = new Point[4];

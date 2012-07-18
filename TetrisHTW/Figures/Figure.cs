@@ -10,6 +10,7 @@ using System.Windows.Shapes;
 using TetrisHTW.Model;
 using TetrisHTW.tools;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace TetrisHTW.Figures
 {
@@ -19,6 +20,7 @@ namespace TetrisHTW.Figures
         protected Color color;
         protected Point[] points = new Point[4];
         protected int rotateState;
+        private bool mutex;
 
 
         public Figure(DefaultBoardModel boardModel)
@@ -43,6 +45,12 @@ namespace TetrisHTW.Figures
         {
             lock (App.myLock)
             {
+                
+                if (mutex)
+                {
+                    /*Diese Figur ist bereits nicht mehr relevant, da sie gefallen ist und eine neue Figur existiert*/
+                    return;
+                }
                 board.clearPoints(points);
                 bool fits = doPointsFit(newPoints);
                 if (!fits)
@@ -65,7 +73,9 @@ namespace TetrisHTW.Figures
 
                         board.setCurrentFigure(board.getPreviewFigure());
                         board.setPreviewFigure(board.generateRandomFigure());
+                        Debug.WriteLine("new on board");
                         board.getCurrentFigure().newOnBoard();
+                        mutex = true;
                     }
                 }
                 else
@@ -231,7 +241,7 @@ namespace TetrisHTW.Figures
             }
         }
 
-        public virtual bool doRotate()
+        protected virtual bool doRotate()
         {
             return false;
         }

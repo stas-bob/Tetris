@@ -52,6 +52,7 @@ namespace TetrisHTW.Model
 
         public void collapse(List<int> linesToRemove)
         {
+            linesToRemove.Sort();
             for (int i = 0; i < linesToRemove.Count; i++)
             {
                 if (linesToRemove[i] != -1)
