@@ -20,7 +20,6 @@ namespace TetrisHTW.Figures
         protected Color color;
         protected Point[] points = new Point[4];
         protected int rotateState;
-        private bool mutex;
 
 
         public Figure(DefaultBoardModel boardModel)
@@ -41,50 +40,34 @@ namespace TetrisHTW.Figures
             return true;
         }
 
-        private void checkAfterFall(Point[] newPoints)
-        {
-            lock (App.myLock)
-            {
-                
-                if (mutex)
-                {
-                    /*Diese Figur ist bereits nicht mehr relevant, da sie gefallen ist und eine neue Figur existiert*/
-                    return;
-                }
-                board.clearPoints(points);
-                bool fits = doPointsFit(newPoints);
-                if (!fits)
-                {
-                    board.writeCell(points, color);
-                    bool gameOver = false;
-                    for (int i = 0; i < newPoints.Length; i++)
-                    {
-                        if (newPoints[i].Y < 0)
-                        {
-                            gameOver = true;
-                            App.getInstance().gameOver();
-                        }
-                    }
-                    if (!gameOver)
-                    {
-                        App.getInstance().NotifyFigureFallen(points);
-                        List<int> linesToRemove = getLinesToRemove();
-                        board.collapse(linesToRemove);
+   
 
-                        board.setCurrentFigure(board.getPreviewFigure());
-                        board.setPreviewFigure(board.generateRandomFigure());
-                        Debug.WriteLine("new on board");
-                        board.getCurrentFigure().newOnBoard();
-                        mutex = true;
-                    }
-                }
-                else
+        private void FigureIsFallen()
+        {
+            board.writeCell(points, color);
+            bool gameOver = false;
+            for (int i = 0; i < points.Length; i++)
+            {
+                if (points[i].Y < 0)
                 {
-                    points = newPoints;
-                    board.writeCell(points, color);
+                    gameOver = true;
+                    App.getInstance().gameOver();
                 }
             }
+            if (!gameOver)
+            {
+                App.getInstance().NotifyFigureFallen(points);
+
+                List<int> linesToRemove = getLinesToRemove();
+                board.collapse(linesToRemove);
+
+                board.setCurrentFigure(board.getPreviewFigure());
+                board.setPreviewFigure(board.generateRandomFigure());
+                board.getCurrentFigure().newOnBoard();
+            }
+            
         }
+
         public void fall() 
         {
             lock (App.myLock)
@@ -95,7 +78,17 @@ namespace TetrisHTW.Figures
                 {
                     newPoints[i] = new Point(points[i].X, points[i].Y + 1);
                 }
-                checkAfterFall(newPoints);
+                board.clearPoints(points);
+                bool fits = doPointsFit(newPoints);
+                if (!fits)
+                {
+                    FigureIsFallen();
+                }
+                else
+                {
+                    points = newPoints;
+                    board.writeCell(points, color);
+                }
             }
         }
 
@@ -144,8 +137,8 @@ namespace TetrisHTW.Figures
             {
                 board.clearPoints(points);
                 Point[] fallenPoints = simulatedFall();
-                checkAfterFall(fallenPoints);
-                fall();
+                points = fallenPoints;
+                FigureIsFallen();
             }
         }
 
@@ -156,7 +149,7 @@ namespace TetrisHTW.Figures
             
             for (int i = 0; i < points.Length; i++)
             {
-                newPoints[i] = new Point(points[i].X, points[i].Y + 1);
+                newPoints[i] = new Point(points[i].X, points[i].Y);
             }
             for (int i = 0; i < App.getInstance().getBoardModel().getRows(); i++)
             {
