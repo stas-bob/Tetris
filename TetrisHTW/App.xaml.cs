@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using TetrisHTW.Model;
 using System.Threading;
 using System.Diagnostics;
+using TetrisHTW.View;
 
 namespace TetrisHTW
 {
@@ -74,7 +75,7 @@ namespace TetrisHTW
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.RootVisual = new MainPage();
+            this.RootVisual = new IndexView();
         }
 
         private void Application_Exit(object sender, EventArgs e)

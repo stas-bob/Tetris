@@ -174,12 +174,8 @@ namespace TetrisHTW.Model
             ScoreEventArgs sea = new ScoreEventArgs();
             sea.score = this.score;
 
-            int previousLevel = this.level;
             checkLevel();
-            if (previousLevel != this.level)
-            {
-                FallWorker.Instance.setLevel(this.level);
-            }
+            
             sea.level = this.level;
             NotifyScoreChanged(sea);
         }

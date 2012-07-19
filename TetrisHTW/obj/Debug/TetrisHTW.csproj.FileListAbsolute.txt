@@ -275,7 +275,6 @@ C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\
 C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\zh-Hant\System.ComponentModel.DataAnnotations.resources.dll
 C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\obj\Debug\App.g.i.cs
-C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\obj\Debug\View\MainPage.g.i.cs
 C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\obj\Debug\TetrisHTW.g.resources
 C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\obj\Debug\TetrisHTW.dll
 C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\obj\Debug\TetrisHTW.pdb
@@ -341,3 +340,6 @@ C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\
 C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\ru\System.Windows.Controls.Navigation.resources.dll
 C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\zh-Hans\System.Windows.Controls.Navigation.resources.dll
 C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\zh-Hant\System.Windows.Controls.Navigation.resources.dll
+C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\obj\Debug\View\NormalTetrisView.g.i.cs
+C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\obj\Debug\View\IndexView.g.i.cs
+C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\obj\Debug\View\OptionsView.g.i.cs
