@@ -33,7 +33,6 @@
                     <RowDefinition Height="72" />
                     <RowDefinition Height="72" />
                     <RowDefinition Height="175" />
-                    <RowDefinition Height="117" />
                 <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -42,7 +41,6 @@
                     <ColumnDefinition Width="59*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Start" Height="23" Name="button1" Click="button1_Click" IsTabStop="False" Margin="12,24" />
                 <StackPanel Grid.Column="1" >
                     <TextBlock Text="Score" HorizontalAlignment="Center"/>
                     <TextBlock Text="" Name="scoreText" HorizontalAlignment="Center"/>

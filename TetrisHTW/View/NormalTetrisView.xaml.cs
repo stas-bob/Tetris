@@ -38,8 +38,8 @@ namespace TetrisHTW
             /*Hier werden die Grids initialisiert*/
             initBoard();
             /*Das sind die Listener für das Keyboard*/
-            this.KeyDown += new KeyEventHandler(Page_KeyDown);
-            this.KeyUp += new KeyEventHandler(Page_KeyUp);
+            App.getInstance().RootVisual.KeyDown += new KeyEventHandler(Page_KeyDown);
+            App.getInstance().RootVisual.KeyUp += new KeyEventHandler(Page_KeyUp);
             /* Hier kommen die Event Listener fuers Spiel*/
             boardModel.BoardChanged += new BoardChangedEventHandler(BoardChanged);
             boardModel.ScoreChanged += new ScoreChangedEventHandler(ScoreChanged);
@@ -47,6 +47,7 @@ namespace TetrisHTW
             App.getInstance().GameOverEvent += new GameOverEventHandler(GameOver);
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(FigureFallen);
 
+            this.InitGame();
             /*Circles Background*/
             //anime.Begin();
 
@@ -144,7 +145,7 @@ namespace TetrisHTW
             }
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void InitGame()
         {
             StopGame();
             FallWorker.Instance.setLevel(0);

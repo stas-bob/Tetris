@@ -26,6 +26,7 @@ namespace TetrisHTW.Model
         private const int columns = 10;
         private const int rows = 20;
         private volatile Color[,] board = new Color[columns, rows];
+
         
         public event BoardChangedEventHandler BoardChanged;
         public event ScoreChangedEventHandler ScoreChanged;
