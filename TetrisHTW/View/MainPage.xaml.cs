@@ -34,24 +34,24 @@ namespace TetrisHTW
             
             this.boardModel = App.getInstance().getBoardModel();
             InitializeComponent();
+            /*Hier werden die Grids initialisiert*/
             initBoard();
+            /*Das sind die Listener für das Keyboard*/
             this.KeyDown += new KeyEventHandler(Page_KeyDown);
             this.KeyUp += new KeyEventHandler(Page_KeyUp);
-
+            /* Hier kommen die Event Listener fuers Spiel*/
             boardModel.BoardChanged += new BoardChangedEventHandler(BoardChanged);
             boardModel.ScoreChanged += new ScoreChangedEventHandler(ScoreChanged);
             App.getInstance().GameOverEvent += new GameOverEventHandler(GameOver);
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(FigureFallen);
 
             /*Circles Background*/
-            anime.Begin();
+            //anime.Begin();
         }
-
-       
-
 
         void initBoard()
         {
+            /*Hier werden die Columns und Rows definiert*/
             for (int i = 0; i < boardModel.getColumns(); i++)
             {
                 boardGrid.ColumnDefinitions.Add(new ColumnDefinition());
@@ -60,6 +60,7 @@ namespace TetrisHTW
             {
                 boardGrid.RowDefinitions.Add(new RowDefinition());
             }
+            /* Die Rechtecke für das Grid werden hier erstellt*/
             for (int i = 0; i < boardModel.getRows(); i++)
             {
                 for (int j = 0; j < boardModel.getColumns(); j++)
@@ -75,6 +76,7 @@ namespace TetrisHTW
                     boardGrid.Children.Add(rect);
                 }
             }
+            /*Auch hier Rechtecke ins Grid-Vorschau*/
             for (int i = 0; i < previewGrid.RowDefinitions.Count; i++)
             {
                 for (int j = 0; j < previewGrid.ColumnDefinitions.Count; j++)
@@ -91,14 +93,14 @@ namespace TetrisHTW
         void AnimCompleted(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            dAnimeX.To = rnd.Next(200);
-            dAnimeY.To = rnd.Next(200);
-            dAnimeX2.To = rnd.Next(200);
-            dAnimeY2.To = rnd.Next(200);
-            anime.Begin();
+            //dAnimeX.To = rnd.Next(200);
+            //dAnimeY.To = rnd.Next(200);
+            //dAnimeX2.To = rnd.Next(200);
+            //dAnimeY2.To = rnd.Next(200);
+            //anime.Begin();
         }
 
-        
+        /*KeyboardListener fuer druecken einer Taste*/
         void Page_KeyDown(object sender, KeyEventArgs e)
         {
             if (!gameStop)
@@ -108,6 +110,7 @@ namespace TetrisHTW
                     case Key.Up: boardModel.getCurrentFigure().rotate(); break;
                     case Key.Space: boardModel.getCurrentFigure().fallCompletely(); break;
                     default: 
+                        /* Dieser Timer ist fuer das fluessige links rechts und nach unten Bewegen */
                         if (timer == null)
                         {
                             lastKey = e.Key;

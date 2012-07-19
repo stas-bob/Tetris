@@ -6,7 +6,7 @@
     mc:Ignorable="d"
     d:DesignHeight="420" d:DesignWidth="344" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
         <Canvas Name="canvas">
-            <Canvas.Resources>
+        <!--<Canvas.Resources>
                 <Storyboard x:Name="anime">
                     <DoubleAnimation x:Name="dAnimeX" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
                     <DoubleAnimation x:Name="dAnimeY" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
@@ -14,7 +14,7 @@
                     <DoubleAnimation x:Name="dAnimeY2" Storyboard.TargetName="ellipse2" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
                 </Storyboard>
             </Canvas.Resources>
-            <Ellipse x:Name="ellipse" Height="100" Width="100" StrokeThickness="20" Canvas.Left="20" Canvas.Top="50">
+            <Ellipse x:Name="ellipse" Height="10" Width="10" StrokeThickness="20" Canvas.Left="20" Canvas.Top="50">
                 <Ellipse.Stroke>
                     <LinearGradientBrush>
                         <GradientStop Color="Transparent" Offset="0.1"/>
@@ -26,7 +26,7 @@
                     <BlurEffect Radius="5"/>
                 </Ellipse.Effect>
             </Ellipse>
-            <Ellipse x:Name="ellipse2" Height="50" Width="50" Stroke="Red" StrokeThickness="5"/>
+            <Ellipse x:Name="ellipse2" Height="50" Width="50" Stroke="Red" StrokeThickness="5"/>-->
             <Grid x:Name="LayoutRoot" Height="360" Width="285" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="72" />

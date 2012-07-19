@@ -62,10 +62,7 @@ namespace TetrisHTW.Model
             }
             for (int i = 0; i < linesToRemove.Count; i++)
             {
-                if (linesToRemove[i] != -1)
-                {
-                    score++;
-                }
+                score++;
             }
             BoardEventArgs bae = new BoardEventArgs(getBoardData());
             bae.removedLines = linesToRemove;

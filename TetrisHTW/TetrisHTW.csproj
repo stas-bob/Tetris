@@ -67,6 +67,7 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Data.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Windows.Controls.Navigation, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
@@ -75,13 +76,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FallWorker.cs" />
+    <Compile Include="Util\FallWorker.cs" />
     <Compile Include="Figures\J.cs" />
     <Compile Include="Figures\L.cs" />
     <Compile Include="Figures\S.cs" />
     <Compile Include="Figures\T.cs" />
     <Compile Include="Figures\Z.cs" />
-    <Compile Include="Lock.cs" />
+    <Compile Include="Util\Lock.cs" />
     <Compile Include="Figures\I.cs" />
     <Compile Include="Figures\Figure.cs" />
     <Compile Include="Figures\O.cs" />
@@ -90,7 +91,7 @@
     <Compile Include="Model\GameOverEventArgs.cs" />
     <Compile Include="Model\FigureFallenEventArgs.cs" />
     <Compile Include="Model\ScoreEventArgs.cs" />
-    <Compile Include="tools\Point.cs" />
+    <Compile Include="Tools\Point.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

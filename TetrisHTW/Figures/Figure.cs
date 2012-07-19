@@ -27,9 +27,10 @@ namespace TetrisHTW.Figures
             this.board = boardModel;
         }
 
+        /* Testen ob die temporaere Figur in die Position passt*/
         protected bool doPointsFit(Point[] points)
         {
-
+            
             for (int i = 0; i < points.Length; i++)
             {
                 if (points[i].X < 0 || points[i].X >= board.getColumns() || points[i].Y < 0 || points[i].Y >= board.getRows() || board.isCellColored((int)points[i].X, (int)points[i].Y))
@@ -46,6 +47,7 @@ namespace TetrisHTW.Figures
         {
             board.writeCell(points, color);
             bool gameOver = false;
+            /*Pruefen ob GameOver*/
             for (int i = 0; i < points.Length; i++)
             {
                 if (points[i].Y < 0)
@@ -58,9 +60,12 @@ namespace TetrisHTW.Figures
             {
                 App.getInstance().NotifyFigureFallen(points);
 
+                
                 List<int> linesToRemove = getLinesToRemove();
+                /*Hier werden die zu loeschenden Zeilen geloescht*/
                 board.collapse(linesToRemove);
 
+                /*Setzt Vorschaufigur als aktuelle Figur und generiert neue Vorschau*/
                 board.setCurrentFigure(board.getPreviewFigure());
                 board.setPreviewFigure(board.generateRandomFigure());
                 board.getCurrentFigure().newOnBoard();
@@ -72,6 +77,7 @@ namespace TetrisHTW.Figures
         {
             lock (App.myLock)
             {
+                /* Punkte der temporaeren Figur*/
                 Point[] newPoints = new Point[4];
             
                 for (int i = 0; i < points.Length; i++)
@@ -86,12 +92,14 @@ namespace TetrisHTW.Figures
                 }
                 else
                 {
+                    /*temporaere Figur wird aktuelle Figur (Punkten)*/
                     points = newPoints;
                     board.writeCell(points, color);
                 }
             }
         }
 
+        /*Diese Methode stellt fest welche Zeilen zu loeschen sind*/
         private List<int> getLinesToRemove()
         {
             lock (App.myLock)
@@ -131,6 +139,7 @@ namespace TetrisHTW.Figures
             }
         }
 
+        /* Hier wird die aktuelle Figur an den hoechst moeglichen y Wert gesetzt*/
         public void fallCompletely()
         {
             lock (App.myLock)
@@ -142,6 +151,7 @@ namespace TetrisHTW.Figures
             }
         }
 
+        /*Hier wird geprueft, wie weit die temporaere Figur (Punkte) fallen kann*/
         private Point[] simulatedFall()
         {
 
@@ -170,6 +180,7 @@ namespace TetrisHTW.Figures
             return newPoints;
         }
 
+        /* Es wird versucht, ob man die aktuelle Figur nach links verschieben kann*/
         public bool left()
         {
             lock (App.myLock)
@@ -190,6 +201,7 @@ namespace TetrisHTW.Figures
             }
         }
 
+        /* Es wird versucht, ob man die aktuelle Figur nach rechts verschieben kann*/
         public bool right()
         {
             lock (App.myLock)
@@ -227,7 +239,7 @@ namespace TetrisHTW.Figures
 
         public bool rotate()
         {
-            //Wegen Fallthread
+            //Wegen Fallthread TODO ??
             lock (App.myLock)
             {
                 return doRotate();
