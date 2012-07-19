@@ -59,7 +59,6 @@ namespace TetrisHTW.Figures
             if (!gameOver)
             {
                 App.getInstance().NotifyFigureFallen(points);
-
                 
                 List<int> linesToRemove = getLinesToRemove();
                 /*Hier werden die zu loeschenden Zeilen geloescht*/
@@ -233,6 +232,10 @@ namespace TetrisHTW.Figures
                 if (!fitsOnBoard)
                 {
                     App.getInstance().gameOver();
+                }
+                else
+                {
+                    board.setScore(5);
                 }
             }
         }

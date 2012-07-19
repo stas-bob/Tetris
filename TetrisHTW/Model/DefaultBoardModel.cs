@@ -19,14 +19,17 @@ namespace TetrisHTW.Model
         private Random rnd = new Random();
         private Color boardColor = Color.FromArgb(255, 200, 200, 200);
         private int score;
+        private int lines;
+        private int level;
         private Figure currentFigure;
         private Figure previewFigure;
         private const int columns = 10;
-        private const int rows = 15;
+        private const int rows = 20;
         private volatile Color[,] board = new Color[columns, rows];
         
         public event BoardChangedEventHandler BoardChanged;
         public event ScoreChangedEventHandler ScoreChanged;
+        public event LineChangedEventHandler LineChanged;
 
         public void clearBoard()
         {
@@ -55,19 +58,54 @@ namespace TetrisHTW.Model
             linesToRemove.Sort();
             for (int i = 0; i < linesToRemove.Count; i++)
             {
-                if (linesToRemove[i] != -1)
-                {
-                    shiftToLine(linesToRemove[i]);
-                }
+                shiftToLine(linesToRemove[i]);
             }
             for (int i = 0; i < linesToRemove.Count; i++)
             {
-                score++;
+                lines++;
             }
             BoardEventArgs bae = new BoardEventArgs(getBoardData());
             bae.removedLines = linesToRemove;
             NotifyBoardChanged(bae);
-            setScore(score);
+            if (linesToRemove.Count > 0)
+            {
+                setScore(calcScore(linesToRemove.Count));
+                setLines(lines);
+            }
+        }
+
+        private int calcScore(int lines)
+        {
+            double tmpScore = 0;
+            for (int i = 1; i <= lines; i++)
+            {
+                switch (level)
+                {
+                    case 0: tmpScore += Math.Pow(50, calcLines(i)); break;
+                    case 1: tmpScore += Math.Pow(100, calcLines(i)); break;
+                    case 2: tmpScore += Math.Pow(150, calcLines(i)); break;
+                    case 3: tmpScore += Math.Pow(200, calcLines(i)); break;
+                    case 4: tmpScore += Math.Pow(250, calcLines(i)); break;
+                    case 5: tmpScore += Math.Pow(300, calcLines(i)); break;
+                    case 6: tmpScore += Math.Pow(350, calcLines(i)); break;
+                    case 7: tmpScore += Math.Pow(400, calcLines(i)); break;
+                    case 8: tmpScore += Math.Pow(450, calcLines(i)); break;
+                    case 9: tmpScore += Math.Pow(500, calcLines(i)); break;
+                }
+            }
+            return (int)tmpScore;
+        }
+
+        private double calcLines(int lines)
+        {
+            switch (lines)
+            {
+                case 1: return 1;
+                case 2: return 1.025;
+                case 3: return 1.05;
+                case 4: return 1.075;
+            }
+            return 0.0;
         }
 
         public bool isCellColored(int x, int y)
@@ -98,6 +136,14 @@ namespace TetrisHTW.Model
             }
         }
 
+        public void NotifyLineChanged(LineEventArgs sea)
+        {
+            if (ScoreChanged != null)
+            {
+                LineChanged(this, sea);
+            }
+        }
+
         public void writeCell(Point[] points, Color c)
         {
             for (int i = 0; i < points.Length; i++)
@@ -124,10 +170,73 @@ namespace TetrisHTW.Model
 
         public void setScore(int score)
         {
-            this.score = score;
+            this.score += score;
             ScoreEventArgs sea = new ScoreEventArgs();
-            sea.score = score;
+            sea.score = this.score;
+
+            int previousLevel = this.level;
+            checkLevel();
+            if (previousLevel != this.level)
+            {
+                FallWorker.Instance.setLevel(this.level);
+            }
+            sea.level = this.level;
             NotifyScoreChanged(sea);
+        }
+
+      
+
+        private void checkLevel()
+        {
+            
+            if (lines < 10)
+            {
+                this.level = 0;
+            }
+            else if (lines < 20)
+            {
+                this.level = 1;
+            }
+            else if (lines < 30)
+            {
+                this.level = 2;
+            }
+            else if (lines < 40)
+            {
+                this.level = 3;
+            }
+            else if (lines < 50)
+            {
+                this.level = 4;
+            }
+            else if (lines < 60)
+            {
+                this.level = 5;
+            }
+            else if (lines < 70)
+            {
+                this.level = 6;
+            }
+            else if (lines < 80)
+            {
+                this.level = 7;
+            }
+            else if (lines < 90)
+            {
+                this.level = 8;
+            }
+            else if (lines >= 100)
+            {
+                this.level = 9;
+            }
+        }
+
+        public void setLines(int lines)
+        {
+            this.lines = lines;
+            LineEventArgs sea = new LineEventArgs();
+            sea.lines = lines;
+            NotifyLineChanged(sea);
         }
 
         public Figure generateRandomFigure()

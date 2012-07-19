@@ -21,6 +21,7 @@ namespace TetrisHTW.Model
 
         event BoardChangedEventHandler BoardChanged;
         event ScoreChangedEventHandler ScoreChanged;
+        event LineChangedEventHandler LineChanged;
 
         void collapse(List<int> linesToRemove);
 
@@ -58,5 +59,7 @@ namespace TetrisHTW.Model
         void shiftToLine(int y);
 
         void clearBoard();
+
+        void setLines(int lines);
     }
 }

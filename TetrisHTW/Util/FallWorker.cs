@@ -15,13 +15,53 @@ namespace TetrisHTW
 {
     public class FallWorker
     {
+        private static volatile FallWorker instance;
+        private static object syncRoot = new Object();
+
+        private int level = 1;
+
+        private FallWorker() { }
+
+        public static FallWorker Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (syncRoot)
+                    {
+                        if (instance == null)
+                            instance = new FallWorker();
+                    }
+                }
+
+                return instance;
+            }
+        }
+
+
+        public void setLevel(int level)
+        {
+            this.level = level;
+        }
+
         /*Ist die Methode, die die Steine fallen laesst*/
         public void InvokeFalling()
         {
             shouldStop = false;
-            while (!shouldStop)
-            {
-                Thread.Sleep(400);
+            while (!shouldStop) {
+                switch (level) {
+                    case 0: Thread.Sleep(1000); break;
+                    case 1: Thread.Sleep(900); break;
+                    case 2: Thread.Sleep(800); break;
+                    case 3: Thread.Sleep(700); break;
+                    case 4: Thread.Sleep(600); break;
+                    case 5: Thread.Sleep(500); break;
+                    case 6: Thread.Sleep(400); break;
+                    case 7: Thread.Sleep(300); break;
+                    case 8: Thread.Sleep(200); break;
+                    case 9: Thread.Sleep(100); break;
+                }
 
                 lock (App.myLock)
                 {

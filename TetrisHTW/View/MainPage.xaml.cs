@@ -42,6 +42,7 @@ namespace TetrisHTW
             /* Hier kommen die Event Listener fuers Spiel*/
             boardModel.BoardChanged += new BoardChangedEventHandler(BoardChanged);
             boardModel.ScoreChanged += new ScoreChangedEventHandler(ScoreChanged);
+            boardModel.LineChanged += new LineChangedEventHandler(LineChanged);
             App.getInstance().GameOverEvent += new GameOverEventHandler(GameOver);
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(FigureFallen);
 
@@ -144,8 +145,9 @@ namespace TetrisHTW
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             StopGame();
+            FallWorker.Instance.setLevel(0);
             boardModel.setScore(0);
-            
+            boardModel.setLines(0);
             boardModel.clearBoard();
             Figure preview = boardModel.generateRandomFigure();
             Figure current = boardModel.generateRandomFigure();
@@ -327,8 +329,18 @@ namespace TetrisHTW
             Dispatcher.BeginInvoke(delegate
             {
                 scoreText.Text = bea.score + "";
+                levelText.Text = bea.level + "";
             });
             
+        }
+
+        public void LineChanged(object sender, LineEventArgs lea)
+        {
+            Dispatcher.BeginInvoke(delegate
+            {
+                linesText.Text = lea.lines + "";
+            });
+
         }
 
         public void FigureFallen(object sender, FigureFallenEventArgs ffea)
@@ -423,7 +435,7 @@ namespace TetrisHTW
         public void GameStart()
         {
             gameStop = false;
-            fallWorker = new FallWorker();
+            fallWorker = FallWorker.Instance;
             new Thread(fallWorker.InvokeFalling).Start();
         }
     }

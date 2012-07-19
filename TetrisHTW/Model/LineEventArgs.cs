@@ -11,10 +11,9 @@ using System.Windows.Shapes;
 
 namespace TetrisHTW.Model
 {
-    public class ScoreEventArgs: EventArgs
+    public class LineEventArgs: EventArgs
     {
         
-        public int score { get; set; }
-        public int level { get; set; }
+        public int lines { get; set; }
     }
 }

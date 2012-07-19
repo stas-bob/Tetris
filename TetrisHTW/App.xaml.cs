@@ -17,6 +17,7 @@ namespace TetrisHTW
 {
     public delegate void BoardChangedEventHandler(object sender, BoardEventArgs e);
     public delegate void ScoreChangedEventHandler(object sender, ScoreEventArgs e);
+    public delegate void LineChangedEventHandler(object sender, LineEventArgs e);
     public delegate void GameOverEventHandler(object sender, GameOverEventArgs e);
     public delegate void FigureFallenEventHandler(object sender, FigureFallenEventArgs e);
 

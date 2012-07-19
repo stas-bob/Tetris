@@ -76,6 +76,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\ScoreEventArgs.cs" />
     <Compile Include="Util\FallWorker.cs" />
     <Compile Include="Figures\J.cs" />
     <Compile Include="Figures\L.cs" />
@@ -90,7 +91,7 @@
     <Compile Include="Model\BoardModel.cs" />
     <Compile Include="Model\GameOverEventArgs.cs" />
     <Compile Include="Model\FigureFallenEventArgs.cs" />
-    <Compile Include="Model\ScoreEventArgs.cs" />
+    <Compile Include="Model\LineEventArgs.cs" />
     <Compile Include="Tools\Point.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="420" d:DesignWidth="344" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    d:DesignHeight="767" d:DesignWidth="336" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
         <Canvas Name="canvas">
         <!--<Canvas.Resources>
                 <Storyboard x:Name="anime">
@@ -27,14 +27,15 @@
                 </Ellipse.Effect>
             </Ellipse>
             <Ellipse x:Name="ellipse2" Height="50" Width="50" Stroke="Red" StrokeThickness="5"/>-->
-            <Grid x:Name="LayoutRoot" Height="360" Width="285" >
+            <Grid x:Name="LayoutRoot" Height="510" Width="285" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="72" />
                     <RowDefinition Height="72" />
                     <RowDefinition Height="72" />
-                    <RowDefinition Height="72" />
-                    <RowDefinition Height="72" />
-                </Grid.RowDefinitions>
+                    <RowDefinition Height="175" />
+                    <RowDefinition Height="117" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200" />
                     <ColumnDefinition Width="85" />
@@ -46,7 +47,11 @@
                     <TextBlock Text="Score" HorizontalAlignment="Center"/>
                     <TextBlock Text="" Name="scoreText" HorizontalAlignment="Center"/>
                 </StackPanel>
-                <StackPanel Grid.Column="1" Grid.Row="1">
+            <StackPanel Grid.Column="1" Grid.Row="1">
+                <TextBlock Text="Lines" HorizontalAlignment="Center"/>
+                <TextBlock Text="" Name="linesText" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="3">
                     <TextBlock Text="Vorschau" HorizontalAlignment="Center" Height="17"/>
                     <Grid Name="previewGrid" HorizontalAlignment="Center">
                         <Grid.RowDefinitions>
