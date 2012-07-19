@@ -1,5 +1,5 @@
-﻿<xapCache source="C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\TetrisHTW.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="18.07.2012 17:10:28">
-  <file source="C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\obj\Debug\TetrisHTW.dll" archivePath="TetrisHTW.dll" lastWriteTime="18.07.2012 17:10:26" />
+﻿<xapCache source="C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\TetrisHTW.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="19.07.2012 08:10:01">
+  <file source="C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\obj\Debug\TetrisHTW.dll" archivePath="TetrisHTW.dll" lastWriteTime="19.07.2012 08:09:59" />
   <file source="c:\Program Files\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll" archivePath="System.ComponentModel.DataAnnotations.dll" lastWriteTime="18.11.2011 16:40:20" />
   <file source="c:\Program Files\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.Data.dll" archivePath="System.Windows.Controls.Data.dll" lastWriteTime="18.11.2011 16:40:20" />
   <file source="c:\Program Files\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.Data.Input.dll" archivePath="System.Windows.Controls.Data.Input.dll" lastWriteTime="18.11.2011 16:40:20" />
@@ -8,5 +8,5 @@
   <file source="c:\Program Files\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\de\System.Windows.Controls.Data.resources.dll" archivePath="de\System.Windows.Controls.Data.resources.dll" lastWriteTime="18.11.2011 16:40:20" />
   <file source="c:\Program Files\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\de\System.Windows.Controls.Data.Input.resources.dll" archivePath="de\System.Windows.Controls.Data.Input.resources.dll" lastWriteTime="18.11.2011 16:40:20" />
   <file source="c:\Program Files\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\de\System.Windows.Data.resources.dll" archivePath="de\System.Windows.Data.resources.dll" lastWriteTime="18.11.2011 16:40:20" />
-  <file source="C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="17.07.2012 22:14:55" />
+  <file source="C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="19.07.2012 06:33:07" />
 </xapCache>

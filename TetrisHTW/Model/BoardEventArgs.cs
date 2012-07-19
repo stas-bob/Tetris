@@ -14,12 +14,22 @@ namespace TetrisHTW.Model
 {
     public class BoardEventArgs: EventArgs
     {
-        public BoardEventArgs()
+        public BoardEventArgs(Color[,] boardData)
         {
+            Color[,] newBoardData = new Color[boardData.GetLength(0), boardData.GetLength(1)];
+            for (int i = 0; i < boardData.GetLength(1); i++)
+            {
+                for (int j = 0; j < boardData.GetLength(0); j++)
+                {
+                    newBoardData[j, i] = boardData[j, i];
+                }
+            }
             removedLines = new List<int>();
+            this.boardData = newBoardData;
         }
 
         
         public List<int> removedLines { get; set; }
+        public Color[,] boardData { get; set; }
     }
 }

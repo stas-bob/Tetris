@@ -67,7 +67,7 @@ namespace TetrisHTW.Model
                     score++;
                 }
             }
-            BoardEventArgs bae = new BoardEventArgs();
+            BoardEventArgs bae = new BoardEventArgs(getBoardData());
             bae.removedLines = linesToRemove;
             NotifyBoardChanged(bae);
             setScore(score);
@@ -107,7 +107,7 @@ namespace TetrisHTW.Model
             {
                 board[(int)points[i].X, (int)points[i].Y] = c;
             }
-            NotifyBoardChanged(new BoardEventArgs());
+            NotifyBoardChanged(new BoardEventArgs(getBoardData()));
         }
 
         public Color[,] getBoardData()

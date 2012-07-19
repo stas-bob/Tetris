@@ -38,7 +38,6 @@ namespace TetrisHTW.Model
 
         void writeCell(Point[] points, Color c);
 
-        Color[,] getBoardData();
 
         Figure getCurrentFigure();
 

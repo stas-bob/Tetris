@@ -155,11 +155,17 @@ namespace TetrisHTW
             GameStart();
         } 
 
+
         public void BoardChanged(object sender, BoardEventArgs bea)
         {
             Dispatcher.BeginInvoke(delegate
             {
-                Color[,] data = boardModel.getBoardData();
+                Color[,] data = bea.boardData;
+                if (bea.removedLines.Count > 0)
+                {
+                    animateRemovedLines(bea.removedLines);
+                    
+                }
                 foreach(FrameworkElement frameWorkElement in boardGrid.Children)
                 {
                     Rectangle rect = (Rectangle)frameWorkElement;
@@ -253,6 +259,66 @@ namespace TetrisHTW
             });
         }
 
+        private void animateRemovedLines(List<int> removedLines)
+        {
+            Storyboard sb = new Storyboard();
+            foreach (int y in removedLines)
+            {
+                for (int i = 0; i < boardModel.getColumns(); i++)
+                {
+                    Rectangle rectOnBoard = getRectangleAt(i, y);
+                    Rectangle rect = new Rectangle();
+                    rect.Height = rectOnBoard.ActualHeight;
+                    rect.Width = rectOnBoard.ActualWidth;
+                    rect.Fill = rectOnBoard.Fill;
+
+                    Point p = rectOnBoard.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+
+                    canvas.Children.Add(rect);
+                    Canvas.SetLeft(rect, p.X);
+                    Canvas.SetTop(rect, p.Y);
+
+                    DoubleAnimationUsingKeyFrames dauk = new DoubleAnimationUsingKeyFrames();
+                    Duration duration = new Duration(TimeSpan.FromMilliseconds(1000));
+                    dauk.Duration = duration;
+                    Storyboard.SetTarget(dauk, rect);
+                    Storyboard.SetTargetProperty(dauk, new PropertyPath("(Canvas.Top)"));
+
+                    SplineDoubleKeyFrame sdk = new SplineDoubleKeyFrame();
+                    sdk.SetValue(SplineDoubleKeyFrame.ValueProperty, p.Y + 150.0);
+                    KeyTime kt = TimeSpan.FromMilliseconds(1000);
+                    KeySpline ks = new KeySpline();
+                    ks.ControlPoint1 = new Point(0, 0.5);
+                    ks.ControlPoint2 = new Point(1, 0.1);
+                    sdk.KeySpline = ks;
+                    sdk.KeyTime = kt;
+                    dauk.KeyFrames.Add(sdk);
+
+                    DoubleAnimationUsingKeyFrames dauk2 = new DoubleAnimationUsingKeyFrames();
+                    dauk2.Duration = duration;
+                    Storyboard.SetTarget(dauk2, rect);
+                    Storyboard.SetTargetProperty(dauk2, new PropertyPath("Opacity"));
+
+                    SplineDoubleKeyFrame sdk2 = new SplineDoubleKeyFrame();
+                    sdk2.SetValue(SplineDoubleKeyFrame.ValueProperty, 0.0);
+                    KeyTime kt2 = TimeSpan.FromMilliseconds(1000);
+                    KeySpline ks2 = new KeySpline();
+                    ks2.ControlPoint1 = new Point(0, 0.5);
+                    ks2.ControlPoint2 = new Point(1, 0.5);
+                    sdk2.KeySpline = ks2;
+                    sdk2.KeyTime = kt2;
+                    dauk2.KeyFrames.Add(sdk2);
+                    sb.Children.Add(dauk);
+                    sb.Children.Add(dauk2);
+                }
+            }
+            if (!LayoutRoot.Resources.Contains("unique_id"))
+            {
+                LayoutRoot.Resources.Add("unique_id", sb);
+            }
+            sb.Begin();
+        }
+
         public void ScoreChanged(object sender, ScoreEventArgs bea)
         {
             Dispatcher.BeginInvoke(delegate
@@ -290,20 +356,26 @@ namespace TetrisHTW
 
         }
 
+        public Rectangle getRectangleAt(int x, int y)
+        {
+            foreach (FrameworkElement frameWorkElement in boardGrid.Children)
+            {
+                int xx = Grid.GetColumn(frameWorkElement);
+                int yy = Grid.GetRow(frameWorkElement);
+                if (xx == x && yy == y)
+                {
+                    return (Rectangle)frameWorkElement;
+                }
+            }
+            return null;
+        }
+
         public List<Rectangle> getBoardRectangles(tools.Point[] points)
         {
             List<Rectangle> rectangles = new List<Rectangle>();
             foreach (tools.Point point in points)
             {
-                foreach (FrameworkElement frameWorkElement in boardGrid.Children)
-                {
-                    int xx = Grid.GetColumn(frameWorkElement) ;
-                    int yy = Grid.GetRow(frameWorkElement);
-                    if (xx == point.X && yy == point.Y)
-                    {
-                        rectangles.Add((Rectangle)frameWorkElement);
-                    }
-                }
+                rectangles.Add(getRectangleAt(point.X, point.Y));
             }
             return rectangles;
         }
