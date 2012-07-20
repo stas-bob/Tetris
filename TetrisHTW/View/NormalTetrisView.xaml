@@ -4,17 +4,33 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="767" d:DesignWidth="336" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
-        <Canvas Name="canvas">
-        <!--<Canvas.Resources>
+    d:DesignHeight="643" d:DesignWidth="397" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    <Canvas Name="canvas" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Canvas.Resources>
                 <Storyboard x:Name="anime">
                     <DoubleAnimation x:Name="dAnimeX" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
                     <DoubleAnimation x:Name="dAnimeY" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
                     <DoubleAnimation x:Name="dAnimeX2" Storyboard.TargetName="ellipse2" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
                     <DoubleAnimation x:Name="dAnimeY2" Storyboard.TargetName="ellipse2" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
-                </Storyboard>
-            </Canvas.Resources>
-            <Ellipse x:Name="ellipse" Height="10" Width="10" StrokeThickness="20" Canvas.Left="20" Canvas.Top="50">
+                <DoubleAnimation x:Name="dAnimeX3" Storyboard.TargetName="ellipse3" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeY3" Storyboard.TargetName="ellipse3" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeX4" Storyboard.TargetName="ellipse4" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeY4" Storyboard.TargetName="ellipse4" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeX5" Storyboard.TargetName="ellipse5" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeY5" Storyboard.TargetName="ellipse5" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeX6" Storyboard.TargetName="ellipse6" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeY6" Storyboard.TargetName="ellipse6" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeX7" Storyboard.TargetName="ellipse7" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeY7" Storyboard.TargetName="ellipse7" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeX8" Storyboard.TargetName="ellipse8" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="dAnimeY8" Storyboard.TargetName="ellipse8" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
+            </Storyboard>
+            <Storyboard x:Name="anime2">
+                <DoubleAnimation x:Name="dAnimeStrokeThickness" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="StrokeThickness" Duration="0:0:2" From="1" To="40" AutoReverse="True" RepeatBehavior="forever"/>
+                <DoubleAnimation x:Name="dAnimeStrokeThickness2" Storyboard.TargetName="ellipse2" Storyboard.TargetProperty="StrokeThickness" Duration="0:0:2" From="1" To="10" AutoReverse="True" RepeatBehavior="forever"/>
+            </Storyboard>
+        </Canvas.Resources>
+            <Ellipse x:Name="ellipse" Height="100" Width="100" StrokeThickness="1" Canvas.Left="20" Canvas.Top="50">
                 <Ellipse.Stroke>
                     <LinearGradientBrush>
                         <GradientStop Color="Transparent" Offset="0.1"/>
@@ -26,8 +42,15 @@
                     <BlurEffect Radius="5"/>
                 </Ellipse.Effect>
             </Ellipse>
-            <Ellipse x:Name="ellipse2" Height="50" Width="50" Stroke="Red" StrokeThickness="5"/>-->
-            <Grid x:Name="LayoutRoot" Height="510" Width="285" >
+            <Ellipse x:Name="ellipse2" Height="50" Width="50" Stroke="Red" StrokeThickness="1"/>
+            <Ellipse x:Name="ellipse3" Height="50" Width="50" Stroke="Blue" StrokeThickness="1"/>
+            <Ellipse x:Name="ellipse4" Height="50" Width="50" Stroke="Purple" StrokeThickness="1"/>
+            <Ellipse x:Name="ellipse5" Height="50" Width="50" Stroke="Green" StrokeThickness="1"/>
+            <Ellipse x:Name="ellipse6" Height="50" Width="50" Stroke="Orange" StrokeThickness="1"/>
+            <Ellipse x:Name="ellipse7" Height="50" Width="50" Stroke="Aquamarine" StrokeThickness="1"/>
+            <Ellipse x:Name="ellipse8" Height="50" Width="50" Stroke="Bisque" StrokeThickness="1"/>
+        
+            <Grid x:Name="LayoutRoot" Height="510" Width="285" Canvas.Left="-148" Canvas.Top="-259">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="72" />
                     <RowDefinition Height="72" />
@@ -73,15 +96,12 @@
 
                 <Grid Name="boardGrid" Grid.Column="0" Grid.RowSpan="4">
                 <Grid.Background>
-                    <LinearGradientBrush Opacity="0.2">
+                    <LinearGradientBrush Opacity="0.8">
                         <LinearGradientBrush.Transform>
                             <RotateTransform Angle="20"/>
                         </LinearGradientBrush.Transform>
-                        <GradientStop Color="blue" Offset="0"/>
-                        <GradientStop Color="Green" Offset="0.25"/>
-                        <GradientStop Color="Yellow" Offset="0.5"/>
-                        <GradientStop Color="Red" Offset="0.75"/>
-                        <GradientStop Color="Violet" Offset="1"/>
+                        <GradientStop Color="DarkBlue" Offset="0"/>
+                        <GradientStop Color="Violet" Offset="0.9"/>
                     </LinearGradientBrush>
                 </Grid.Background>
                 </Grid>

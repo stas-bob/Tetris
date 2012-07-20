@@ -29,6 +29,7 @@ namespace TetrisHTW
         private Timer timer;
         private Key lastKey;
         private int previousLevel;
+        private Random rnd = new Random();
 
         public NormalTetrisView()
         {
@@ -49,7 +50,8 @@ namespace TetrisHTW
 
             this.InitGame();
             /*Circles Background*/
-            //anime.Begin();
+            anime.Begin();
+            anime2.Begin();
 
         }
 
@@ -96,12 +98,23 @@ namespace TetrisHTW
         /*Circles Background*/
         void AnimCompleted(object sender, EventArgs e)
         {
-            Random rnd = new Random();
-            //dAnimeX.To = rnd.Next(200);
-            //dAnimeY.To = rnd.Next(200);
-            //dAnimeX2.To = rnd.Next(200);
-            //dAnimeY2.To = rnd.Next(200);
-            //anime.Begin();
+            dAnimeX.To = rnd.Next((int)boardGrid.ActualWidth);
+            dAnimeY.To = rnd.Next((int)boardGrid.ActualHeight);
+            dAnimeX2.To = rnd.Next((int)boardGrid.ActualWidth);
+            dAnimeY2.To = rnd.Next((int)boardGrid.ActualHeight);
+            dAnimeX3.To = rnd.Next((int)boardGrid.ActualWidth);
+            dAnimeY3.To = rnd.Next((int)boardGrid.ActualHeight);
+            dAnimeX4.To = rnd.Next((int)boardGrid.ActualWidth);
+            dAnimeY4.To = rnd.Next((int)boardGrid.ActualHeight);
+            dAnimeX5.To = rnd.Next((int)boardGrid.ActualWidth);
+            dAnimeY5.To = rnd.Next((int)boardGrid.ActualHeight);
+            dAnimeX6.To = rnd.Next((int)boardGrid.ActualWidth);
+            dAnimeY6.To = rnd.Next((int)boardGrid.ActualHeight);
+            dAnimeX7.To = rnd.Next((int)boardGrid.ActualWidth);
+            dAnimeY7.To = rnd.Next((int)boardGrid.ActualHeight);
+            dAnimeX8.To = rnd.Next((int)boardGrid.ActualWidth);
+            dAnimeY8.To = rnd.Next((int)boardGrid.ActualHeight);
+            anime.Begin();
         }
 
         /*KeyboardListener fuer druecken einer Taste*/
@@ -283,8 +296,8 @@ namespace TetrisHTW
                     Point p = rectOnBoard.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
 
                     canvas.Children.Add(rect);
-                    Canvas.SetLeft(rect, p.X);
-                    Canvas.SetTop(rect, p.Y);
+                    Canvas.SetLeft(rect, p.X + Canvas.GetLeft(LayoutRoot));
+                    Canvas.SetTop(rect, p.Y + Canvas.GetTop(LayoutRoot));
 
                     DoubleAnimationUsingKeyFrames dauk = new DoubleAnimationUsingKeyFrames();
                     Duration duration = new Duration(TimeSpan.FromMilliseconds(1000));
@@ -293,7 +306,7 @@ namespace TetrisHTW
                     Storyboard.SetTargetProperty(dauk, new PropertyPath("(Canvas.Top)"));
 
                     SplineDoubleKeyFrame sdk = new SplineDoubleKeyFrame();
-                    sdk.SetValue(SplineDoubleKeyFrame.ValueProperty, p.Y + 150.0);
+                    sdk.SetValue(SplineDoubleKeyFrame.ValueProperty, p.Y + (Canvas.GetTop(boardGrid) + boardGrid.ActualHeight - p.Y) + rnd.Next(150));
                     KeyTime kt = TimeSpan.FromMilliseconds(1000);
                     KeySpline ks = new KeySpline();
                     ks.ControlPoint1 = new Point(0, 0.5);
@@ -360,7 +373,7 @@ namespace TetrisHTW
                 Storyboard sb = new Storyboard();
                 foreach (Rectangle rectangle in rectangles)
                 {
-                    Duration duration = new Duration(TimeSpan.FromMilliseconds(100));
+                    Duration duration = new Duration(TimeSpan.FromMilliseconds(200));
                     DoubleAnimation myDoubleAnimation = new DoubleAnimation();
                     myDoubleAnimation.Duration = duration;
                     myDoubleAnimation.AutoReverse = true;
@@ -399,22 +412,22 @@ namespace TetrisHTW
                     gs1.Color = Colors.Transparent;
                     gs1.Offset = 0.0;
                     GradientStop gs2 = new GradientStop();
-                    gs2.Color = Color.FromArgb(80, ffea.color.R, ffea.color.G, ffea.color.B);
+                    gs2.Color = Color.FromArgb(100, ffea.color.R, ffea.color.G, ffea.color.B);
                     gs2.Offset = 0.0;
                     lgb.GradientStops.Add(gs1);
                     lgb.GradientStops.Add(gs2);
 
                     effectRectangle.Fill = lgb;
                     canvas.Children.Add(effectRectangle);
-                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X);
-                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y);
+                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot));
+                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot));
 
-                    Duration duration = new Duration(TimeSpan.FromMilliseconds(1000));
+                    Duration duration = new Duration(TimeSpan.FromMilliseconds(3000));
                     DoubleAnimation myDoubleAnimation = new DoubleAnimation();
                     myDoubleAnimation.Duration = duration;
                     Storyboard.SetTarget(myDoubleAnimation, gs2);
                     Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath("Offset"));
-                    myDoubleAnimation.To = 2.0;
+                    myDoubleAnimation.To = 10.0;
                     sb.Children.Add(myDoubleAnimation);
                     sb.Completed += new EventHandler((a, b) =>
                     {
@@ -557,5 +570,6 @@ namespace TetrisHTW
             fallWorker = FallWorker.Instance;
             new Thread(fallWorker.InvokeFalling).Start();
         }
+
     }
 }
