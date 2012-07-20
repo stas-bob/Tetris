@@ -4,30 +4,52 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="643" d:DesignWidth="397" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
-    <Canvas Name="canvas" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Canvas.Resources>
-                <Storyboard x:Name="anime">
-                    <DoubleAnimation x:Name="dAnimeX" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
-                    <DoubleAnimation x:Name="dAnimeY" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             d:DesignHeight="800" d:DesignWidth="800">
+        <Canvas Name="canvas" HorizontalAlignment="Center" Margin="0,100,200,0">
+            <Canvas.Resources>
+                <Storyboard x:Name="flyingAround">
+                    <DoubleAnimation x:Name="animXT" Storyboard.TargetName="T" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
+                    <DoubleAnimation x:Name="animYT" Storyboard.TargetName="T" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animXL" Storyboard.TargetName="L" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animYL" Storyboard.TargetName="L" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animXJ" Storyboard.TargetName="J" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animYJ" Storyboard.TargetName="J" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animXO" Storyboard.TargetName="O" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:2" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animYO" Storyboard.TargetName="O" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:2" Completed="AnimCompleted"/>
             </Storyboard>
-            <Storyboard x:Name="anime2">
-                <DoubleAnimation x:Name="dAnimeStrokeThickness" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="StrokeThickness" Duration="0:0:2" From="1" To="40" AutoReverse="True" RepeatBehavior="forever"/>
+            <Storyboard x:Name="rotating">
+                <DoubleAnimation x:Name="animRotateT" Storyboard.TargetName="rotateTransformT" Storyboard.TargetProperty="Angle" Duration="0:0:2" From="0" To="360" RepeatBehavior="forever"/>
+                <!--<DoubleAnimation x:Name="animRotateI" Storyboard.TargetName="rotateTransformI" Storyboard.TargetProperty="Angle" Duration="0:0:2" From="0" To="360" RepeatBehavior="forever"/>-->
+                <!--<DoubleAnimation x:Name="animRotateZ" Storyboard.TargetName="rotateTransformZ" Storyboard.TargetProperty="Angle" Duration="0:0:2" From="0" To="360" RepeatBehavior="forever"/>-->
+                <!--<DoubleAnimation x:Name="animRotateS" Storyboard.TargetName="rotateTransformS" Storyboard.TargetProperty="Angle" Duration="0:0:2" From="0" To="360" RepeatBehavior="forever"/>-->
+                <DoubleAnimation x:Name="animRotateO" Storyboard.TargetName="rotateTransformO" Storyboard.TargetProperty="Angle" Duration="0:0:2" From="0" To="360" RepeatBehavior="forever"/>
+                <DoubleAnimation x:Name="animRotateL" Storyboard.TargetName="rotateTransformL" Storyboard.TargetProperty="Angle" Duration="0:0:2" From="0" To="360" RepeatBehavior="forever"/>
+                <DoubleAnimation x:Name="animRotateJ" Storyboard.TargetName="rotateTransformJ" Storyboard.TargetProperty="Angle" Duration="0:0:2" From="0" To="360" RepeatBehavior="forever"/>
             </Storyboard>
         </Canvas.Resources>
-            <Ellipse x:Name="ellipse" Height="100" Width="100" StrokeThickness="1" Canvas.Left="20" Canvas.Top="50">
-                <Ellipse.Stroke>
-                    <LinearGradientBrush>
-                        <GradientStop Color="Transparent" Offset="0.1"/>
-                        <GradientStop Color="Red" Offset="0.4"/>
-                        <GradientStop Color="Transparent" Offset="0.9"/>
-                    </LinearGradientBrush>
-                </Ellipse.Stroke>
-                <Ellipse.Effect>
-                    <BlurEffect Radius="5"/>
-                </Ellipse.Effect>
-            </Ellipse>
-            <Grid x:Name="LayoutRoot" Height="510" Width="285" Canvas.Left="-148" Canvas.Top="-259">
+        <Path StrokeThickness="2" Height="50" Width="75" Name="T" Data="M0,0 L0,0 L75,0 L75,25 L50,25 L50,50 L25,50 L25,25 L0,25 L0,0" Stroke="#6CB800FF">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="rotateTransformT"></RotateTransform>
+            </Path.RenderTransform>
+        </Path>
+        <Path StrokeThickness="3" Height="30" Width="30" Name="O" Data="M0,0 L30,0 L30,30 L0,30 L0,0" Stroke="#6CB800FF">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="rotateTransformO"></RotateTransform>
+            </Path.RenderTransform>
+        </Path>
+        <Path StrokeThickness="10" Height="150" Width="100" Name="L" Canvas.Top="100" Data="M0,0 L0,150 L50,150 L50,50 L100,50 L100,0 L0,0" Stroke="#6CB800FF">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="rotateTransformL"></RotateTransform>
+            </Path.RenderTransform>
+        </Path>
+        <Path StrokeThickness="2" Height="50" Width="40" Name="J" Canvas.Top="300" Data="M0,0 L0,20 L20,20 L20,50 L40,50 L40,0 L0,0" Stroke="#6CB800FF">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="rotateTransformJ"></RotateTransform>
+            </Path.RenderTransform>
+        </Path>
+
+        <Grid x:Name="LayoutRoot" Height="510" Width="285" Canvas.Left="0" Canvas.Top="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="72" />
                     <RowDefinition Height="72" />
@@ -84,4 +106,4 @@
                 </Grid>
             </Grid>
         </Canvas>
-    </UserControl>
+</UserControl>

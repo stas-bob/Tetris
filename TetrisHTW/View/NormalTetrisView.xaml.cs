@@ -49,10 +49,9 @@ namespace TetrisHTW
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(FigureFallen);
 
             this.InitGame();
-            /*Circles Background*/
-            anime.Begin();
-            anime2.Begin();
-
+            /*Background Animation*/
+            flyingAround.Begin();
+            rotating.Begin();
         }
 
         void initBoard()
@@ -95,13 +94,20 @@ namespace TetrisHTW
             }
         }
 
-        /*Circles Background*/
+        /*Background animation*/
         void AnimCompleted(object sender, EventArgs e)
         {
-            dAnimeX.To = rnd.Next((int)boardGrid.ActualWidth);
-            dAnimeY.To = rnd.Next((int)boardGrid.ActualHeight);
+            Point p = canvas.TransformToVisual(App.getInstance().RootVisual).Transform(new Point(0, 0));
+            animXO.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYO.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+            animXT.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYT.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+            animXL.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYL.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+            animXJ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYJ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
             
-            anime.Begin();
+            flyingAround.Begin();
         }
 
         /*KeyboardListener fuer druecken einer Taste*/
@@ -293,7 +299,7 @@ namespace TetrisHTW
                     Storyboard.SetTargetProperty(dauk, new PropertyPath("(Canvas.Top)"));
 
                     SplineDoubleKeyFrame sdk = new SplineDoubleKeyFrame();
-                    sdk.SetValue(SplineDoubleKeyFrame.ValueProperty, p.Y + (Canvas.GetTop(boardGrid) + boardGrid.ActualHeight - p.Y) + rnd.Next(150));
+                    sdk.SetValue(SplineDoubleKeyFrame.ValueProperty, p.Y + (Canvas.GetTop(boardGrid) + boardGrid.ActualHeight - p.Y) + rnd.Next(250));
                     KeyTime kt = TimeSpan.FromMilliseconds(1000);
                     KeySpline ks = new KeySpline();
                     ks.ControlPoint1 = new Point(0, 0.5);
