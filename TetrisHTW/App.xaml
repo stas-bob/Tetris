@@ -11,5 +11,12 @@
         <ImageBrush x:Key="CyanPointBrush" ImageSource="Images/cyan.png" Stretch="UniformToFill"/>
         <ImageBrush x:Key="YellowPointBrush" ImageSource="Images/yellow.png" Stretch="UniformToFill"/>
         <ImageBrush x:Key="GreenPointBrush" ImageSource="Images/green.png" Stretch="UniformToFill"/>
+        <Style TargetType="TextBlock" x:Key="TextBlockStyle">
+            <Setter Property="Foreground" Value="Navy"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        
     </Application.Resources>
 </Application>

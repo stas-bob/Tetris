@@ -30,6 +30,7 @@ namespace TetrisHTW
         private Key lastKey;
         private int previousLevel;
         private Random rnd = new Random();
+        private bool pause;
 
         public NormalTetrisView()
         {
@@ -50,8 +51,8 @@ namespace TetrisHTW
 
             this.InitGame();
             /*Background Animation*/
-            flyingAround.Begin();
-            rotating.Begin();
+            flyingAroundSB.Begin();
+            rotatingSB.Begin();
         }
 
         void initBoard()
@@ -106,14 +107,35 @@ namespace TetrisHTW
             animYL.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
             animXJ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
             animYJ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+            animXI.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYI.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+            animXS.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYS.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+            animXZ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYZ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
             
-            flyingAround.Begin();
+            flyingAroundSB.Begin();
         }
 
         /*KeyboardListener fuer druecken einer Taste*/
         void Page_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!gameStop)
+            if (e.Key == Key.P)
+            {
+                if (!pause)
+                {
+                    GamePause();
+                    pause = true;
+                    pauseOnSB.Begin();
+                }
+                else
+                {
+                    pauseOffSB.Begin();
+                    pause = false;
+                    GameResume();
+                }
+            }
+            if (!gameStop && !pause)
             {
                 switch (e.Key)
                 {
@@ -343,6 +365,7 @@ namespace TetrisHTW
                 {
                     FallWorker.Instance.setLevel(bea.level);
                     previousLevel = bea.level;
+                    levelFontSizeSB.Begin();
                 }
             });
             
@@ -353,6 +376,7 @@ namespace TetrisHTW
             Dispatcher.BeginInvoke(delegate
             {
                 linesText.Text = lea.lines + "";
+                
             });
 
         }
@@ -564,5 +588,26 @@ namespace TetrisHTW
             new Thread(fallWorker.InvokeFalling).Start();
         }
 
+
+        public void GamePause()
+        {
+            if (!gameStop) 
+            {
+                pause = true;
+                if (fallWorker != null)
+                {
+                    fallWorker.RequestStop();
+                }
+            }
+        }
+
+        public void GameResume()
+        {
+            if (!gameStop)
+            {
+                pause = false;
+                new Thread(fallWorker.InvokeFalling).Start();
+            }
+        }
     }
 }
