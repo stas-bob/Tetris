@@ -44,15 +44,6 @@
                 <StackPanel Grid.Column="1" >
                     <TextBlock Text="Score" HorizontalAlignment="Center"/>
                     <TextBlock Text="" Name="scoreText" HorizontalAlignment="Center"/>
-                <StackPanel.Background>
-                    <LinearGradientBrush>
-                        <LinearGradientBrush.Transform>
-                            <RotateTransform Angle="50"/>
-                        </LinearGradientBrush.Transform>
-                        <GradientStop Color="Transparent" Offset="0.0"/>
-                        <GradientStop x:Name="target" Color="red" Offset="2"/>
-                    </LinearGradientBrush>
-                </StackPanel.Background>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="1">
                 <TextBlock Text="Lines" HorizontalAlignment="Center"/>

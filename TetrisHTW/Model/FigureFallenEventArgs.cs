@@ -29,12 +29,9 @@ namespace TetrisHTW.Model
         {
             for (int i = 0; i < figurePoints.Length; i++)
             {
-                for (int j = 0; j < previousFigurePoints.Length; j++)
+                if (figurePoints[i].X != previousFigurePoints[i].X || figurePoints[i].Y != previousFigurePoints[i].Y)
                 {
-                    if (figurePoints[i].X != figurePoints[j].X || figurePoints[i].Y != figurePoints[j].Y)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
             return true;
