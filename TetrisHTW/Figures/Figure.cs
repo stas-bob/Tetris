@@ -42,8 +42,8 @@ namespace TetrisHTW.Figures
         }
 
    
-
-        private void FigureIsFallen()
+        /*Punkte vor dem Fall = previousPoints*/
+        private void FigureIsFallen(Point[] previousPoints)
         {
             board.writeCell(points, color);
             bool gameOver = false;
@@ -58,7 +58,7 @@ namespace TetrisHTW.Figures
             }
             if (!gameOver)
             {
-                App.getInstance().NotifyFigureFallen(points);
+                App.getInstance().NotifyFigureFallen(previousPoints, points, color);
                 
                 List<int> linesToRemove = getLinesToRemove();
                 /*Hier werden die zu loeschenden Zeilen geloescht*/
@@ -87,7 +87,7 @@ namespace TetrisHTW.Figures
                 bool fits = doPointsFit(newPoints);
                 if (!fits)
                 {
-                    FigureIsFallen();
+                    FigureIsFallen(points);
                 }
                 else
                 {
@@ -145,8 +145,13 @@ namespace TetrisHTW.Figures
             {
                 board.clearPoints(points);
                 Point[] fallenPoints = simulatedFall();
+                Point[] previousPoints = new Point[4];
+                for (int i = 0; i < points.Length; i++)
+                {
+                    previousPoints[i] = new Point(points[i].X, points[i].Y);
+                }
                 points = fallenPoints;
-                FigureIsFallen();
+                FigureIsFallen(previousPoints);
             }
         }
 

@@ -56,11 +56,11 @@ namespace TetrisHTW
             return boardModel;
         }
 
-        public void NotifyFigureFallen(tools.Point[] points)
+        public void NotifyFigureFallen(tools.Point[] previousPoints, tools.Point[] points, Color c)
         {
             if (FigureFallenEvent != null)
             {
-                FigureFallenEventArgs ffea = new FigureFallenEventArgs(points);
+                FigureFallenEventArgs ffea = new FigureFallenEventArgs(previousPoints, points, c);
                 FigureFallenEvent(this, ffea);
             }
         }

@@ -370,13 +370,124 @@ namespace TetrisHTW
                     myDoubleAnimation.From = 1;
                     sb.Children.Add(myDoubleAnimation);
                 }
+                if (!ffea.PointsAreEqual())
+                {
+                    int maxY = getMax(points, false);
+                    int minY = getMin(ffea.previousFigurePoints, false);
+                    int minX = getMin(points, true);
+                    int maxX = getMax(points, true);
+
+                    Rectangle upperLeftRect = getRectangleAt(minX, minY);
+                    Rectangle bottomRightRect = getRectangleAt(maxX, maxY);
+
+                    Point upperLeftPoint = upperLeftRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+                    Point bottomRightPoint = bottomRightRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+
+                    int width = (int)(bottomRightPoint.X - upperLeftPoint.X) + (int)upperLeftRect.ActualWidth;
+                    int height = (int)(bottomRightPoint.Y - upperLeftPoint.Y) + (int)upperLeftRect.ActualHeight;
+
+                    Rectangle effectRectangle = new Rectangle();
+                    effectRectangle.Width = width;
+                    effectRectangle.Height = height;
+
+
+                    LinearGradientBrush lgb = new LinearGradientBrush();
+                    RotateTransform rt = new RotateTransform();
+                    rt.Angle = 20;
+                    lgb.Transform = rt;
+                    GradientStop gs1 = new GradientStop();
+                    gs1.Color = Colors.Transparent;
+                    gs1.Offset = 0.0;
+                    GradientStop gs2 = new GradientStop();
+                    gs2.Color = Color.FromArgb(80, ffea.color.R, ffea.color.G, ffea.color.B);
+                    gs2.Offset = 0.0;
+                    lgb.GradientStops.Add(gs1);
+                    lgb.GradientStops.Add(gs2);
+
+                    effectRectangle.Fill = lgb;
+                    canvas.Children.Add(effectRectangle);
+                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X);
+                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y);
+
+                    Duration duration = new Duration(TimeSpan.FromMilliseconds(1000));
+                    DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+                    myDoubleAnimation.Duration = duration;
+                    Storyboard.SetTarget(myDoubleAnimation, gs2);
+                    Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath("Offset"));
+                    myDoubleAnimation.To = 2.0;
+                    sb.Children.Add(myDoubleAnimation);
+                    sb.Completed += new EventHandler((a, b) =>
+                    {
+                        canvas.Children.Remove(effectRectangle);
+                    });
+                }
                 if (!LayoutRoot.Resources.Contains("unique_id"))
                 {
                     LayoutRoot.Resources.Add("unique_id", sb);
                 }
                 sb.Begin();
+
             });
 
+        }
+
+
+        public int getMax(tools.Point[] points, bool x)
+        {
+            if (!x)
+            {
+
+                int max = points[0].Y;
+                for (int i = 0; i < points.Length; i++)
+                {
+                    if (points[i].Y > max)
+                    {
+                        max = points[i].Y;
+                    }
+                }
+                return max;
+            }
+            else
+            {
+                int max = points[0].X;
+                for (int i = 0; i < points.Length; i++)
+                {
+                    if (points[i].X > max)
+                    {
+                        max = points[i].X;
+                    }
+                }
+                return max;
+            }
+        }
+
+        public int getMin(tools.Point[] points, bool x)
+        {
+            if (!x)
+            {
+                int min = points[0].Y;
+                for (int i = 0; i < points.Length; i++)
+                {
+                    if (points[i].Y < min)
+                    {
+                        min = points[i].Y;
+                    }
+                }
+                return min;
+            }
+            else
+            {
+                int min = points[0].X;
+                for (int i = 0; i < points.Length; i++)
+                {
+                    if (points[i].X < min)
+                    {
+                        min = points[i].X;
+                    }
+                }
+                return min;
+
+            }
         }
 
         public Rectangle getRectangleAt(int x, int y)
