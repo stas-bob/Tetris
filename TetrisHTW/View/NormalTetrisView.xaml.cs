@@ -100,20 +100,7 @@ namespace TetrisHTW
         {
             dAnimeX.To = rnd.Next((int)boardGrid.ActualWidth);
             dAnimeY.To = rnd.Next((int)boardGrid.ActualHeight);
-            dAnimeX2.To = rnd.Next((int)boardGrid.ActualWidth);
-            dAnimeY2.To = rnd.Next((int)boardGrid.ActualHeight);
-            dAnimeX3.To = rnd.Next((int)boardGrid.ActualWidth);
-            dAnimeY3.To = rnd.Next((int)boardGrid.ActualHeight);
-            dAnimeX4.To = rnd.Next((int)boardGrid.ActualWidth);
-            dAnimeY4.To = rnd.Next((int)boardGrid.ActualHeight);
-            dAnimeX5.To = rnd.Next((int)boardGrid.ActualWidth);
-            dAnimeY5.To = rnd.Next((int)boardGrid.ActualHeight);
-            dAnimeX6.To = rnd.Next((int)boardGrid.ActualWidth);
-            dAnimeY6.To = rnd.Next((int)boardGrid.ActualHeight);
-            dAnimeX7.To = rnd.Next((int)boardGrid.ActualWidth);
-            dAnimeY7.To = rnd.Next((int)boardGrid.ActualHeight);
-            dAnimeX8.To = rnd.Next((int)boardGrid.ActualWidth);
-            dAnimeY8.To = rnd.Next((int)boardGrid.ActualHeight);
+            
             anime.Begin();
         }
 
