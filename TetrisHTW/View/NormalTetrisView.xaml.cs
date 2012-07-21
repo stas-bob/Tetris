@@ -31,6 +31,7 @@ namespace TetrisHTW
         private int previousLevel;
         private Random rnd = new Random();
         private bool pause;
+        private bool hardFall;
 
         public NormalTetrisView()
         {
@@ -146,7 +147,7 @@ namespace TetrisHTW
                         if (timer == null)
                         {
                             lastKey = e.Key;
-                            timer = new Timer(MoveFigure, null, 0, 150);
+                            timer = new Timer(MoveFigure, null, 0, 120);
                         }
                         break;
                 }
@@ -199,7 +200,14 @@ namespace TetrisHTW
                 Color[,] data = bea.boardData;
                 if (bea.removedLines.Count > 0)
                 {
-                    animateRemovedLines(bea.removedLines);
+                    if (hardFall)
+                    {
+                        animateRemovedLinesHard(bea.removedLines);
+                    }
+                    else
+                    {
+                        animateRemovedLinesSoft(bea.removedLines);
+                    }
                     
                 }
                 foreach(FrameworkElement frameWorkElement in boardGrid.Children)
@@ -295,9 +303,10 @@ namespace TetrisHTW
             });
         }
 
-        private void animateRemovedLines(List<int> removedLines)
+        private void animateRemovedLinesHard(List<int> removedLines)
         {
             Storyboard sb = new Storyboard();
+            List<Rectangle> animatedRectangled = new List<Rectangle>();
             foreach (int y in removedLines)
             {
                 for (int i = 0; i < boardModel.getColumns(); i++)
@@ -314,44 +323,179 @@ namespace TetrisHTW
                     Canvas.SetLeft(rect, p.X + Canvas.GetLeft(LayoutRoot));
                     Canvas.SetTop(rect, p.Y + Canvas.GetTop(LayoutRoot));
 
+
+                    CompositeTransform ct = new CompositeTransform();
+                    ct.CenterX = rect.ActualWidth / 2;
+                    ct.CenterY = rect.ActualHeight / 2;
+                    rect.RenderTransform = ct;
+                   
+                   
+                    //Bewegung
                     DoubleAnimationUsingKeyFrames dauk = new DoubleAnimationUsingKeyFrames();
-                    Duration duration = new Duration(TimeSpan.FromMilliseconds(1000));
-                    dauk.Duration = duration;
+                    Storyboard.SetTargetProperty(dauk, new PropertyPath("(UIElement.RenderTransform).(CompositeTransform.TranslateY)"));
                     Storyboard.SetTarget(dauk, rect);
-                    Storyboard.SetTargetProperty(dauk, new PropertyPath("(Canvas.Top)"));
+
 
                     SplineDoubleKeyFrame sdk = new SplineDoubleKeyFrame();
-                    sdk.SetValue(SplineDoubleKeyFrame.ValueProperty, p.Y + (Canvas.GetTop(boardGrid) + boardGrid.ActualHeight - p.Y) + rnd.Next(250));
-                    KeyTime kt = TimeSpan.FromMilliseconds(1000);
+                    sdk.SetValue(SplineDoubleKeyFrame.ValueProperty, (double)(-1 * rnd.Next(200)));
+                    sdk.KeyTime = TimeSpan.FromMilliseconds(rnd.Next(400));
                     KeySpline ks = new KeySpline();
-                    ks.ControlPoint1 = new Point(0, 0.5);
-                    ks.ControlPoint2 = new Point(1, 0.1);
+                    ks.ControlPoint1 = new Point(0, 1);
+                    ks.ControlPoint2 = new Point(1, 1);
                     sdk.KeySpline = ks;
-                    sdk.KeyTime = kt;
                     dauk.KeyFrames.Add(sdk);
 
+                    SplineDoubleKeyFrame sdk0 = new SplineDoubleKeyFrame();
+                    sdk0.SetValue(SplineDoubleKeyFrame.ValueProperty, (double)rnd.Next(474));
+                    sdk0.KeyTime = TimeSpan.FromMilliseconds(1000);
+                    KeySpline ks0 = new KeySpline();
+                    ks0.ControlPoint1 = new Point(1, 0);
+                    ks0.ControlPoint2 = new Point(1, 1);
+                    sdk0.KeySpline = ks0;
+                    dauk.KeyFrames.Add(sdk0);
+                    //Drehung
+                    //-------------------------------
+                    DoubleAnimation da = new DoubleAnimation();
+                    Storyboard.SetTargetProperty(da, new PropertyPath("(UIElement.RenderTransform).(CompositeTransform.Rotation)"));
+                    Storyboard.SetTarget(da, rect);
+                    da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+                    int fac = rnd.Next(2) == 0 ? -1 : 1;
+
+                    da.To = fac*360.0;
+                    da.RepeatBehavior = RepeatBehavior.Forever;
+
+
+                    //--Opacity
                     DoubleAnimationUsingKeyFrames dauk2 = new DoubleAnimationUsingKeyFrames();
-                    dauk2.Duration = duration;
                     Storyboard.SetTarget(dauk2, rect);
                     Storyboard.SetTargetProperty(dauk2, new PropertyPath("Opacity"));
 
-                    SplineDoubleKeyFrame sdk2 = new SplineDoubleKeyFrame();
-                    sdk2.SetValue(SplineDoubleKeyFrame.ValueProperty, 0.0);
-                    KeyTime kt2 = TimeSpan.FromMilliseconds(1000);
-                    KeySpline ks2 = new KeySpline();
-                    ks2.ControlPoint1 = new Point(0, 0.5);
-                    ks2.ControlPoint2 = new Point(1, 0.5);
-                    sdk2.KeySpline = ks2;
-                    sdk2.KeyTime = kt2;
-                    dauk2.KeyFrames.Add(sdk2);
+                    SplineDoubleKeyFrame sdk3 = new SplineDoubleKeyFrame();
+                    sdk3.SetValue(SplineDoubleKeyFrame.ValueProperty, 0.0);
+                    KeySpline ks3 = new KeySpline();
+                    ks3.ControlPoint1 = new Point(0, 0.5);
+                    ks3.ControlPoint2 = new Point(1, 0.5);
+                    sdk3.KeySpline = ks3;
+                    sdk3.KeyTime = TimeSpan.FromMilliseconds(1000);
+                    dauk2.KeyFrames.Add(sdk3);
+
+
+                    
                     sb.Children.Add(dauk);
+                    sb.Children.Add(da);
                     sb.Children.Add(dauk2);
+                    animatedRectangled.Add(rect);
                 }
             }
             if (!LayoutRoot.Resources.Contains("unique_id"))
             {
                 LayoutRoot.Resources.Add("unique_id", sb);
             }
+            sb.Completed += new EventHandler((a, b) =>
+            {
+                foreach (var rect in animatedRectangled)
+                {
+                    canvas.Children.Remove(rect);
+                }
+            });
+            sb.Begin();
+        }
+
+        private void animateRemovedLinesSoft(List<int> removedLines)
+        {
+            Storyboard sb = new Storyboard();
+            List<Rectangle> animatedRectangled = new List<Rectangle>();
+            foreach (int y in removedLines)
+            {
+                for (int i = 0; i < boardModel.getColumns(); i++)
+                {
+                    Rectangle rectOnBoard = getRectangleAt(i, y);
+                    Rectangle rect = new Rectangle();
+                    rect.Height = rectOnBoard.ActualHeight;
+                    rect.Width = rectOnBoard.ActualWidth;
+                    rect.Fill = rectOnBoard.Fill;
+
+                    Point p = rectOnBoard.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+
+                    canvas.Children.Add(rect);
+                    Canvas.SetLeft(rect, p.X + Canvas.GetLeft(LayoutRoot));
+                    Canvas.SetTop(rect, p.Y + Canvas.GetTop(LayoutRoot));
+
+
+                    CompositeTransform ct = new CompositeTransform();
+                    ct.CenterX = rect.ActualWidth / 2;
+                    ct.CenterY = rect.ActualHeight / 2;
+                    rect.RenderTransform = ct;
+
+
+                    //Bewegung
+                    DoubleAnimationUsingKeyFrames dauk = new DoubleAnimationUsingKeyFrames();
+                    Storyboard.SetTargetProperty(dauk, new PropertyPath("(UIElement.RenderTransform).(CompositeTransform.TranslateY)"));
+                    Storyboard.SetTarget(dauk, rect);
+
+
+                    SplineDoubleKeyFrame sdk = new SplineDoubleKeyFrame();
+                    sdk.SetValue(SplineDoubleKeyFrame.ValueProperty, (double)(-1 * rnd.Next(10)));
+                    sdk.KeyTime = TimeSpan.FromMilliseconds(rnd.Next(400));
+                    KeySpline ks = new KeySpline();
+                    ks.ControlPoint1 = new Point(0, 1);
+                    ks.ControlPoint2 = new Point(1, 1);
+                    sdk.KeySpline = ks;
+                    dauk.KeyFrames.Add(sdk);
+
+                    SplineDoubleKeyFrame sdk0 = new SplineDoubleKeyFrame();
+                    sdk0.SetValue(SplineDoubleKeyFrame.ValueProperty, (double)rnd.Next(474));
+                    sdk0.KeyTime = TimeSpan.FromMilliseconds(1000);
+                    KeySpline ks0 = new KeySpline();
+                    ks0.ControlPoint1 = new Point(1, 0);
+                    ks0.ControlPoint2 = new Point(1, 1);
+                    sdk0.KeySpline = ks0;
+                    dauk.KeyFrames.Add(sdk0);
+                    //Drehung
+                    //-------------------------------
+                    DoubleAnimation da = new DoubleAnimation();
+                    Storyboard.SetTargetProperty(da, new PropertyPath("(UIElement.RenderTransform).(CompositeTransform.Rotation)"));
+                    Storyboard.SetTarget(da, rect);
+                    da.Duration = new Duration(TimeSpan.FromMilliseconds(1000));
+                    int fac = rnd.Next(2) == 0 ? -1 : 1;
+
+                    da.To = fac * 360.0;
+                    da.RepeatBehavior = RepeatBehavior.Forever;
+
+
+                    //--Opacity
+                    DoubleAnimationUsingKeyFrames dauk2 = new DoubleAnimationUsingKeyFrames();
+                    Storyboard.SetTarget(dauk2, rect);
+                    Storyboard.SetTargetProperty(dauk2, new PropertyPath("Opacity"));
+
+                    SplineDoubleKeyFrame sdk3 = new SplineDoubleKeyFrame();
+                    sdk3.SetValue(SplineDoubleKeyFrame.ValueProperty, 0.0);
+                    KeySpline ks3 = new KeySpline();
+                    ks3.ControlPoint1 = new Point(0, 0.5);
+                    ks3.ControlPoint2 = new Point(1, 0.5);
+                    sdk3.KeySpline = ks3;
+                    sdk3.KeyTime = TimeSpan.FromMilliseconds(1000);
+                    dauk2.KeyFrames.Add(sdk3);
+
+
+
+                    sb.Children.Add(dauk);
+                    sb.Children.Add(da);
+                    sb.Children.Add(dauk2);
+                    animatedRectangled.Add(rect);
+                }
+            }
+            if (!LayoutRoot.Resources.Contains("unique_id"))
+            {
+                LayoutRoot.Resources.Add("unique_id", sb);
+            }
+            sb.Completed += new EventHandler((a, b) =>
+            {
+                foreach (var rect in animatedRectangled)
+                {
+                    canvas.Children.Remove(rect);
+                }
+            });
             sb.Begin();
         }
 
@@ -385,6 +529,7 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
+                hardFall = false;
                 tools.Point[] points = ffea.figurePoints;
                 List<Rectangle> rectangles = getBoardRectangles(points);
                 Storyboard sb = new Storyboard();
@@ -402,6 +547,7 @@ namespace TetrisHTW
                 }
                 if (!ffea.PointsAreEqual())
                 {
+                    hardFall = true;
                     int maxY = getMax(points, false);
                     int minY = getMin(ffea.previousFigurePoints, false);
                     int minX = getMin(points, true);
