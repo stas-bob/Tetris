@@ -413,8 +413,8 @@ namespace TetrisHTW
                     Point upperLeftPoint = upperLeftRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
                     Point bottomRightPoint = bottomRightRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
 
-                    int width = (int)(bottomRightPoint.X - upperLeftPoint.X) + (int)upperLeftRect.ActualWidth;
-                    int height = (int)(bottomRightPoint.Y - upperLeftPoint.Y) + (int)upperLeftRect.ActualHeight;
+                    double width = bottomRightPoint.X - upperLeftPoint.X + upperLeftRect.ActualWidth;
+                    double height = bottomRightPoint.Y - upperLeftPoint.Y + upperLeftRect.ActualHeight;
 
                     Rectangle effectRectangle = new Rectangle();
                     effectRectangle.Width = width;
@@ -423,7 +423,7 @@ namespace TetrisHTW
 
                     LinearGradientBrush lgb = new LinearGradientBrush();
                     RotateTransform rt = new RotateTransform();
-                    rt.Angle = 20;
+                    rt.Angle = 0;
                     lgb.Transform = rt;
                     GradientStop gs1 = new GradientStop();
                     gs1.Color = Colors.Transparent;
@@ -436,8 +436,8 @@ namespace TetrisHTW
 
                     effectRectangle.Fill = lgb;
                     canvas.Children.Add(effectRectangle);
-                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot));
-                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot));
+                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot) + layoutBorder.BorderThickness.Top);
+                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot) + layoutBorder.BorderThickness.Left);
 
                     Duration duration = new Duration(TimeSpan.FromMilliseconds(3000));
                     DoubleAnimation myDoubleAnimation = new DoubleAnimation();

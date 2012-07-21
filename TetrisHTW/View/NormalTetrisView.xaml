@@ -40,7 +40,8 @@
                 <DoubleAnimation x:Name="animPauseOff" Storyboard.TargetName="levelHint" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="0"/>
             </Storyboard>
             <Storyboard x:Name="levelFontSizeSB">
-                <DoubleAnimation x:Name="animLevelFontSize" Storyboard.TargetName="levelText" Storyboard.TargetProperty="FontSize" Duration="0:0:1" From="30" To="12"/>
+                <!--<DoubleAnimation x:Name="animLevelFontSize" Storyboard.TargetName="levelText" Storyboard.TargetProperty="FontSize" Duration="0:0:1" From="30" To="12"/>-->
+                <DoubleAnimation x:Name="animLevelFontScale" Storyboard.TargetName="levelTextFontScale" Storyboard.TargetProperty="ScaleX" Duration="0:0:1" From="30" To="1"/>
             </Storyboard>
         </Canvas.Resources>
         <Path Canvas.Left="200" StrokeThickness="8" Height="50" Width="75" Name="T" Data="M0,0 L0,0 L75,0 L75,25 L50,25 L50,50 L25,50 L25,25 L0,25 L0,0" Stroke="#16B800FF">
@@ -98,7 +99,7 @@
                 </Rectangle>
             </Canvas>
         </Border>
-        <Border BorderThickness="5" CornerRadius="10" Margin="0" BorderBrush="DarkBlue">
+        <Border Name="layoutBorder" BorderThickness="5" CornerRadius="10" Margin="0" BorderBrush="DarkBlue">
         <Grid x:Name="LayoutRoot" Height="400" Width="285">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="72" />
@@ -156,7 +157,11 @@
                         <RectangleGeometry RadiusX="10" RadiusY="10" Rect="5, 3, 75, 50"/>
                     </StackPanel.Clip>
                     <TextBlock Text="Level" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Text="0" Name="levelText" HorizontalAlignment="Center"/>
+                    <TextBlock Text="0" Name="levelText" HorizontalAlignment="Center" Width="7">
+                        <TextBlock.RenderTransform>
+                            <ScaleTransform x:Name="levelTextFontScale" CenterX="3.5"/>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
                 </StackPanel>
 
                 
