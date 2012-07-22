@@ -147,7 +147,7 @@ namespace TetrisHTW
                         if (timer == null)
                         {
                             lastKey = e.Key;
-                            timer = new Timer(MoveFigure, null, 0, 120);
+                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 70 : 120);
                         }
                         break;
                 }
@@ -340,7 +340,7 @@ namespace TetrisHTW
                     sdk.SetValue(SplineDoubleKeyFrame.ValueProperty, (double)(-1 * rnd.Next(200)));
                     sdk.KeyTime = TimeSpan.FromMilliseconds(rnd.Next(400));
                     KeySpline ks = new KeySpline();
-                    ks.ControlPoint1 = new Point(0, 1);
+                    ks.ControlPoint1 = new Point(0, 0.5);
                     ks.ControlPoint2 = new Point(1, 1);
                     sdk.KeySpline = ks;
                     dauk.KeyFrames.Add(sdk);
