@@ -70,7 +70,6 @@ namespace TetrisHTW.Figures
                     newPoints[0].Y = points[0].Y - 1;
                     break;
             }
-            board.clearPoints(points);
             bool fit = doPointsFit(newPoints);
 
             if (fit)
@@ -140,7 +139,6 @@ namespace TetrisHTW.Figures
                         break;
                 }
             }
-            board.writeCell(points, color);
             return fit;
         }
 

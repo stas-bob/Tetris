@@ -31,7 +31,9 @@ namespace TetrisHTW.Model
 
         int getRows();
 
-        Color getColor();
+        Color getBoardColor();
+
+        Color getFallenPreviewColor();
 
         void NotifyBoardChanged(BoardEventArgs bea);
 

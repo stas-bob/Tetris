@@ -19,6 +19,7 @@ namespace TetrisHTW.Figures
         protected DefaultBoardModel board;
         protected Color color;
         protected Point[] points = new Point[4];
+        private Point[] fallenPoints = new Point[4];
         protected int rotateState;
 
 
@@ -195,11 +196,19 @@ namespace TetrisHTW.Figures
                     newPoints[i] = new Point(points[i].X - 1, points[i].Y);
                 }
                 board.clearPoints(points);
+                if (this.fallenPoints != null)
+                {
+                    board.clearPoints(this.fallenPoints);
+                }
+                
                 bool doFit = doPointsFit(newPoints);
                 if (doFit)
                 {
                     points = newPoints;
                 }
+                Point[] fallenPoints = simulatedFall();
+                this.fallenPoints = fallenPoints;
+                board.writeCell(fallenPoints, board.getFallenPreviewColor());
                 board.writeCell(points, color);
                 return doFit;
             }
@@ -211,16 +220,24 @@ namespace TetrisHTW.Figures
             lock (App.myLock)
             {
                 board.clearPoints(points);
+                if (this.fallenPoints != null)
+                {
+                    board.clearPoints(this.fallenPoints);
+                }
                 Point[] newPoints = new Point[4];
                 for (int i = 0; i < points.Length; i++)
                 {
                     newPoints[i] = new Point(points[i].X + 1, points[i].Y);
                 }
+
                 bool doFit = doPointsFit(newPoints);
                 if (doFit)
                 {
                     points = newPoints;
                 }
+                Point[] fallenPoints = simulatedFall();
+                this.fallenPoints = fallenPoints;
+                board.writeCell(fallenPoints, board.getFallenPreviewColor());
                 board.writeCell(points, color);
                 return doFit;
             }
@@ -231,8 +248,14 @@ namespace TetrisHTW.Figures
         {
             lock (App.myLock)
             {
-                
+                if (this.fallenPoints != null)
+                {
+                    board.clearPoints(this.fallenPoints);
+                }
                 bool fitsOnBoard = doPointsFit(points);
+                Point[] fallenPoints = simulatedFall();
+                this.fallenPoints = fallenPoints;
+                board.writeCell(fallenPoints, board.getFallenPreviewColor());
                 board.writeCell(points, color);
                 if (!fitsOnBoard)
                 {
@@ -245,12 +268,22 @@ namespace TetrisHTW.Figures
             }
         }
 
-        public bool rotate()
+        public void rotate()
         {
             //Wegen Fallthread TODO ??
             lock (App.myLock)
             {
-                return doRotate();
+                if (this.fallenPoints != null)
+                {
+                    board.clearPoints(this.fallenPoints);
+                }
+                board.clearPoints(points);
+                doRotate();
+                
+                Point[] fallenPoints = simulatedFall();
+                this.fallenPoints = fallenPoints;
+                board.writeCell(fallenPoints, board.getFallenPreviewColor());
+                board.writeCell(points, color);
             }
         }
 

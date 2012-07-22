@@ -18,6 +18,7 @@ namespace TetrisHTW.Model
     {
         private Random rnd = new Random();
         private Color boardColor = Color.FromArgb(255, 200, 200, 200);
+        private Color fallenPreviewColor = Color.FromArgb(255, 201, 201, 201);
         private int score;
         private int lines;
         private int level;
@@ -44,9 +45,14 @@ namespace TetrisHTW.Model
             score = 0;
         }
 
-        public Color getColor()
+        public Color getBoardColor()
         {
             return boardColor;
+        }
+
+        public Color getFallenPreviewColor()
+        {
+            return fallenPreviewColor;
         }
 
         public DefaultBoardModel()
@@ -111,7 +117,7 @@ namespace TetrisHTW.Model
 
         public bool isCellColored(int x, int y)
         {
-            return board[x, y] != boardColor;
+            return board[x, y] != boardColor && board[x, y] != fallenPreviewColor;
         }
 
         public int getColumns()

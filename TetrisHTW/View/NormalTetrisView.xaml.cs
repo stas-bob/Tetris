@@ -190,8 +190,47 @@ namespace TetrisHTW
             boardModel.getCurrentFigure().newOnBoard();
 
             GameStart();
-        } 
+        }
 
+
+
+        public Brush getBrushByColor(Color currentCellColor)
+        {
+            Brush b = null;
+            if (currentCellColor == Colors.Blue)
+            {
+                b = Application.Current.Resources["BluePointBrush"] as Brush;
+            }
+            else if (currentCellColor == Colors.Yellow)
+            {
+                b = Application.Current.Resources["YellowPointBrush"] as Brush;
+            }
+            else if (currentCellColor == Colors.Green)
+            {
+                b = Application.Current.Resources["GreenPointBrush"] as Brush;
+            }
+            else if (currentCellColor == Colors.Red)
+            {
+                b = Application.Current.Resources["RedPointBrush"] as Brush;
+            }
+            else if (currentCellColor == Colors.Purple)
+            {
+                b = Application.Current.Resources["PurplePointBrush"] as Brush;
+            }
+            else if (currentCellColor == Colors.Cyan)
+            {
+                b = Application.Current.Resources["CyanPointBrush"] as Brush;
+            }
+            else if (currentCellColor == Colors.Orange)
+            {
+                b = Application.Current.Resources["OrangePointBrush"] as Brush;
+            }
+            else if (currentCellColor == boardModel.getFallenPreviewColor())
+            {
+                b = Application.Current.Resources["PreviewPointBrush"] as Brush;
+            }
+            return b;
+        }
 
         public void BoardChanged(object sender, BoardEventArgs bea)
         {
@@ -215,44 +254,19 @@ namespace TetrisHTW
                     Rectangle rect = (Rectangle)frameWorkElement;
                     int x = Grid.GetColumn(frameWorkElement);
                     int y = Grid.GetRow(frameWorkElement);
-                    Color currentFigureColor = data[x, y];
-                    if (currentFigureColor != boardModel.getColor())
+                    Color currentCellColor = data[x, y];
+                    
+                    if (currentCellColor == boardModel.getBoardColor())
                     {
-                        Brush b = null;
-                        if (currentFigureColor == Colors.Blue)
-                        {
-                            b = Application.Current.Resources["BluePointBrush"] as Brush;
-                        } 
-                        else if (currentFigureColor == Colors.Yellow)
-                        {
-                            b = Application.Current.Resources["YellowPointBrush"] as Brush;
-                        } 
-                        else if (currentFigureColor == Colors.Green)
-                        {
-                            b = Application.Current.Resources["GreenPointBrush"] as Brush;
-                        } 
-                        else if (currentFigureColor == Colors.Red)
-                        {
-                            b = Application.Current.Resources["RedPointBrush"] as Brush;
-                        } 
-                        else if (currentFigureColor == Colors.Purple)
-                        {
-                            b = Application.Current.Resources["PurplePointBrush"] as Brush;
-                        } 
-                        else if (currentFigureColor == Colors.Cyan)
-                        {
-                            b = Application.Current.Resources["CyanPointBrush"] as Brush;
-                        } 
-                        else if (currentFigureColor == Colors.Orange)
-                        {
-                            b = Application.Current.Resources["OrangePointBrush"] as Brush;
-                        }
-
-                        rect.Fill = b;
+                        rect.Fill = new SolidColorBrush(Colors.Transparent);
+                    }
+                    else if (currentCellColor == boardModel.getFallenPreviewColor())
+                    {
+                        rect.Fill = getBrushByColor(boardModel.getFallenPreviewColor());
                     }
                     else
                     {
-                        rect.Fill = new SolidColorBrush(Colors.Transparent);
+                        rect.Fill = getBrushByColor(currentCellColor);
                     }
 
                 }
@@ -297,7 +311,6 @@ namespace TetrisHTW
                     {
                         b = Application.Current.Resources["OrangePointBrush"] as Brush;
                     }
-
                     rect.Fill = b;
                 }
             });
