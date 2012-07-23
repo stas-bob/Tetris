@@ -522,7 +522,7 @@ namespace TetrisHTW
                 tools.Point[] points = ffea.figurePoints;
                 List<Rectangle> rectangles = getBoardRectangles(points);
                 Storyboard sb = new Storyboard();
-                sb.Duration = TimeSpan.FromMilliseconds(200);
+                sb.Duration = TimeSpan.FromMilliseconds(400);
                 foreach (Rectangle rectangle in rectangles)
                 {
                     Duration duration = TimeSpan.FromMilliseconds(200);
