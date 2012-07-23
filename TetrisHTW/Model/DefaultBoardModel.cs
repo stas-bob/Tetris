@@ -160,6 +160,20 @@ namespace TetrisHTW.Model
             NotifyBoardChanged(new BoardEventArgs(getBoardData()));
         }
 
+        public void writeCell(Point[] points, Point[] fallenPreviewPoints, Color pointsC, Color fppC)
+        {
+            for (int i = 0; i < fallenPreviewPoints.Length; i++)
+            {
+                board[(int)fallenPreviewPoints[i].X, (int)fallenPreviewPoints[i].Y] = fppC;
+            }
+            for (int i = 0; i < points.Length; i++)
+            {
+                board[(int)points[i].X, (int)points[i].Y] = pointsC;
+            }
+            
+            NotifyBoardChanged(new BoardEventArgs(getBoardData()));
+        }
+
         public Color[,] getBoardData()
         {
             return board;

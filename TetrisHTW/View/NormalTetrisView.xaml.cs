@@ -23,7 +23,6 @@ namespace TetrisHTW
     public partial class NormalTetrisView : UserControl
     {
 
-        private bool gameStop;
         private BoardModel boardModel;
         private FallWorker fallWorker;
         private Timer timer;
@@ -32,10 +31,10 @@ namespace TetrisHTW
         private Random rnd = new Random();
         private bool pause;
         private bool hardFall;
+        private bool gameOver;
 
         public NormalTetrisView()
         {
-            
             this.boardModel = App.getInstance().getBoardModel();
             InitializeComponent();
             /*Hier werden die Grids initialisiert*/
@@ -44,11 +43,11 @@ namespace TetrisHTW
             App.getInstance().RootVisual.KeyDown += new KeyEventHandler(Page_KeyDown);
             App.getInstance().RootVisual.KeyUp += new KeyEventHandler(Page_KeyUp);
             /* Hier kommen die Event Listener fuers Spiel*/
-            boardModel.BoardChanged += new BoardChangedEventHandler(BoardChanged);
-            boardModel.ScoreChanged += new ScoreChangedEventHandler(ScoreChanged);
-            boardModel.LineChanged += new LineChangedEventHandler(LineChanged);
-            App.getInstance().GameOverEvent += new GameOverEventHandler(GameOver);
-            App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(FigureFallen);
+            boardModel.BoardChanged += new BoardChangedEventHandler(OnBoardChanged);
+            boardModel.ScoreChanged += new ScoreChangedEventHandler(OnScoreChanged);
+            boardModel.LineChanged += new LineChangedEventHandler(OnLineChanged);
+            App.getInstance().GameOverEvent += new GameOverEventHandler(OnGameOver);
+            App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(OnFigureFallen);
 
             this.InitGame();
             /*Background Animation*/
@@ -121,37 +120,42 @@ namespace TetrisHTW
         /*KeyboardListener fuer druecken einer Taste*/
         void Page_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.P)
+            if (!gameOver)
             {
-                if (!pause)
+                if (e.Key == Key.P)
                 {
-                    GamePause();
-                    pause = true;
-                    pauseOnSB.Begin();
+                    if (!pause)
+                    {
+                        GamePause();
+                        pause = true;
+                        pauseOnSB.Begin();
+                    }
+                    else
+                    {
+                        pauseOffSB.Begin();
+                        pause = false;
+                        GameResume();
+                    }
                 }
                 else
                 {
-                    pauseOffSB.Begin();
-                    pause = false;
-                    GameResume();
-                }
-            }
-            if (!gameStop && !pause)
-            {
-                switch (e.Key)
-                {
-                    case Key.Up: boardModel.getCurrentFigure().rotate(); break;
-                    case Key.Space: boardModel.getCurrentFigure().fallCompletely(); break;
-                    default: 
-                        /* Dieser Timer ist fuer das fluessige links rechts und nach unten Bewegen */
-                        if (timer == null)
+                    if (!pause)
+                    {
+                        switch (e.Key)
                         {
-                            lastKey = e.Key;
-                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 70 : 120);
+                            case Key.Up: boardModel.getCurrentFigure().rotate(); break;
+                            case Key.Space: boardModel.getCurrentFigure().fallCompletely(); break;
+                            default:
+                                /* Dieser Timer ist fuer das fluessige links rechts und nach unten Bewegen */
+                                if (timer == null)
+                                {
+                                    lastKey = e.Key;
+                                    timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 70 : 140);
+                                }
+                                break;
                         }
-                        break;
+                    }
                 }
-               
             }
         }
 
@@ -176,11 +180,8 @@ namespace TetrisHTW
 
         private void InitGame()
         {
-            StopGame();
-            FallWorker.Instance.setLevel(0);
             boardModel.setScore(0);
             boardModel.setLines(0);
-            boardModel.clearBoard();
             Figure preview = boardModel.generateRandomFigure();
             Figure current = boardModel.generateRandomFigure();
 
@@ -232,7 +233,7 @@ namespace TetrisHTW
             return b;
         }
 
-        public void BoardChanged(object sender, BoardEventArgs bea)
+        public void OnBoardChanged(object sender, BoardEventArgs bea)
         {
             Dispatcher.BeginInvoke(delegate
             {
@@ -282,36 +283,7 @@ namespace TetrisHTW
                 Color currentPreviewFigureColor = boardModel.getPreviewFigure().getColor();
                 foreach (Rectangle rect in previewRectangles)
                 {
-                    Brush b = null;
-                    if (currentPreviewFigureColor == Colors.Blue)
-                    {
-                        b = Application.Current.Resources["BluePointBrush"] as Brush;
-                    } 
-                    else if (currentPreviewFigureColor == Colors.Yellow)
-                    {
-                        b = Application.Current.Resources["YellowPointBrush"] as Brush;
-                    } 
-                    else  if (currentPreviewFigureColor == Colors.Green)
-                    {
-                        b = Application.Current.Resources["GreenPointBrush"] as Brush;
-                    }
-                    else if (currentPreviewFigureColor == Colors.Red)
-                    {
-                        b = Application.Current.Resources["RedPointBrush"] as Brush;
-                    }
-                    else if (currentPreviewFigureColor == Colors.Purple)
-                    {
-                        b = Application.Current.Resources["PurplePointBrush"] as Brush;
-                    }
-                    else if (currentPreviewFigureColor == Colors.Cyan)
-                    {
-                        b = Application.Current.Resources["CyanPointBrush"] as Brush;
-                    }
-                    else if (currentPreviewFigureColor == Colors.Orange)
-                    {
-                        b = Application.Current.Resources["OrangePointBrush"] as Brush;
-                    }
-                    rect.Fill = b;
+                    rect.Fill = getBrushByColor(currentPreviewFigureColor);
                 }
             });
         }
@@ -343,6 +315,7 @@ namespace TetrisHTW
                     rect.RenderTransform = ct;
                    
                    
+
                     //Bewegung
                     DoubleAnimationUsingKeyFrames dauk = new DoubleAnimationUsingKeyFrames();
                     Storyboard.SetTargetProperty(dauk, new PropertyPath("(UIElement.RenderTransform).(CompositeTransform.TranslateY)"));
@@ -371,7 +344,7 @@ namespace TetrisHTW
                     DoubleAnimation da = new DoubleAnimation();
                     Storyboard.SetTargetProperty(da, new PropertyPath("(UIElement.RenderTransform).(CompositeTransform.Rotation)"));
                     Storyboard.SetTarget(da, rect);
-                    da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+                    da.Duration = TimeSpan.FromMilliseconds(200);
                     int fac = rnd.Next(2) == 0 ? -1 : 1;
 
                     da.To = fac*360.0;
@@ -404,6 +377,7 @@ namespace TetrisHTW
             {
                 LayoutRoot.Resources.Add("unique_id", sb);
             }
+            sb.Duration = TimeSpan.FromMilliseconds(1000);
             sb.Completed += new EventHandler((a, b) =>
             {
                 foreach (var rect in animatedRectangled)
@@ -417,6 +391,7 @@ namespace TetrisHTW
         private void animateRemovedLinesSoft(List<int> removedLines)
         {
             Storyboard sb = new Storyboard();
+            
             List<Rectangle> animatedRectangled = new List<Rectangle>();
             foreach (int y in removedLines)
             {
@@ -502,6 +477,7 @@ namespace TetrisHTW
             {
                 LayoutRoot.Resources.Add("unique_id", sb);
             }
+            sb.Duration = TimeSpan.FromMilliseconds(1000);
             sb.Completed += new EventHandler((a, b) =>
             {
                 foreach (var rect in animatedRectangled)
@@ -512,7 +488,7 @@ namespace TetrisHTW
             sb.Begin();
         }
 
-        public void ScoreChanged(object sender, ScoreEventArgs bea)
+        public void OnScoreChanged(object sender, ScoreEventArgs bea)
         {
             Dispatcher.BeginInvoke(delegate
             {
@@ -528,7 +504,7 @@ namespace TetrisHTW
             
         }
 
-        public void LineChanged(object sender, LineEventArgs lea)
+        public void OnLineChanged(object sender, LineEventArgs lea)
         {
             Dispatcher.BeginInvoke(delegate
             {
@@ -538,7 +514,7 @@ namespace TetrisHTW
 
         }
 
-        public void FigureFallen(object sender, FigureFallenEventArgs ffea)
+        public void OnFigureFallen(object sender, FigureFallenEventArgs ffea)
         {
             Dispatcher.BeginInvoke(delegate
             {
@@ -546,9 +522,10 @@ namespace TetrisHTW
                 tools.Point[] points = ffea.figurePoints;
                 List<Rectangle> rectangles = getBoardRectangles(points);
                 Storyboard sb = new Storyboard();
+                sb.Duration = TimeSpan.FromMilliseconds(200);
                 foreach (Rectangle rectangle in rectangles)
                 {
-                    Duration duration = new Duration(TimeSpan.FromMilliseconds(200));
+                    Duration duration = TimeSpan.FromMilliseconds(200);
                     DoubleAnimation myDoubleAnimation = new DoubleAnimation();
                     myDoubleAnimation.Duration = duration;
                     myDoubleAnimation.AutoReverse = true;
@@ -560,6 +537,7 @@ namespace TetrisHTW
                 }
                 if (!ffea.PointsAreEqual())
                 {
+                    sb.Duration = TimeSpan.FromMilliseconds(3000);
                     hardFall = true;
                     int maxY = getMax(points, false);
                     int minY = getMin(ffea.previousFigurePoints, false);
@@ -598,7 +576,7 @@ namespace TetrisHTW
                     Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot) + layoutBorder.BorderThickness.Top);
                     Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot) + layoutBorder.BorderThickness.Left);
 
-                    Duration duration = new Duration(TimeSpan.FromMilliseconds(3000));
+                    Duration duration = TimeSpan.FromMilliseconds(3000);
                     DoubleAnimation myDoubleAnimation = new DoubleAnimation();
                     myDoubleAnimation.Duration = duration;
                     Storyboard.SetTarget(myDoubleAnimation, gs2);
@@ -610,6 +588,7 @@ namespace TetrisHTW
                         canvas.Children.Remove(effectRectangle);
                     });
                 }
+                
                 if (!LayoutRoot.Resources.Contains("unique_id"))
                 {
                     LayoutRoot.Resources.Add("unique_id", sb);
@@ -721,28 +700,28 @@ namespace TetrisHTW
             return rectangles;
         }
 
-        public void GameOver(object sender, GameOverEventArgs goea)
+        public void OnGameOver(object sender, GameOverEventArgs goea)
         {
             Dispatcher.BeginInvoke(delegate
             {
                 Debug.WriteLine("game over");
                 scoreText.Text = "game over";
-                StopGame();
+                GameOver();
             });
         }
 
-        public void StopGame()
+        public void GameOver()
         {
             if (fallWorker != null)
             {
                 fallWorker.RequestStop();
             }
-            gameStop = true;
+            gameOver = true;
         }
 
         public void GameStart()
         {
-            gameStop = false;
+            gameOver = false;
             fallWorker = FallWorker.Instance;
             new Thread(fallWorker.InvokeFalling).Start();
         }
@@ -750,7 +729,7 @@ namespace TetrisHTW
 
         public void GamePause()
         {
-            if (!gameStop) 
+            if (!gameOver) 
             {
                 pause = true;
                 if (fallWorker != null)
@@ -762,7 +741,7 @@ namespace TetrisHTW
 
         public void GameResume()
         {
-            if (!gameStop)
+            if (!gameOver)
             {
                 pause = false;
                 new Thread(fallWorker.InvokeFalling).Start();

@@ -208,8 +208,7 @@ namespace TetrisHTW.Figures
                 }
                 Point[] fallenPoints = simulatedFall();
                 this.fallenPoints = fallenPoints;
-                board.writeCell(fallenPoints, board.getFallenPreviewColor());
-                board.writeCell(points, color);
+                board.writeCell(points, fallenPoints, color, board.getFallenPreviewColor());
                 return doFit;
             }
         }
@@ -237,8 +236,7 @@ namespace TetrisHTW.Figures
                 }
                 Point[] fallenPoints = simulatedFall();
                 this.fallenPoints = fallenPoints;
-                board.writeCell(fallenPoints, board.getFallenPreviewColor());
-                board.writeCell(points, color);
+                board.writeCell(points, fallenPoints, color, board.getFallenPreviewColor());
                 return doFit;
             }
         }
@@ -255,8 +253,7 @@ namespace TetrisHTW.Figures
                 bool fitsOnBoard = doPointsFit(points);
                 Point[] fallenPoints = simulatedFall();
                 this.fallenPoints = fallenPoints;
-                board.writeCell(fallenPoints, board.getFallenPreviewColor());
-                board.writeCell(points, color);
+                board.writeCell(points, fallenPoints, color, board.getFallenPreviewColor());
                 if (!fitsOnBoard)
                 {
                     App.getInstance().gameOver();
@@ -270,7 +267,7 @@ namespace TetrisHTW.Figures
 
         public void rotate()
         {
-            //Wegen Fallthread TODO ??
+            //Wegen Fallthread
             lock (App.myLock)
             {
                 if (this.fallenPoints != null)
@@ -278,18 +275,18 @@ namespace TetrisHTW.Figures
                     board.clearPoints(this.fallenPoints);
                 }
                 board.clearPoints(points);
+
                 doRotate();
                 
                 Point[] fallenPoints = simulatedFall();
                 this.fallenPoints = fallenPoints;
-                board.writeCell(fallenPoints, board.getFallenPreviewColor());
-                board.writeCell(points, color);
+                board.writeCell(points, fallenPoints, color, board.getFallenPreviewColor());
             }
         }
 
-        protected virtual bool doRotate()
+        protected virtual void doRotate()
         {
-            return false;
+
         }
 
         public abstract string toString();
