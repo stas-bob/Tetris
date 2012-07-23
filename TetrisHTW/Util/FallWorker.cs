@@ -18,7 +18,7 @@ namespace TetrisHTW
         private static volatile FallWorker instance;
         private static object syncRoot = new Object();
 
-        private int level = 1;
+        private int level = 0;
 
         private FallWorker() { }
 

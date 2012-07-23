@@ -62,7 +62,9 @@ namespace TetrisHTW.Model
 
         public void collapse(List<int> linesToRemove)
         {
-            linesToRemove.Sort();
+            linesToRemove.Sort(delegate(int a, int b) {
+                return a.CompareTo(b);    
+            });
             for (int i = 0; i < linesToRemove.Count; i++)
             {
                 shiftToLine(linesToRemove[i]);
@@ -160,6 +162,7 @@ namespace TetrisHTW.Model
             NotifyBoardChanged(new BoardEventArgs(getBoardData()));
         }
 
+        /*mit vorschaupunkten*/
         public void writeCell(Point[] points, Point[] fallenPreviewPoints, Color pointsC, Color fppC)
         {
             for (int i = 0; i < fallenPreviewPoints.Length; i++)
@@ -195,7 +198,7 @@ namespace TetrisHTW.Model
             ScoreEventArgs sea = new ScoreEventArgs();
             sea.score = this.score;
 
-            checkLevel();
+            updateLevel();
             
             sea.level = this.level;
             NotifyScoreChanged(sea);
@@ -203,7 +206,7 @@ namespace TetrisHTW.Model
 
       
 
-        private void checkLevel()
+        private void updateLevel()
         {
             
             if (lines < 10)

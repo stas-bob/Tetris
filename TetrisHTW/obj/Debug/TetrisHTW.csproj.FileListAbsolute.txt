@@ -406,3 +406,8 @@ C:\Users\Mathias\Git\Tetris\Tetris\TetrisHTW\Bin\Debug\zh-Hant\System.Windows.Da
 C:\Users\Mathias\Git\Tetris\Tetris\TetrisHTW\obj\Debug\View\IndexView.g.i.cs
 C:\Users\Mathias\Git\Tetris\Tetris\TetrisHTW\obj\Debug\View\NormalTetrisView.g.i.cs
 C:\Users\Mathias\Git\Tetris\Tetris\TetrisHTW\obj\Debug\View\OptionsView.g.i.cs
+C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\System.ComponentModel.DataAnnotations.xml
+C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\System.Windows.Controls.Data.xml
+C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\System.Windows.Controls.Data.Input.xml
+C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\System.Windows.Controls.Navigation.xml
+C:\Users\bline\Documents\Visual Studio 2010\Projects\Tetris\TetrisHTW\Bin\Debug\System.Windows.Data.xml
