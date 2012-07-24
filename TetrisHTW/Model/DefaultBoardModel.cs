@@ -78,19 +78,23 @@ namespace TetrisHTW.Model
             NotifyBoardChanged(bae);
             if (linesToRemove.Count > 0)
             {
-                setScore(calcScore(linesToRemove.Count));
+                setScore(calcScore(linesToRemove));
                 setLines(lines);
             }
         }
 
-        private int calcScore(int lines)
+        /*
+         * Errechnet den Score anhand der Anzahl gelöschten Zeile und der Höhe
+         */
+        private int calcScore(List<int> linesToRemove)
         {
+            linesToRemove.Reverse();
             double tmpScore = 0;
-            for (int i = 1; i <= lines; i++)
+            for (int i = 1; i <= linesToRemove.Count; i++)
             {
                 switch (level)
                 {
-                    case 0: tmpScore += Math.Pow(50, calcLines(i)); break;
+                    case 0: tmpScore += Math.Pow(50 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
                     case 1: tmpScore += Math.Pow(100, calcLines(i)); break;
                     case 2: tmpScore += Math.Pow(150, calcLines(i)); break;
                     case 3: tmpScore += Math.Pow(200, calcLines(i)); break;
@@ -105,6 +109,9 @@ namespace TetrisHTW.Model
             return (int)tmpScore;
         }
 
+        /**
+         * Gibt einen Wert zurück, so dass der Score anhand der auf einmal gelöschten Zeilen ansteigt
+         */
         private double calcLines(int lines)
         {
             switch (lines)
@@ -115,6 +122,15 @@ namespace TetrisHTW.Model
                 case 4: return 1.075;
             }
             return 0.0;
+        }
+
+        /*
+         * Gibt einen Wert zurück, um den Score nach der Höhe der Zeile zu berrechnen die gelöscht wird
+         */
+        private int calcHeight(int height)
+        {
+            return ((height + 1) - 20) * -1;
+
         }
 
         public bool isCellColored(int x, int y)
