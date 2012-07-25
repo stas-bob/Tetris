@@ -45,7 +45,7 @@
             <TextBlock Text="Anleitung:"/>
             <TextBlock Text="Test"/>
             <TextBlock Text="Spielername:"/>
-            <TextBox />
+            <TextBox Name="playerNameTextBox" />
             <Button Content="Spielen" Click="Spielen_Click"/>
             <Button Content="Zurück" Click="Zurueck_Click"/>
         </StackPanel>

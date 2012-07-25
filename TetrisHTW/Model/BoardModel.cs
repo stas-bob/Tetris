@@ -48,6 +48,8 @@ namespace TetrisHTW.Model
 
         int getScore();
 
+        int getLevel();
+
         void setScore(int score);
 
         Figure generateRandomFigure();

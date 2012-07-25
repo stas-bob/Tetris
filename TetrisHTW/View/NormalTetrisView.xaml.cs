@@ -14,6 +14,7 @@ using TetrisHTW.Model;
 using System.Threading;
 using System.Diagnostics;
 using TetrisHTW.Figures;
+using TetrisHTW.Util;
 
 namespace TetrisHTW
 {
@@ -32,9 +33,15 @@ namespace TetrisHTW
         private bool pause;
         private bool hardFall;
         private bool gameOver;
+        private SQLClient sqlClient = new SQLClient("http://stl-l-18.htw-saarland.de:8080/TetrisSQLProxy/SQLProxyServlet");
+        private string playerName;
+        private long time;
+        private List<long> timeList = new List<long>();
+        public const int MOD = 1;
 
-        public NormalTetrisView()
+        public NormalTetrisView(string playerName)
         {
+            this.playerName = playerName;
             this.boardModel = App.getInstance().getBoardModel();
             InitializeComponent();
             /*Hier werden die Grids initialisiert*/
@@ -717,6 +724,13 @@ namespace TetrisHTW
                 fallWorker.RequestStop();
             }
             gameOver = true;
+            timeList.Add(DateTime.Now.Ticks - time);
+            time = 0;
+            foreach (long t in timeList)
+            {
+                time += t;
+            }
+            sqlClient.writeScore(playerName, boardModel.getScore(), boardModel.getLevel(), time, MOD);
         }
 
         public void GameStart()
@@ -724,6 +738,7 @@ namespace TetrisHTW
             gameOver = false;
             fallWorker = FallWorker.Instance;
             new Thread(fallWorker.InvokeFalling).Start();
+            time = DateTime.Now.Ticks;
         }
 
 
@@ -736,6 +751,7 @@ namespace TetrisHTW
                 {
                     fallWorker.RequestStop();
                 }
+                timeList.Add(DateTime.Now.Ticks - time);
             }
         }
 
@@ -745,6 +761,7 @@ namespace TetrisHTW
             {
                 pause = false;
                 new Thread(fallWorker.InvokeFalling).Start();
+                time = DateTime.Now.Ticks;
             }
         }
     }

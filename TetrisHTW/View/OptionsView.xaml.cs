@@ -21,7 +21,12 @@ namespace TetrisHTW.View
 
         private void Spielen_Click(object sender, RoutedEventArgs e)
         {
-            NormalTetrisView ntv = new NormalTetrisView(); 
+            bool unknown = false;
+            if (playerNameTextBox.Text == null || playerNameTextBox.Text.Equals(""))
+            {
+                unknown = true;
+            }
+            NormalTetrisView ntv = new NormalTetrisView(unknown ? "Unbekannt" : playerNameTextBox.Text); 
             this.Content = ntv;
             App.getInstance().RootVisual = ntv;
         }

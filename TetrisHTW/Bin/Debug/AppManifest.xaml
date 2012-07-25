@@ -6,10 +6,12 @@
     <AssemblyPart x:Name="System.Windows.Controls.Data.Input" Source="System.Windows.Controls.Data.Input.dll" />
     <AssemblyPart x:Name="System.Windows.Controls.Navigation" Source="System.Windows.Controls.Navigation.dll" />
     <AssemblyPart x:Name="System.Windows.Data" Source="System.Windows.Data.dll" />
+    <AssemblyPart x:Name="System.Xml.Linq" Source="System.Xml.Linq.dll" />
     <AssemblyPart Source="de/System.ComponentModel.DataAnnotations.resources.dll" />
     <AssemblyPart Source="de/System.Windows.Controls.Data.resources.dll" />
     <AssemblyPart Source="de/System.Windows.Controls.Data.Input.resources.dll" />
     <AssemblyPart Source="de/System.Windows.Controls.Navigation.resources.dll" />
     <AssemblyPart Source="de/System.Windows.Data.resources.dll" />
+    <AssemblyPart Source="de/System.Xml.Linq.resources.dll" />
   </Deployment.Parts>
 </Deployment>

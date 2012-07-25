@@ -192,6 +192,11 @@ namespace TetrisHTW.Model
             return score;
         }
 
+        public int getLevel()
+        {
+            return level;
+        }
+
         public void setScore(int score)
         {
             this.score += score;
