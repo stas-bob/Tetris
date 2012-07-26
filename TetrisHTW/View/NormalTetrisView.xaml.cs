@@ -717,7 +717,7 @@ namespace TetrisHTW
         private void GameStart()
         {
             gameOver = false;
-            fallWorker = new FallWorker();
+            fallWorker = new FallWorker(boardModel.getLevel());
             new Thread(fallWorker.InvokeFalling).Start();
             time = DateTime.Now.Ticks;
         }
@@ -742,7 +742,7 @@ namespace TetrisHTW
             if (!gameOver)
             {
                 pause = false;
-                fallWorker = new FallWorker();
+                fallWorker = new FallWorker(boardModel.getLevel());
                 new Thread(fallWorker.InvokeFalling).Start();
                 time = DateTime.Now.Ticks;
                 

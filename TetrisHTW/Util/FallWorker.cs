@@ -20,6 +20,10 @@ namespace TetrisHTW
 
         private int level = 0;
 
+        public FallWorker(int level)
+        {
+            this.level = level;
+        }
 
         public void setLevel(int level)
         {
