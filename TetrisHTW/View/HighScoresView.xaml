@@ -6,7 +6,8 @@
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480">
-    <Grid x:Name="LayoutRoot">
-        <StackPanel  Height="456" HorizontalAlignment="Left" Margin="12,12,0,0" Name="stackPanel1" VerticalAlignment="Top" Width="616" />
-    </Grid>
+    <StackPanel x:Name="LayoutRoot">
+        <StackPanel HorizontalAlignment="Center" Margin="20" Name="stackPanel1" VerticalAlignment="Top"/>
+        <Button Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="Button_Click"/>
+    </StackPanel>
 </UserControl>

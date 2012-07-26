@@ -42,16 +42,17 @@ namespace TetrisHTW.View
         {
             if (hv == null)
             {
-                hv = new HighScoresView();
+                hv = new HighScoresView(this);
             }
             rootContainer.Child = hv;
+            hv.update();
         }
 
         private void Ueber_Click(object sender, RoutedEventArgs e)
         {
             if (av == null)
             {
-                av = new AboutView();
+                av = new AboutView(this);
             }
             rootContainer.Child = av;
         }

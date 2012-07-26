@@ -18,19 +18,25 @@ namespace TetrisHTW.View
     public partial class HighScoresView : UserControl
     {
         private SQLClient sqlClient = new SQLClient("http://stl-l-18.htw-saarland.de:8080/TetrisSQLProxy/SQLProxyServlet");
+        private IndexView iv;
 
-        public HighScoresView()
+        public HighScoresView(IndexView iv)
         {
-            
+            this.iv = iv;        
 
             InitializeComponent();
 
-            sqlClient.requestScores(callback, error, 100);
         }
 
+        public void update()
+        {
+            sqlClient.requestScores(callback, error, 100);
+        }
         public void callback(System.Collections.Generic.List<string> playerNames, System.Collections.Generic.List<int> levels, System.Collections.Generic.List<int> scores, System.Collections.Generic.List<string> times, System.Collections.Generic.List<int> mods)
         {
             Dispatcher.BeginInvoke(() => {
+                stackPanel1.Children.Clear();
+
                 for (int i = 0; i < playerNames.Count; i++)
                 {
                     TextBlock tb = new TextBlock();
@@ -48,6 +54,11 @@ namespace TetrisHTW.View
                 tb.Text = msg;
                 stackPanel1.Children.Add(tb);
             });
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            iv.rootContainer.Child = iv.LayoutRoot;
         }
 
     }

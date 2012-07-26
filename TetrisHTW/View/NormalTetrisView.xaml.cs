@@ -561,8 +561,8 @@ namespace TetrisHTW
 
                     effectRectangle.Fill = lgb;
                     canvas.Children.Add(effectRectangle);
-                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot) + boardBorder.BorderThickness.Left);
-                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot) + boardBorder.BorderThickness.Top);
+                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot));
+                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot));
 
                     Duration duration = TimeSpan.FromMilliseconds(3000);
                     DoubleAnimation myDoubleAnimation = new DoubleAnimation();

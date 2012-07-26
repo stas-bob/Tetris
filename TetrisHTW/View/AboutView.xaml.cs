@@ -15,9 +15,16 @@ namespace TetrisHTW.View
 {
     public partial class AboutView : UserControl
     {
-        public AboutView()
+        private IndexView iv;
+        public AboutView(IndexView iv)
         {
+            this.iv = iv;
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            iv.rootContainer.Child = iv.LayoutRoot;
         }
     }
 }

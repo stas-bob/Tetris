@@ -6,7 +6,9 @@
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480">
-    <Grid x:Name="LayoutRoot">
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="229,235,0,0" Name="textBlock1" Text="Stas Thomas Mathias" VerticalAlignment="Top" />
-    </Grid>
+    <StackPanel x:Name="LayoutRoot">
+        <TextBlock HorizontalAlignment="Center" Name="textBlock1" Text="{StaticResource AboutText}" VerticalAlignment="Top" Margin="130" TextWrapping="Wrap"/>
+
+        <Button Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="Button_Click"/>
+    </StackPanel>
 </UserControl>
