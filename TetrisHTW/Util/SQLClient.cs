@@ -111,24 +111,30 @@ namespace TetrisHTW.Util
                 List<int> scores = new List<int>();
                 List<string> times = new List<string>();
                 List<int> mods = new List<int>();
-
-                XElement root = XElement.Parse(e.Result);
-                
-                foreach (XElement scoreentry in root.Nodes())
+                try
                 {
-                    string playerName = (string)scoreentry.Element("playername");
-                    int level = int.Parse((string)scoreentry.Element("level"));
-                    int score = int.Parse((string)scoreentry.Element("score"));
-                    string time = (string)scoreentry.Element("time");
-                    int mod = int.Parse((string)scoreentry.Element("mod"));
+                    XElement root = XElement.Parse(e.Result);
 
-                    playerNames.Add(playerName);
-                    levels.Add(level);
-                    scores.Add(score);
-                    times.Add(time);
-                    mods.Add(mod);
+                    foreach (XElement scoreentry in root.Nodes())
+                    {
+                        string playerName = (string)scoreentry.Element("playername");
+                        int level = int.Parse((string)scoreentry.Element("level"));
+                        int score = int.Parse((string)scoreentry.Element("score"));
+                        string time = (string)scoreentry.Element("time");
+                        int mod = int.Parse((string)scoreentry.Element("mod"));
+
+                        playerNames.Add(playerName);
+                        levels.Add(level);
+                        scores.Add(score);
+                        times.Add(time);
+                        mods.Add(mod);
+                    }
+                    cb(playerNames, levels, scores, times, mods);
                 }
-                cb(playerNames, levels, scores, times, mods);
+                catch (Exception exc)
+                {
+                    ecb(exc.Message + " Fehler, eventuell ist der Server nicht erreichbar.");
+                }
             }
             else
                 ecb(e.Error.Message);

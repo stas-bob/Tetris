@@ -28,7 +28,9 @@ namespace TetrisHTW.View
 
         private void Highscore_Click(object sender, RoutedEventArgs e)
         {
+            
             this.Content = new HighScores();
+            
         }
         private void Ueber_Click(object sender, RoutedEventArgs e)
         {

@@ -21,6 +21,8 @@ namespace TetrisHTW.View
 
         public HighScores()
         {
+            
+
             InitializeComponent();
 
             sqlClient.requestScores(callback, error, 100);
@@ -40,7 +42,12 @@ namespace TetrisHTW.View
 
         public void error(string msg)
         {
-            Debug.WriteLine(msg);
+            Dispatcher.BeginInvoke(() =>
+            {
+                TextBlock tb = new TextBlock();
+                tb.Text = msg;
+                stackPanel1.Children.Add(tb);
+            });
         }
 
     }
