@@ -38,10 +38,14 @@ namespace TetrisHTW
         private string playerName;
         private long time;
         private List<long> timeList = new List<long>();
+        private OptionsView ov;
+        private IndexView iv;
         public const int MOD = 1;
 
-        public NormalTetrisView()
+        public NormalTetrisView(OptionsView ov, IndexView iv)
         {
+            this.iv = iv;
+            this.ov = ov;
             this.boardModel = App.getInstance().getBoardModel();
             InitializeComponent();
             /*Hier werden die Grids initialisiert*/
@@ -56,8 +60,6 @@ namespace TetrisHTW
             App.getInstance().GameOverEvent += new GameOverEventHandler(OnGameOver);
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(OnFigureFallen);
             playerName = "Unbekannt";
-
-            this.InitGame();
         }
 
         void initBoard()
@@ -163,10 +165,8 @@ namespace TetrisHTW
             }
         }
 
-        private void InitGame()
+        public void InitGame()
         {
-            boardModel.setScore(0);
-            boardModel.setLines(0);
             Figure preview = boardModel.generateRandomFigure();
             Figure current = boardModel.generateRandomFigure();
 
@@ -484,7 +484,7 @@ namespace TetrisHTW
                 levelText.Text = bea.level + "";
                 if (previousLevel != bea.level)
                 {
-                    FallWorker.Instance.setLevel(bea.level);
+                    fallWorker.setLevel(bea.level);
                     previousLevel = bea.level;
                     levelFontSizeSB.Begin();
                 }
@@ -698,7 +698,7 @@ namespace TetrisHTW
             });
         }
 
-        public void GameOver()
+        private void GameOver()
         {
             if (fallWorker != null)
             {
@@ -714,16 +714,17 @@ namespace TetrisHTW
             sqlClient.writeScore(playerName, boardModel.getScore(), boardModel.getLevel(), time, MOD);
         }
 
-        public void GameStart()
+        private void GameStart()
         {
             gameOver = false;
-            fallWorker = FallWorker.Instance;
+            fallWorker = new FallWorker();
             new Thread(fallWorker.InvokeFalling).Start();
             time = DateTime.Now.Ticks;
         }
 
 
-        public void GamePause()
+
+        private void GamePause()
         {
             if (!gameOver) 
             {
@@ -736,14 +737,42 @@ namespace TetrisHTW
             }
         }
 
-        public void GameResume()
+        private void GameResume()
         {
             if (!gameOver)
             {
                 pause = false;
+                fallWorker = new FallWorker();
                 new Thread(fallWorker.InvokeFalling).Start();
                 time = DateTime.Now.Ticks;
+                
             }
+        }
+
+
+        private void ExitGame()
+        {
+            if (fallWorker != null)
+            {
+                fallWorker.RequestStop();
+                fallWorker.setLevel(0);
+            }
+            timeList.Clear();
+            time = 0;
+            gameOver = false;
+            pause = false;
+            levelHint.Opacity = 0;
+            boardModel.clearBoard();
+            lastKey = 0;
+            previousLevel = 0;
+            playerName = "Unbekannt";
+            hardFall = false;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ExitGame();
+            iv.rootContainer.Child = ov;
         }
     }
 }

@@ -43,6 +43,10 @@ namespace TetrisHTW.Model
                 }
             }
             score = 0;
+            level = 0;
+            lines = 0;
+            currentFigure = null;
+            previewFigure = null;
         }
 
         public Color getBoardColor()

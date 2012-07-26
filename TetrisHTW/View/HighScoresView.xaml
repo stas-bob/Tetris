@@ -7,7 +7,16 @@
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480">
     <StackPanel x:Name="LayoutRoot">
-        <StackPanel HorizontalAlignment="Center" Margin="20" Name="stackPanel1" VerticalAlignment="Top"/>
+        <ScrollViewer 
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Margin="10,10,10,10" 
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto"
+            Height="350">
+                <StackPanel HorizontalAlignment="Center" Margin="20" Name="stackPanel1" VerticalAlignment="Top"/>
+        </ScrollViewer>
+        
         <Button Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="Button_Click"/>
     </StackPanel>
 </UserControl>

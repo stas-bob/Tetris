@@ -20,6 +20,7 @@ namespace TetrisHTW.View
         private HighScoresView hv;
         private AboutView av;
 
+
         public IndexView()
         {
             InitializeComponent();

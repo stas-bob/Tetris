@@ -29,7 +29,7 @@ namespace TetrisHTW.View
         {
             if (ntv == null)
             {
-                ntv = new NormalTetrisView(); 
+                ntv = new NormalTetrisView(this, iv); 
             }
             bool unknown = false;
             if (playerNameTextBox.Text == null || playerNameTextBox.Text.Equals(""))
@@ -39,6 +39,7 @@ namespace TetrisHTW.View
             if (!unknown) {
                 ntv.setPlayerName(playerNameTextBox.Text);
             }
+            ntv.InitGame();
             iv.rootContainer.Child = ntv;
         }
 

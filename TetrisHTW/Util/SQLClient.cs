@@ -19,9 +19,11 @@ namespace TetrisHTW.Util
     public class SQLClient
     {
         private string proxy;
-        string postData;
+        private string postData;
+        private Random rnd = new Random();
         public delegate void SuccessCallback(System.Collections.Generic.List<string> playerNames, System.Collections.Generic.List<int> levels, System.Collections.Generic.List<int> scores, System.Collections.Generic.List<string> times, System.Collections.Generic.List<int> mods);
         public delegate void ErrorCallback(string msg);
+
 
         SuccessCallback cb;
         ErrorCallback ecb;
@@ -93,9 +95,10 @@ namespace TetrisHTW.Util
                 WebClient get = new WebClient();
 
 
+
                 get.DownloadStringCompleted += client_DownloadStringCompleted;
 
-                get.DownloadStringAsync(new Uri(proxy + "?lines=" + lines));
+                get.DownloadStringAsync(new Uri(proxy + "?lines=" + lines + "&random=" + rnd.Next(int.MaxValue)));
             }
             catch (Exception e)
             { Debug.WriteLine(e.Message); }
