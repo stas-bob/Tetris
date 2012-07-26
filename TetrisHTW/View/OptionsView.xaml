@@ -259,10 +259,11 @@
             </Path.RenderTransform>
         </Path>
 
+        <Border Name="layoutBorder" Height="420" Width="420" BorderThickness="5" CornerRadius="10" Margin="0" BorderBrush="DarkBlue">
         <StackPanel Width="400" Height="400">
-            <Grid x:Name="LayoutRoot">
-                <StackPanel>
-                    <TextBlock Height="50" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="40" FontFamily="Buxton Sketch" TextAlignment="Center"><Run Text="S">
+                <Grid x:Name="LayoutRoot">
+                    <StackPanel>
+                        <TextBlock Height="50" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="40" FontFamily="Buxton Sketch" TextAlignment="Center"><Run Text="S">
 				<Run.Foreground>
 					<SolidColorBrush Color="#FF4C56F3">
 						<SolidColorBrush.RelativeTransform>
@@ -397,78 +398,80 @@
 			</Run></TextBlock>
 
 
-                    <TextBlock Text="Modus:" FontSize="20" FontFamily="Buxton Sketch"/>
-                    <Grid >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="25"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions >
-                            <ColumnDefinition Width="35"/>
-                            <ColumnDefinition Width="25"/>
-                            <ColumnDefinition Width="85"/>
-                            <ColumnDefinition Width="25"/>
-                            <ColumnDefinition Width="85"/>
-                            <ColumnDefinition Width="25"/>
-                            <ColumnDefinition Width="85"/>
-                            <ColumnDefinition Width="35"/>
-                        </Grid.ColumnDefinitions>
-                        <RadioButton Grid.Column="1" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="True" />
-                        <TextBlock Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5,0,0,0" TextWrapping="Wrap" Text="Normal" FontFamily="Buxton Sketch" FontSize="18"/>
-                        <RadioButton Grid.Column="3" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="False"/>
-                        <TextBlock Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"   TextWrapping="Wrap" Text="Spezial" FontFamily="Buxton Sketch" FontSize="18"/>
-                        <RadioButton Grid.Column="5" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="False"/>
-                        <TextBlock Grid.Column="6" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5,0,0,0"  TextWrapping="Wrap" Text="Kretschmer"  FontFamily="Buxton Sketch" FontSize="18"/>
-                    </Grid>
+                        <TextBlock Text="Modus:" FontSize="20" FontFamily="Buxton Sketch"/>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="35"/>
+                                <ColumnDefinition Width="25"/>
+                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition Width="25"/>
+                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition Width="25"/>
+                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition Width="35"/>
+                            </Grid.ColumnDefinitions>
+                            <RadioButton Grid.Column="1" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="True" />
+                            <TextBlock Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5,0,0,0" TextWrapping="Wrap" Text="Normal" FontFamily="Buxton Sketch" FontSize="18"/>
+                            <RadioButton Grid.Column="3" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="False"/>
+                            <TextBlock Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"   TextWrapping="Wrap" Text="Spezial" FontFamily="Buxton Sketch" FontSize="18"/>
+                            <RadioButton Grid.Column="5" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="False"/>
+                            <TextBlock Grid.Column="6" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5,0,0,0"  TextWrapping="Wrap" Text="Kretschmer"  FontFamily="Buxton Sketch" FontSize="18"/>
+                        </Grid>
 
 
-                    <TextBlock Text="Level:"  FontSize="20" FontFamily="Buxton Sketch"/>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="25"/>
-                            <RowDefinition Height="10"/>
-                            <RowDefinition Height="25"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions >
-                            <ColumnDefinition Width="75"/>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="50"/>
-                        </Grid.ColumnDefinitions>
-                        <ToggleButton Name ="tb0" Grid.Column="1" Grid.Row="0" Content="0" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" IsChecked="True" Click="ToggleButton_Click"/>
-                        <ToggleButton Name ="tb1" Grid.Column="2" Grid.Row="0" Content="1" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
-                        <ToggleButton Name ="tb2" Grid.Column="3" Grid.Row="0" Content="2" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
-                        <ToggleButton Name ="tb3" Grid.Column="4" Grid.Row="0" Content="3" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
-                        <ToggleButton Name ="tb4" Grid.Column="5" Grid.Row="0" Content="4" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
-                        <ToggleButton Name ="tb5" Grid.Column="1" Grid.Row="2" Content="5" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
-                        <ToggleButton Name ="tb6" Grid.Column="2" Grid.Row="2" Content="6" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
-                        <ToggleButton Name ="tb7" Grid.Column="3" Grid.Row="2" Content="7" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
-                        <ToggleButton Name ="tb8" Grid.Column="4" Grid.Row="2" Content="8" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
-                        <ToggleButton Name ="tb9" Grid.Column="5" Grid.Row="2" Content="9" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
-                    </Grid>
+                        <TextBlock Text="Level:"  FontSize="20" FontFamily="Buxton Sketch"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="10"/>
+                                <RowDefinition Height="25"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="75"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+                            <ToggleButton Name ="tb0" Grid.Column="1" Grid.Row="0" Content="0" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" IsChecked="True" Click="ToggleButton_Click"/>
+                            <ToggleButton Name ="tb1" Grid.Column="2" Grid.Row="0" Content="1" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                            <ToggleButton Name ="tb2" Grid.Column="3" Grid.Row="0" Content="2" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                            <ToggleButton Name ="tb3" Grid.Column="4" Grid.Row="0" Content="3" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                            <ToggleButton Name ="tb4" Grid.Column="5" Grid.Row="0" Content="4" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                            <ToggleButton Name ="tb5" Grid.Column="1" Grid.Row="2" Content="5" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                            <ToggleButton Name ="tb6" Grid.Column="2" Grid.Row="2" Content="6" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                            <ToggleButton Name ="tb7" Grid.Column="3" Grid.Row="2" Content="7" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                            <ToggleButton Name ="tb8" Grid.Column="4" Grid.Row="2" Content="8" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                            <ToggleButton Name ="tb9" Grid.Column="5" Grid.Row="2" Content="9" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                        </Grid>
 
-                    <TextBlock Text="Anleitung:" FontSize="20" FontFamily="Buxton Sketch" Margin="0,5,0,0"/>
-                    <TextBlock Text="Test" FontSize="20" FontFamily="Buxton Sketch" Margin="0,5,0,0"/>
-                    <TextBlock Text="Spielername:" FontSize="20" FontFamily="Buxton Sketch" Margin="0,5,0,0"/>
-                    <TextBox Name="playerNameTextBox" Margin="0,10,0,10" />
+                        <TextBlock Text="Anleitung:" FontSize="20" FontFamily="Buxton Sketch" Margin="0,5,0,0"/>
+                        <TextBlock Text="Test" FontSize="20" FontFamily="Buxton Sketch" Margin="0,5,0,0"/>
+                        <TextBlock Text="Spielername:" FontSize="20" FontFamily="Buxton Sketch" Margin="0,5,0,0"/>
+                        <TextBox Name="playerNameTextBox" Margin="0,10,0,10" />
 
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="75"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="25"/>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="150"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="75"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="150"/>
 
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="1" Grid.Row="0" Content="Spielen"  Height="75" Style="{StaticResource ButtonStyle1}" Width="150" Foreground="White" FontSize="24" FontWeight="Bold" Click="Spielen_Click"/>
-                        <Button Grid.Column="3" Grid.Row="0"  Content="Zurück"  Height="75" Style="{StaticResource ButtonStyle1}" Width="150" Foreground="White" FontSize="24" FontWeight="Bold" Click="Zurueck_Click"/>
-                    </Grid>
-                </StackPanel>
-            </Grid>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="1" Grid.Row="0" Content="Spielen"  Height="75" Style="{StaticResource ButtonStyle1}" Width="150" Foreground="White" FontSize="24" FontWeight="Bold" Click="Spielen_Click"/>
+                            <Button Grid.Column="3" Grid.Row="0"  Content="Zurück"  Height="75" Style="{StaticResource ButtonStyle1}" Width="150" Foreground="White" FontSize="24" FontWeight="Bold" Click="Zurueck_Click"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+           
         </StackPanel>
+        </Border>
     </Canvas>
 </UserControl>
