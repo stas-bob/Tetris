@@ -16,10 +16,14 @@ namespace TetrisHTW.View
     public partial class IndexView : UserControl
     {
         private Random rnd = new Random();
+        private OptionsView ov;
+        private HighScoresView hv;
+        private AboutView av;
 
         public IndexView()
         {
             InitializeComponent();
+
             flyingAroundSB.Begin();
             rotatingSB.Begin();
         }
@@ -27,25 +31,33 @@ namespace TetrisHTW.View
 
         private void Spielen_Click(object sender, RoutedEventArgs e)
         {
-            OptionsView ov = new OptionsView(this);
-            layoutBorder.Child = ov;
+            if (ov == null)
+            {
+                ov = new OptionsView(this);
+            }
+            rootContainer.Child = ov;
         }
 
         private void Highscore_Click(object sender, RoutedEventArgs e)
         {
-            
-            this.Content = new HighScores();
-            
+            if (hv == null)
+            {
+                hv = new HighScoresView();
+            }
+            rootContainer.Child = hv;
         }
+
         private void Ueber_Click(object sender, RoutedEventArgs e)
         {
-
+            if (av == null)
+            {
+                av = new AboutView();
+            }
+            rootContainer.Child = av;
         }
 
         void AnimCompleted(object sender, EventArgs e)
         {
-
-          
             Point p = canvas.TransformToVisual(App.getInstance().RootVisual).Transform(new Point(0, 0));
             animXO.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
             animYO.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;

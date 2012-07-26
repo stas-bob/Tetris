@@ -95,8 +95,11 @@
     <Compile Include="Model\LineEventArgs.cs" />
     <Compile Include="Tools\Point.cs" />
     <Compile Include="Util\SQLClient.cs" />
-    <Compile Include="View\HighScores.xaml.cs">
-      <DependentUpon>HighScores.xaml</DependentUpon>
+    <Compile Include="View\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HighScoresView.xaml.cs">
+      <DependentUpon>HighScoresView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\IndexView.xaml.cs">
       <DependentUpon>IndexView.xaml</DependentUpon>
@@ -115,7 +118,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="View\HighScores.xaml">
+    <Page Include="View\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HighScoresView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +158,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\wall.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

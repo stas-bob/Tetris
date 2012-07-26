@@ -40,10 +40,8 @@ namespace TetrisHTW
         private List<long> timeList = new List<long>();
         public const int MOD = 1;
 
-        public NormalTetrisView(string playerName)
+        public NormalTetrisView()
         {
-            this.iv = iv;
-            this.playerName = playerName;
             this.boardModel = App.getInstance().getBoardModel();
             InitializeComponent();
             /*Hier werden die Grids initialisiert*/
@@ -57,6 +55,7 @@ namespace TetrisHTW
             boardModel.LineChanged += new LineChangedEventHandler(OnLineChanged);
             App.getInstance().GameOverEvent += new GameOverEventHandler(OnGameOver);
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(OnFigureFallen);
+            playerName = "Unbekannt";
 
             this.InitGame();
         }
@@ -179,7 +178,10 @@ namespace TetrisHTW
             GameStart();
         }
 
-
+        public void setPlayerName(string playerName)
+        {
+            this.playerName = playerName;
+        }
 
         public Brush getBrushByColor(Color currentCellColor)
         {
@@ -559,8 +561,8 @@ namespace TetrisHTW
 
                     effectRectangle.Fill = lgb;
                     canvas.Children.Add(effectRectangle);
-                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot) );
-                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot) );
+                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot) + boardBorder.BorderThickness.Left);
+                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot) + boardBorder.BorderThickness.Top);
 
                     Duration duration = TimeSpan.FromMilliseconds(3000);
                     DoubleAnimation myDoubleAnimation = new DoubleAnimation();

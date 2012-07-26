@@ -17,29 +17,36 @@ namespace TetrisHTW.View
     {
         private Random rnd = new Random();
         private IndexView iv;
+        private NormalTetrisView ntv;
 
         public OptionsView(IndexView iv)
         {
-            this.iv = iv;
             InitializeComponent();
+            this.iv = iv;
         }
 
         private void Spielen_Click(object sender, RoutedEventArgs e)
         {
+            if (ntv == null)
+            {
+                ntv = new NormalTetrisView(); 
+            }
             bool unknown = false;
             if (playerNameTextBox.Text == null || playerNameTextBox.Text.Equals(""))
             {
                 unknown = true;
             }
-            NormalTetrisView ntv = new NormalTetrisView(unknown ? "Unbekannt" : playerNameTextBox.Text); 
-            iv.layoutBorder.Child = ntv;
+            if (!unknown) {
+                ntv.setPlayerName(playerNameTextBox.Text);
+            }
+            iv.rootContainer.Child = ntv;
         }
 
         
 
         private void Zurueck_Click(object sender, RoutedEventArgs e)
         {
-            iv.layoutBorder.Child = iv.LayoutRoot;
+            iv.rootContainer.Child = iv.LayoutRoot;
         }
 
         
