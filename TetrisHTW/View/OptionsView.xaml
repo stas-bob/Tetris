@@ -4,50 +4,471 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
-    
-    <Grid x:Name="LayoutRoot" Background="White">
-        <StackPanel>
-            <TextBlock Text="Spieloptionen"/>
-            <TextBlock Text="Modus:"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <RadioButton Content="Normal" GroupName="mode" IsChecked="True" />
-                <RadioButton Content="Spezial" GroupName="mode" IsEnabled="False"/>
-                <RadioButton Content="Kretschmer" GroupName="mode" IsEnabled="False"/>
-            </StackPanel>
-            
-                
-            <TextBlock Text="Level:"/>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="25"/>
-                    <RowDefinition Height="25"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Grid.Row="0" Content="0" HorizontalAlignment="Center" />
-                <Button Grid.Column="1" Grid.Row="0" Content="1" HorizontalAlignment="Center" />
-                <Button Grid.Column="2" Grid.Row="0" Content="2" HorizontalAlignment="Center" />
-                <Button Grid.Column="3" Grid.Row="0" Content="3" HorizontalAlignment="Center" />
-                <Button Grid.Column="4" Grid.Row="0" Content="4" HorizontalAlignment="Center" />
-                <Button Grid.Column="0" Grid.Row="1" Content="5" HorizontalAlignment="Center" />
-                <Button Grid.Column="1" Grid.Row="1" Content="6" HorizontalAlignment="Center" />
-                <Button Grid.Column="2" Grid.Row="1" Content="7" HorizontalAlignment="Center" />
-                <Button Grid.Column="3" Grid.Row="1" Content="8" HorizontalAlignment="Center" />
-                <Button Grid.Column="4" Grid.Row="1" Content="9" HorizontalAlignment="Center" />
+    d:DesignHeight="480" d:DesignWidth="640">
+
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle1" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="rectangle" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Rectangle x:Name="rectangle" Stroke="Black" RadiusX="12" RadiusY="12">
+                                <Rectangle.Effect>
+                                    <DropShadowEffect/>
+                                </Rectangle.Effect>
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="DarkBlue" Offset="0"/>
+                                        <GradientStop Color="#FFE68AE6" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentPresenter.Effect>
+                                    <DropShadowEffect/>
+                                </ContentPresenter.Effect>
+                            </ContentPresenter>
+                            <Grid Margin="0,-37,0,-38" Opacity="0.5">
+                                <Rectangle x:Name="InnerShadow" Margin="0,37,0,38" RadiusX="12" RadiusY="12">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Offset="0.853"/>
+                                            <GradientStop Color="Black" Offset="0.996"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Rectangle x:Name="InnerShadow_Right" RenderTransformOrigin="0.5,0.5" Margin="37.664,0,37.336,0" UseLayoutRounding="False" d:LayoutRounding="Auto" Height="150" Width="75" RadiusX="12" RadiusY="12">
+                                    <Rectangle.RenderTransform>
+                                        <CompositeTransform Rotation="-89.873"/>
+                                    </Rectangle.RenderTransform>
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Offset="0.909"/>
+                                            <GradientStop Color="Black" Offset="0.996"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Rectangle x:Name="InnerShadow_Left" RenderTransformOrigin="0.5,0.5" Margin="37.664,0,37.336,0" UseLayoutRounding="False" d:LayoutRounding="Auto" Height="150" Width="75" RadiusX="12" RadiusY="12">
+                                    <Rectangle.RenderTransform>
+                                        <CompositeTransform Rotation="-270.325"/>
+                                    </Rectangle.RenderTransform>
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Offset="0.935" Color="Transparent"/>
+                                            <GradientStop Color="White" Offset="0.996"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ToggleButtonStyle1" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0" To="#FFFD1F09" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="rectangle" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked"/>
+                                    <VisualState x:Name="Indeterminate"/>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0" To="#FFFF0000" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="rectangle" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Rectangle x:Name="rectangle" RadiusX="2" RadiusY="2" Height="25" VerticalAlignment="Bottom">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="DarkBlue" Offset="0"/>
+                                        <GradientStop Color="#FFE682EE" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <Grid Opacity="0.6">
+                                <Rectangle x:Name="InnerShadow" RadiusX="2" RadiusY="2" Height="25" VerticalAlignment="Bottom">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Offset="0.832"/>
+                                            <GradientStop Color="Black" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Rectangle x:Name="InnerShadow_Right" RadiusX="2" RadiusY="2" Height="25" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
+                                    <Rectangle.RenderTransform>
+                                        <CompositeTransform Rotation="-90.473"/>
+                                    </Rectangle.RenderTransform>
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Offset="0.892"/>
+                                            <GradientStop Color="Black" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Rectangle x:Name="InnerShadow_Left" RadiusX="2" RadiusY="2" Height="25" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
+                                    <Rectangle.RenderTransform>
+                                        <CompositeTransform Rotation="-270.3"/>
+                                    </Rectangle.RenderTransform>
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Offset="0.909" Color="Transparent"/>
+                                            <GradientStop Color="White" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="RadioButtonStyle1" TargetType="RadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="ellipse" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked"/>
+                                    <VisualState x:Name="Indeterminate"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Ellipse x:Name="ellipse">
+                                <Ellipse.Fill>
+                                    <RadialGradientBrush>
+                                        <GradientStop Color="DarkBlue" Offset="1"/>
+                                        <GradientStop Color="Violet"/>
+                                    </RadialGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <Ellipse Opacity="0.5">
+                                <Ellipse.Fill>
+                                    <RadialGradientBrush>
+                                        <GradientStop Color="Black" Offset="0.991"/>
+                                        <GradientStop Color="#000000EE" Offset="0.776"/>
+                                    </RadialGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Canvas Name="canvas" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,375,400">
+        <Canvas.Resources>
+            <Storyboard x:Name="flyingAroundSB">
+                <DoubleAnimation x:Name="animXT"  To="200" Storyboard.TargetName="T" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animYT"  To="300" Storyboard.TargetName="T" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animXL"  To="100" Storyboard.TargetName="L" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animYL"  To="500" Storyboard.TargetName="L" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animXJ"  To="800" Storyboard.TargetName="J" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animYJ"  To="400" Storyboard.TargetName="J" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animXO"  To="30" Storyboard.TargetName="O" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animYO"  To="200" Storyboard.TargetName="O" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animXI"  To="222" Storyboard.TargetName="I" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animYI"  To="10" Storyboard.TargetName="I" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animXS"  To="100" Storyboard.TargetName="S" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animYS"  To="200" Storyboard.TargetName="S" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animXZ"  To="100" Storyboard.TargetName="Z" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
+                <DoubleAnimation x:Name="animYZ"  To="400" Storyboard.TargetName="Z" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
+            </Storyboard>
+            <Storyboard x:Name="rotatingSB">
+                <DoubleAnimation x:Name="animRotateT" Storyboard.TargetName="rotateTransformT" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
+                <DoubleAnimation x:Name="animRotateI" Storyboard.TargetName="rotateTransformI" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
+                <DoubleAnimation x:Name="animRotateZ" Storyboard.TargetName="rotateTransformZ" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
+                <DoubleAnimation x:Name="animRotateS" Storyboard.TargetName="rotateTransformS" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
+                <DoubleAnimation x:Name="animRotateO" Storyboard.TargetName="rotateTransformO" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
+                <DoubleAnimation x:Name="animRotateL" Storyboard.TargetName="rotateTransformL" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
+                <DoubleAnimation x:Name="animRotateJ" Storyboard.TargetName="rotateTransformJ" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
+            </Storyboard>
+        </Canvas.Resources>
+        <Path Canvas.Left="200" StrokeThickness="8" Height="50" Width="75" Name="T" Data="M0,0 L0,0 L75,0 L75,25 L50,25 L50,50 L25,50 L25,25 L0,25 L0,0" Stroke="#26B800FF">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="rotateTransformT"></RotateTransform>
+            </Path.RenderTransform>
+        </Path>
+        <Path Canvas.Left="100" Canvas.Top="300" StrokeThickness="3" Height="30" Width="30" Name="O" Data="M0,0 L30,0 L30,30 L0,30 L0,0" Stroke="#3AFFD800">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="rotateTransformO"></RotateTransform>
+            </Path.RenderTransform>
+        </Path>
+        <Path Canvas.Left="-200" Canvas.Top="-200" StrokeThickness="10" Height="150" Width="100" Name="L" Data="M0,0 L0,150 L50,150 L50,50 L100,50 L100,0 L0,0" Stroke="#383BFF00" Fill="{x:Null}">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="rotateTransformL"></RotateTransform>
+            </Path.RenderTransform>
+        </Path>
+        <Path Canvas.Left="400" Canvas.Top="600" StrokeThickness="3" Height="50" Width="40" Name="J" Data="M0,0 L0,20 L20,20 L20,50 L40,50 L40,0 L0,0" Stroke="#3300FFEB">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="rotateTransformJ"></RotateTransform>
+            </Path.RenderTransform>
+        </Path>
+        <Path Canvas.Top="320" Canvas.Left="-100" StrokeThickness="5" Height="100" Width="25" Name="I" Data="M0,0 L0,100 L25,100 L25,0 L0,0" Stroke="#360062FF">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="rotateTransformI"></RotateTransform>
+            </Path.RenderTransform>
+        </Path>
+        <Path Canvas.Top="70" Canvas.Left="-160" StrokeThickness="5" Height="100" Width="100" Name="Z" Data="M0,0 L0,30 L30,30 L30,60 L90,60 L90,30 L60,30 L60,0 L0,0" Stroke="#2AFF0000">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="rotateTransformZ"></RotateTransform>
+            </Path.RenderTransform>
+        </Path>
+
+        <Path StrokeThickness="5" Height="70" Width="105" Name="S" Data="M0,35 L35,35 L35,0 L105,0 L105,35 L70,35 L70,70 L0,70 L0,35" Stroke="#29FF8900">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="rotateTransformS"></RotateTransform>
+            </Path.RenderTransform>
+        </Path>
+
+        <StackPanel Width="400" Height="400">
+            <Grid x:Name="LayoutRoot">
+                <StackPanel>
+                    <TextBlock Height="50" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="40" FontFamily="Buxton Sketch" TextAlignment="Center"><Run Text="S">
+				<Run.Foreground>
+					<SolidColorBrush Color="#FF4C56F3">
+						<SolidColorBrush.RelativeTransform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.RelativeTransform>
+						<SolidColorBrush.Transform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.Transform>
+					</SolidColorBrush>
+				</Run.Foreground>
+			</Run><Run Text="p">
+				<Run.Foreground>
+					<SolidColorBrush Color="#FFE4C6E7">
+						<SolidColorBrush.RelativeTransform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.RelativeTransform>
+						<SolidColorBrush.Transform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.Transform>
+					</SolidColorBrush>
+				</Run.Foreground>
+			</Run><Run Text="i">
+				<Run.Foreground>
+					<SolidColorBrush Color="#FF7CFB28">
+						<SolidColorBrush.RelativeTransform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.RelativeTransform>
+						<SolidColorBrush.Transform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.Transform>
+					</SolidColorBrush>
+				</Run.Foreground>
+			</Run><Run Text="e">
+				<Run.Foreground>
+					<SolidColorBrush Color="#FFE24139">
+						<SolidColorBrush.RelativeTransform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.RelativeTransform>
+						<SolidColorBrush.Transform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.Transform>
+					</SolidColorBrush>
+				</Run.Foreground>
+			</Run><Run Text="l"/><Run Text="o">
+				<Run.Foreground>
+					<SolidColorBrush Color="#FF438382">
+						<SolidColorBrush.RelativeTransform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.RelativeTransform>
+						<SolidColorBrush.Transform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.Transform>
+					</SolidColorBrush>
+				</Run.Foreground>
+			</Run><Run Text="p">
+				<Run.Foreground>
+					<SolidColorBrush Color="#FF0F2683">
+						<SolidColorBrush.RelativeTransform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.RelativeTransform>
+						<SolidColorBrush.Transform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.Transform>
+					</SolidColorBrush>
+				</Run.Foreground>
+			</Run><Run Text="t">
+				<Run.Foreground>
+					<SolidColorBrush Color="#FF3AD290">
+						<SolidColorBrush.RelativeTransform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.RelativeTransform>
+						<SolidColorBrush.Transform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.Transform>
+					</SolidColorBrush>
+				</Run.Foreground>
+			</Run><Run Text="i">
+				<Run.Foreground>
+					<SolidColorBrush Color="#FFE2A231">
+						<SolidColorBrush.RelativeTransform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.RelativeTransform>
+						<SolidColorBrush.Transform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.Transform>
+					</SolidColorBrush>
+				</Run.Foreground>
+			</Run><Run Text="o">
+				<Run.Foreground>
+					<SolidColorBrush Color="#FF5EA2FD">
+						<SolidColorBrush.RelativeTransform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.RelativeTransform>
+						<SolidColorBrush.Transform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.Transform>
+					</SolidColorBrush>
+				</Run.Foreground>
+			</Run><Run Text="n">
+				<Run.Foreground>
+					<SolidColorBrush Color="#FFA33394">
+						<SolidColorBrush.RelativeTransform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.RelativeTransform>
+						<SolidColorBrush.Transform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.Transform>
+					</SolidColorBrush>
+				</Run.Foreground>
+			</Run><Run Text="e">
+				<Run.Foreground>
+					<SolidColorBrush Color="#FFF6F725">
+						<SolidColorBrush.RelativeTransform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.RelativeTransform>
+						<SolidColorBrush.Transform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.Transform>
+					</SolidColorBrush>
+				</Run.Foreground>
+			</Run><Run Text="n">
+				<Run.Foreground>
+					<SolidColorBrush Color="#FF3B16F1">
+						<SolidColorBrush.RelativeTransform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.RelativeTransform>
+						<SolidColorBrush.Transform>
+							<MatrixTransform Matrix="Identity"/>
+						</SolidColorBrush.Transform>
+					</SolidColorBrush>
+				</Run.Foreground>
+			</Run></TextBlock>
+
+
+                    <TextBlock Text="Modus:" FontSize="20" FontFamily="Buxton Sketch"/>
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="35"/>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="85"/>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="85"/>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="85"/>
+                            <ColumnDefinition Width="35"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Grid.Column="1" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="True" />
+                        <TextBlock Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5,0,0,0" TextWrapping="Wrap" Text="Normal" FontFamily="Buxton Sketch" FontSize="18"/>
+                        <RadioButton Grid.Column="3" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="False"/>
+                        <TextBlock Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"   TextWrapping="Wrap" Text="Spezial" FontFamily="Buxton Sketch" FontSize="18"/>
+                        <RadioButton Grid.Column="5" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="False"/>
+                        <TextBlock Grid.Column="6" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5,0,0,0"  TextWrapping="Wrap" Text="Kretschmer"  FontFamily="Buxton Sketch" FontSize="18"/>
+                    </Grid>
+
+
+                    <TextBlock Text="Level:"  FontSize="20" FontFamily="Buxton Sketch"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="25"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton Name ="tb0" Grid.Column="1" Grid.Row="0" Content="0" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" IsChecked="True" Click="ToggleButton_Click"/>
+                        <ToggleButton Name ="tb1" Grid.Column="2" Grid.Row="0" Content="1" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                        <ToggleButton Name ="tb2" Grid.Column="3" Grid.Row="0" Content="2" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                        <ToggleButton Name ="tb3" Grid.Column="4" Grid.Row="0" Content="3" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                        <ToggleButton Name ="tb4" Grid.Column="5" Grid.Row="0" Content="4" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                        <ToggleButton Name ="tb5" Grid.Column="1" Grid.Row="2" Content="5" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                        <ToggleButton Name ="tb6" Grid.Column="2" Grid.Row="2" Content="6" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                        <ToggleButton Name ="tb7" Grid.Column="3" Grid.Row="2" Content="7" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                        <ToggleButton Name ="tb8" Grid.Column="4" Grid.Row="2" Content="8" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                        <ToggleButton Name ="tb9" Grid.Column="5" Grid.Row="2" Content="9" HorizontalAlignment="Center" Height="25" Style="{StaticResource ToggleButtonStyle1}" Width="25" Click="ToggleButton_Click"/>
+                    </Grid>
+
+                    <TextBlock Text="Anleitung:" FontSize="20" FontFamily="Buxton Sketch" Margin="0,5,0,0"/>
+                    <TextBlock Text="Test" FontSize="20" FontFamily="Buxton Sketch" Margin="0,5,0,0"/>
+                    <TextBlock Text="Spielername:" FontSize="20" FontFamily="Buxton Sketch" Margin="0,5,0,0"/>
+                    <TextBox Name="playerNameTextBox" Margin="0,10,0,10" />
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="75"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="150"/>
+
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1" Grid.Row="0" Content="Spielen"  Height="75" Style="{StaticResource ButtonStyle1}" Width="150" Foreground="White" FontSize="24" FontWeight="Bold" Click="Spielen_Click"/>
+                        <Button Grid.Column="3" Grid.Row="0"  Content="Zurück"  Height="75" Style="{StaticResource ButtonStyle1}" Width="150" Foreground="White" FontSize="24" FontWeight="Bold" Click="Zurueck_Click"/>
+                    </Grid>
+                </StackPanel>
             </Grid>
-            
-            <TextBlock Text="Anleitung:"/>
-            <TextBlock Text="Test"/>
-            <TextBlock Text="Spielername:"/>
-            <TextBox Name="playerNameTextBox" />
-            <Button Content="Spielen" Click="Spielen_Click"/>
-            <Button Content="Zurück" Click="Zurueck_Click"/>
         </StackPanel>
-    </Grid>
+    </Canvas>
 </UserControl>

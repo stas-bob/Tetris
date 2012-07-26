@@ -15,9 +15,13 @@ namespace TetrisHTW.View
 {
     public partial class IndexView : UserControl
     {
+        private Random rnd = new Random();
+
         public IndexView()
         {
             InitializeComponent();
+            flyingAroundSB.Begin();
+            rotatingSB.Begin();
         }
 
 
@@ -35,6 +39,27 @@ namespace TetrisHTW.View
         private void Ueber_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        void AnimCompleted(object sender, EventArgs e)
+        {
+            Point p = canvas.TransformToVisual(App.getInstance().RootVisual).Transform(new Point(0, 0));
+            animXO.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYO.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+            animXT.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYT.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+            animXL.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYL.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+            animXJ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYJ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+            animXI.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYI.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+            animXS.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYS.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+            animXZ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
+            animYZ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
+
+            flyingAroundSB.Begin();
         }
 
     }
