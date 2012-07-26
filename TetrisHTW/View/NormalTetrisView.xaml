@@ -39,7 +39,7 @@
                 </Rectangle>
             </Canvas>
         </Border>
-        <Button Canvas.Left="227" Canvas.Top="320" Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="Button_Click"/>
+        <Button Canvas.Left="227" Canvas.Top="320" Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="Button_Click" IsTabStop="False" IsHitTestVisible="True" IsEnabled="True" />
             <Grid x:Name="LayoutRoot" Height="400" Width="295">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="72" />
