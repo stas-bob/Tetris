@@ -16,12 +16,12 @@ namespace TetrisHTW.View
     public partial class OptionsView : UserControl
     {
         private Random rnd = new Random();
+        private IndexView iv;
 
-        public OptionsView()
+        public OptionsView(IndexView iv)
         {
+            this.iv = iv;
             InitializeComponent();
-            flyingAroundSB.Begin();
-            rotatingSB.Begin();
         }
 
         private void Spielen_Click(object sender, RoutedEventArgs e)
@@ -32,37 +32,17 @@ namespace TetrisHTW.View
                 unknown = true;
             }
             NormalTetrisView ntv = new NormalTetrisView(unknown ? "Unbekannt" : playerNameTextBox.Text); 
-            this.Content = ntv;
-            App.getInstance().RootVisual = ntv;
+            iv.layoutBorder.Child = ntv;
         }
 
         
 
         private void Zurueck_Click(object sender, RoutedEventArgs e)
         {
-            this.Content = new IndexView();
+            iv.layoutBorder.Child = iv.LayoutRoot;
         }
 
-        void AnimCompleted(object sender, EventArgs e)
-        {
-            Point p = canvas.TransformToVisual(App.getInstance().RootVisual).Transform(new Point(0, 0));
-            animXO.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYO.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            animXT.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYT.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            animXL.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYL.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            animXJ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYJ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            animXI.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYI.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            animXS.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYS.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            animXZ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYZ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-
-            flyingAroundSB.Begin();
-        }
+        
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {

@@ -15,6 +15,7 @@ using System.Threading;
 using System.Diagnostics;
 using TetrisHTW.Figures;
 using TetrisHTW.Util;
+using TetrisHTW.View;
 
 namespace TetrisHTW
 {
@@ -41,6 +42,7 @@ namespace TetrisHTW
 
         public NormalTetrisView(string playerName)
         {
+            this.iv = iv;
             this.playerName = playerName;
             this.boardModel = App.getInstance().getBoardModel();
             InitializeComponent();
@@ -57,9 +59,6 @@ namespace TetrisHTW
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(OnFigureFallen);
 
             this.InitGame();
-            /*Background Animation*/
-            flyingAroundSB.Begin();
-            rotatingSB.Begin();
         }
 
         void initBoard()
@@ -102,27 +101,7 @@ namespace TetrisHTW
             }
         }
 
-        /*Background animation*/
-        void AnimCompleted(object sender, EventArgs e)
-        {
-            Point p = canvas.TransformToVisual(App.getInstance().RootVisual).Transform(new Point(0, 0));
-            animXO.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYO.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            animXT.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYT.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            animXL.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYL.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            animXJ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYJ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            animXI.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYI.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            animXS.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYS.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            animXZ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
-            animYZ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
-            
-            flyingAroundSB.Begin();
-        }
+
 
         /*KeyboardListener fuer druecken einer Taste*/
         void Page_KeyDown(object sender, KeyEventArgs e)
@@ -580,8 +559,8 @@ namespace TetrisHTW
 
                     effectRectangle.Fill = lgb;
                     canvas.Children.Add(effectRectangle);
-                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot) + layoutBorder.BorderThickness.Top);
-                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot) + layoutBorder.BorderThickness.Left);
+                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot) );
+                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot) );
 
                     Duration duration = TimeSpan.FromMilliseconds(3000);
                     DoubleAnimation myDoubleAnimation = new DoubleAnimation();

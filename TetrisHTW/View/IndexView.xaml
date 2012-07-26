@@ -145,7 +145,7 @@
             </Path.RenderTransform>
         </Path>
 
-        <Border Name="layoutBorder" Height="420" Width="285" BorderThickness="5" CornerRadius="10" Margin="0" BorderBrush="DarkBlue">
+        <Border Name="layoutBorder" Height="420" Width="420" BorderThickness="5" CornerRadius="10" Margin="-70 0 0 0" BorderBrush="DarkBlue">
             <Grid x:Name="LayoutRoot" Height="400" Width="285">
 
                 <Grid.RowDefinitions>

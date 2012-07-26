@@ -27,7 +27,8 @@ namespace TetrisHTW.View
 
         private void Spielen_Click(object sender, RoutedEventArgs e)
         {
-            this.Content = new OptionsView();
+            OptionsView ov = new OptionsView(this);
+            layoutBorder.Child = ov;
         }
 
         private void Highscore_Click(object sender, RoutedEventArgs e)

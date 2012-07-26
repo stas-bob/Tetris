@@ -8,31 +8,6 @@
              d:DesignHeight="515" d:DesignWidth="800">
     <Canvas Name="canvas" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,250,400">
         <Canvas.Resources>
-            <Storyboard x:Name="flyingAroundSB">
-                <DoubleAnimation x:Name="animXT"  To="200" Storyboard.TargetName="T" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animYT"  To="300" Storyboard.TargetName="T" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animXL"  To="100" Storyboard.TargetName="L" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animYL"  To="500" Storyboard.TargetName="L" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animXJ"  To="800" Storyboard.TargetName="J" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animYJ"  To="400" Storyboard.TargetName="J" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animXO"  To="30" Storyboard.TargetName="O" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animYO"  To="200" Storyboard.TargetName="O" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animXI"  To="222" Storyboard.TargetName="I" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animYI"  To="10" Storyboard.TargetName="I" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animXS"  To="100" Storyboard.TargetName="S" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animYS"  To="200" Storyboard.TargetName="S" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animXZ"  To="100" Storyboard.TargetName="Z" Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:20" Completed="AnimCompleted"/>
-                <DoubleAnimation x:Name="animYZ"  To="400" Storyboard.TargetName="Z" Storyboard.TargetProperty="(Canvas.Top)" Duration="0:0:20" Completed="AnimCompleted"/>
-            </Storyboard>
-            <Storyboard x:Name="rotatingSB">
-                <DoubleAnimation x:Name="animRotateT" Storyboard.TargetName="rotateTransformT" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
-                <DoubleAnimation x:Name="animRotateI" Storyboard.TargetName="rotateTransformI" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
-                <DoubleAnimation x:Name="animRotateZ" Storyboard.TargetName="rotateTransformZ" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
-                <DoubleAnimation x:Name="animRotateS" Storyboard.TargetName="rotateTransformS" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
-                <DoubleAnimation x:Name="animRotateO" Storyboard.TargetName="rotateTransformO" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
-                <DoubleAnimation x:Name="animRotateL" Storyboard.TargetName="rotateTransformL" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
-                <DoubleAnimation x:Name="animRotateJ" Storyboard.TargetName="rotateTransformJ" Storyboard.TargetProperty="Angle" Duration="0:0:20" From="0" To="360" RepeatBehavior="forever"/>
-            </Storyboard>
             <Storyboard x:Name="pauseOnSB">
                 <DoubleAnimation x:Name="animPauseOn" Storyboard.TargetName="levelHint" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="1"/>
             </Storyboard>
@@ -44,42 +19,7 @@
                 <DoubleAnimation x:Name="animLevelFontScale" Storyboard.TargetName="levelTextFontScale" Storyboard.TargetProperty="ScaleX" Duration="0:0:1" From="30" To="1"/>
             </Storyboard>
         </Canvas.Resources>
-        <Path Canvas.Left="200" StrokeThickness="8" Height="50" Width="75" Name="T" Data="M0,0 L0,0 L75,0 L75,25 L50,25 L50,50 L25,50 L25,25 L0,25 L0,0" Stroke="#26B800FF">
-            <Path.RenderTransform>
-                <RotateTransform x:Name="rotateTransformT"></RotateTransform>
-            </Path.RenderTransform>
-        </Path>
-        <Path Canvas.Left="100" Canvas.Top="300" StrokeThickness="3" Height="30" Width="30" Name="O" Data="M0,0 L30,0 L30,30 L0,30 L0,0" Stroke="#3AFFD800">
-            <Path.RenderTransform>
-                <RotateTransform x:Name="rotateTransformO"></RotateTransform>
-            </Path.RenderTransform>
-        </Path>
-        <Path Canvas.Left="-200" Canvas.Top="-200" StrokeThickness="10" Height="150" Width="100" Name="L" Data="M0,0 L0,150 L50,150 L50,50 L100,50 L100,0 L0,0" Stroke="#383BFF00" Fill="{x:Null}">
-            <Path.RenderTransform>
-                <RotateTransform x:Name="rotateTransformL"></RotateTransform>
-            </Path.RenderTransform>
-        </Path>
-        <Path Canvas.Left="400" Canvas.Top="600" StrokeThickness="3" Height="50" Width="40" Name="J" Data="M0,0 L0,20 L20,20 L20,50 L40,50 L40,0 L0,0" Stroke="#3300FFEB">
-            <Path.RenderTransform>
-                <RotateTransform x:Name="rotateTransformJ"></RotateTransform>
-            </Path.RenderTransform>
-        </Path>
-        <Path Canvas.Top="320" Canvas.Left="-100" StrokeThickness="5" Height="100" Width="25" Name="I" Data="M0,0 L0,100 L25,100 L25,0 L0,0" Stroke="#360062FF">
-            <Path.RenderTransform>
-                <RotateTransform x:Name="rotateTransformI"></RotateTransform>
-            </Path.RenderTransform>
-        </Path>
-        <Path Canvas.Top="70" Canvas.Left="-160" StrokeThickness="5" Height="100" Width="100" Name="Z" Data="M0,0 L0,30 L30,30 L30,60 L90,60 L90,30 L60,30 L60,0 L0,0" Stroke="#2AFF0000">
-            <Path.RenderTransform>
-                <RotateTransform x:Name="rotateTransformZ"></RotateTransform>
-            </Path.RenderTransform>
-        </Path>
-
-        <Path StrokeThickness="5" Height="70" Width="105" Name="S" Data="M0,35 L35,35 L35,0 L105,0 L105,35 L70,35 L70,70 L0,70 L0,35" Stroke="#29FF8900">
-            <Path.RenderTransform>
-                <RotateTransform x:Name="rotateTransformS"></RotateTransform>
-            </Path.RenderTransform>
-        </Path>
+        
         <Border Name="levelHint" Width="150" Height="70" Canvas.ZIndex="1" CornerRadius="20" Canvas.Left="28" Canvas.Top="100" Opacity="0">
             <Canvas Background="DarkSlateBlue">
                 <Canvas.Clip>
@@ -99,7 +39,6 @@
                 </Rectangle>
             </Canvas>
         </Border>
-        <Border Name="layoutBorder" BorderThickness="5" CornerRadius="10" Margin="0" BorderBrush="DarkBlue">
         <Grid x:Name="LayoutRoot" Height="400" Width="285">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="72" />
@@ -177,6 +116,5 @@
                 </Grid.Background>
                 </Grid>
             </Grid>
-        </Border>
     </Canvas>
 </UserControl>
