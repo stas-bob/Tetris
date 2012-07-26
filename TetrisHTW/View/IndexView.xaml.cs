@@ -43,6 +43,8 @@ namespace TetrisHTW.View
 
         void AnimCompleted(object sender, EventArgs e)
         {
+
+          
             Point p = canvas.TransformToVisual(App.getInstance().RootVisual).Transform(new Point(0, 0));
             animXO.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Width) - p.X;
             animYO.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
