@@ -568,19 +568,25 @@ namespace TetrisHTW
 
                     Rectangle upperLeftRect = getRectangleAt(minX, minY);
                     Rectangle bottomRightRect = getRectangleAt(maxX, maxY);
+                    Rectangle bottomLeftRect = getRectangleAt(minX, maxY);
+                    Rectangle upperRightRect = getRectangleAt(maxX, minY);
 
-                    if (rotated)
-                    {
-                        upperLeftRect = getRectangleAt(maxX, maxY);
-                        bottomRightRect = getRectangleAt(minX, minY);
-                    }
+                    //if (rotated)
+                    //{
+                    //    upperLeftRect = getRectangleAt(maxX, maxY);
+                    //    bottomRightRect = getRectangleAt(minX, minY);
+                    //}
 
                     Point upperLeftPoint = upperLeftRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
                     Point bottomRightPoint = bottomRightRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+                    Point bottomLeftPoint = bottomLeftRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+                    Point upperRightPoint = upperRightRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
 
-                    double width = bottomRightPoint.X - upperLeftPoint.X + upperLeftRect.ActualWidth;
-                    double height = bottomRightPoint.Y - upperLeftPoint.Y + upperLeftRect.ActualHeight;
 
+                    double width = Math.Sqrt(Math.Pow(bottomRightPoint.X - bottomLeftPoint.X, 2) + Math.Pow(bottomRightPoint.Y - bottomLeftPoint.Y, 2)) + upperLeftRect.ActualWidth;
+                    double height = Math.Sqrt(Math.Pow(bottomRightPoint.X - upperRightPoint.X, 2) + Math.Pow(bottomRightPoint.Y - upperRightPoint.Y, 2));
+
+                    
                     
                     Rectangle effectRectangle = new Rectangle();
                     effectRectangle.Width = width;
@@ -610,16 +616,8 @@ namespace TetrisHTW
 
                     effectRectangle.Fill = lgb;
                     canvas.Children.Add(effectRectangle);
-                    if (rotated)
-                    {
-                        Canvas.SetLeft(effectRectangle, upperLeftPoint.X + width - upperLeftRect.ActualWidth);
-                        Canvas.SetTop(effectRectangle, upperLeftPoint.Y + height);
-                    }
-                    else
-                    {
-                        Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot));
-                        Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot));
-                    }
+                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot));
+                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot));
                     
 
                     Duration duration = TimeSpan.FromMilliseconds(3000);
