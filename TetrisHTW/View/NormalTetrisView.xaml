@@ -15,8 +15,13 @@
                 <DoubleAnimation x:Name="animHintBoxOff" Storyboard.TargetName="HintBox" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="0"/>
             </Storyboard>
             <Storyboard x:Name="levelFontSizeSB">
-                <!--<DoubleAnimation x:Name="animLevelFontSize" Storyboard.TargetName="levelText" Storyboard.TargetProperty="FontSize" Duration="0:0:1" From="30" To="12"/>-->
                 <DoubleAnimation x:Name="animLevelFontScale" Storyboard.TargetName="levelTextFontScale" Storyboard.TargetProperty="ScaleX" Duration="0:0:1" From="30" To="1"/>
+            </Storyboard>
+
+            <Storyboard x:Name="boardRotateSB">
+                <DoubleAnimation x:Name="animBoardRotate" Storyboard.TargetName="boardBorder" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Duration="0:0:1.5"/>
+                <DoubleAnimation x:Name="animBoardTranslateX" Storyboard.TargetName="boardBorder" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Duration="0:0:1.5"/>
+                <DoubleAnimation x:Name="animBoardTranslateY" Storyboard.TargetName="boardBorder" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Duration="0:0:1.5"/>
             </Storyboard>
         </Canvas.Resources>
         
@@ -105,6 +110,9 @@
                 </StackPanel>
 
             <Border Name="boardBorder" BorderThickness="10" Grid.Column="0" Grid.RowSpan="4" BorderBrush="{StaticResource WallImageBrush}">
+                <Border.RenderTransform>
+                    <CompositeTransform/>
+                </Border.RenderTransform>
                 <Grid Name="boardGrid" >
                     <Grid.Background>
                         <LinearGradientBrush Opacity="0.8">

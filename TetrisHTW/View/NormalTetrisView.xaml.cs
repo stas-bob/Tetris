@@ -40,7 +40,8 @@ namespace TetrisHTW
         private List<long> timeList = new List<long>();
         private OptionsView ov;
         private IndexView iv;
-        public const int MOD = 1;
+        private int mod = 1;
+        private bool rotated;
 
         public NormalTetrisView(OptionsView ov, IndexView iv)
         {
@@ -100,6 +101,11 @@ namespace TetrisHTW
             }
         }
 
+
+        public void setMode(int mode)
+        {
+            this.mod = mode;
+        }
 
 
         /*KeyboardListener fuer druecken einer Taste*/
@@ -236,6 +242,25 @@ namespace TetrisHTW
                 Color[,] data = bea.boardData;
                 if (bea.removedLines.Count > 0)
                 {
+                    if (mod == 3)
+                    {
+                        
+                        if (animBoardRotate.To == null || animBoardRotate.To == 360)
+                        {
+                            rotated = true;
+                            animBoardRotate.To = 180;
+                            animBoardTranslateX.To = 210;
+                            animBoardTranslateY.To = 400;
+                        }
+                        else if (animBoardRotate.To == 180)
+                        {
+                            rotated = false;
+                            animBoardRotate.To = 360;
+                            animBoardTranslateX.To = 0;
+                            animBoardTranslateY.To = 0;
+                        }
+                        boardRotateSB.Begin();
+                    }
                     if (hardFall)
                     {
                         animateRemovedLinesHard(bea.removedLines);
@@ -514,6 +539,7 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
+                
                 hardFall = false;
                 tools.Point[] points = ffea.figurePoints;
                 List<Rectangle> rectangles = getBoardRectangles(points);
@@ -543,15 +569,30 @@ namespace TetrisHTW
                     Rectangle upperLeftRect = getRectangleAt(minX, minY);
                     Rectangle bottomRightRect = getRectangleAt(maxX, maxY);
 
+                    if (rotated)
+                    {
+                        upperLeftRect = getRectangleAt(maxX, maxY);
+                        bottomRightRect = getRectangleAt(minX, minY);
+                    }
+
                     Point upperLeftPoint = upperLeftRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
                     Point bottomRightPoint = bottomRightRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
 
                     double width = bottomRightPoint.X - upperLeftPoint.X + upperLeftRect.ActualWidth;
                     double height = bottomRightPoint.Y - upperLeftPoint.Y + upperLeftRect.ActualHeight;
 
+                    
                     Rectangle effectRectangle = new Rectangle();
                     effectRectangle.Width = width;
                     effectRectangle.Height = height;
+
+                    if (rotated)
+                    {
+                        CompositeTransform ct = new CompositeTransform();
+                        ct.Rotation = animBoardRotate.To.Value;
+                        effectRectangle.RenderTransform = ct;  
+                    }
+
 
 
                     LinearGradientBrush lgb = new LinearGradientBrush();
@@ -569,8 +610,17 @@ namespace TetrisHTW
 
                     effectRectangle.Fill = lgb;
                     canvas.Children.Add(effectRectangle);
-                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot));
-                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot));
+                    if (rotated)
+                    {
+                        Canvas.SetLeft(effectRectangle, upperLeftPoint.X + width - upperLeftRect.ActualWidth);
+                        Canvas.SetTop(effectRectangle, upperLeftPoint.Y + height);
+                    }
+                    else
+                    {
+                        Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot));
+                        Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot));
+                    }
+                    
 
                     Duration duration = TimeSpan.FromMilliseconds(3000);
                     DoubleAnimation myDoubleAnimation = new DoubleAnimation();
@@ -714,7 +764,7 @@ namespace TetrisHTW
             {
                 time += t;
             }
-            sqlClient.writeScore(SQLClientError, playerName, boardModel.getScore(), boardModel.getLevel(), time, MOD);
+            sqlClient.writeScore(SQLClientError, playerName, boardModel.getScore(), boardModel.getLevel(), time, mod);
         }
 
         private void showHint(string msg, int fontSize)
@@ -766,29 +816,41 @@ namespace TetrisHTW
 
         private void ExitGame()
         {
-            if (fallWorker != null)
+            Dispatcher.BeginInvoke(() =>
             {
-                fallWorker.RequestStop();
-                fallWorker.setLevel(0);
-            }
-            timeList.Clear();
-            time = 0;
-            gameOver = false;
-            pause = false;
-            HintBox.Opacity = 0;
-            boardModel.clearBoard();
-            lastKey = 0;
-            previousLevel = 0;
-            playerName = "Unbekannt";
-            hardFall = false;
-            App.getInstance().RootVisual.KeyDown -= Page_KeyDown;
-            App.getInstance().RootVisual.KeyUp -= Page_KeyUp;
+                if (fallWorker != null)
+                {
+                    fallWorker.RequestStop();
+                    fallWorker.setLevel(0);
+                }
+                timeList.Clear();
+                time = 0;
+                gameOver = false;
+                pause = false;
+                HintBox.Opacity = 0;
+                boardModel.clearBoard();
+                lastKey = 0;
+                previousLevel = 0;
+                playerName = "Unbekannt";
+                hardFall = false;
+                rotated = false;
+                mod = 1;
+                CompositeTransform ct = new CompositeTransform();
+                ct.Rotation = 0;
+                ct.TranslateX = 0;
+                ct.TranslateY = 0;
+                boardBorder.RenderTransform = ct;
+                animBoardRotate.To = null;
+                App.getInstance().RootVisual.KeyDown -= Page_KeyDown;
+                App.getInstance().RootVisual.KeyUp -= Page_KeyUp;
+            });
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ExitGame();
             iv.rootContainer.Child = ov;
+           
         }
     }
 }

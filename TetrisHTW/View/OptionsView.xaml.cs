@@ -27,18 +27,34 @@ namespace TetrisHTW.View
 
         private void Spielen_Click(object sender, RoutedEventArgs e)
         {
+            int mode = -1;
+            if (normalModeRadioButton.IsChecked == true)
+            {
+                mode = 1;
+            }
+            else if (spezialModeRadioButton.IsChecked == true)
+            {
+                mode = 2;
+            }
+            else if (kretschmerModeRadioButton.IsChecked == true)
+            {
+                mode = 3;
+            }
+
             if (ntv == null)
             {
-                ntv = new NormalTetrisView(this, iv); 
+                ntv = new NormalTetrisView(this, iv);
             }
             bool unknown = false;
             if (playerNameTextBox.Text == null || playerNameTextBox.Text.Equals(""))
             {
                 unknown = true;
             }
-            if (!unknown) {
+            if (!unknown)
+            {
                 ntv.setPlayerName(playerNameTextBox.Text);
             }
+            ntv.setMode(mode);
             ntv.InitGame();
             iv.rootContainer.Child = ntv;
         }

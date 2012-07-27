@@ -160,11 +160,11 @@
                                 <ColumnDefinition Width="85"/>
                                 <ColumnDefinition Width="35"/>
                             </Grid.ColumnDefinitions>
-                            <RadioButton Grid.Column="1" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="True" />
+                            <RadioButton Name="normalModeRadioButton" Grid.Column="1" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="True" />
                             <TextBlock Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5,0,0,0" TextWrapping="Wrap" Text="Normal" FontFamily="Buxton Sketch" FontSize="18"/>
-                            <RadioButton Grid.Column="3" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="False"/>
+                            <RadioButton Name="spezialModeRadioButton" Grid.Column="3" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="False"/>
                             <TextBlock Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"   TextWrapping="Wrap" Text="Spezial" FontFamily="Buxton Sketch" FontSize="18"/>
-                            <RadioButton Grid.Column="5" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="False"/>
+                            <RadioButton Name="kretschmerModeRadioButton" Grid.Column="5" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="False"/>
                             <TextBlock Grid.Column="6" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5,0,0,0"  TextWrapping="Wrap" Text="Kretschmer"  FontFamily="Buxton Sketch" FontSize="18"/>
                         </Grid>
 
