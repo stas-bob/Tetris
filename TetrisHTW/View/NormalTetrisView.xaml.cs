@@ -40,8 +40,7 @@ namespace TetrisHTW
         private List<long> timeList = new List<long>();
         private OptionsView ov;
         private IndexView iv;
-        private int mod = 1;
-        private bool rotated;
+        private int mod;
 
         public NormalTetrisView(OptionsView ov, IndexView iv)
         {
@@ -59,6 +58,7 @@ namespace TetrisHTW
             App.getInstance().GameOverEvent += new GameOverEventHandler(OnGameOver);
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(OnFigureFallen);
             playerName = "Unbekannt";
+            mod = 1;
         }
 
         void initBoard()
@@ -118,11 +118,9 @@ namespace TetrisHTW
                     if (!pause)
                     {
                         showHint("Pause", 40);
-
                     }
                     else
                     {
-
                         GameResume();
                     }
                 }
@@ -177,7 +175,8 @@ namespace TetrisHTW
 
         public void InitGame()
         {
-            /*Das sind die Listener für das Keyboard. TODO Das muss doch auch anders gehn!! this.keydown geht net.*/
+            /*Das sind die Listener für das Keyboard. TODO Das muss doch auch anders gehn!! this.keydown geht net.
+             Ich will dass dieses Objekt weggeraumt. dann braucht man kein onExit(), so muss ich nicht extra event -= machen*/
             App.getInstance().RootVisual.KeyDown += new KeyEventHandler(Page_KeyDown);
             App.getInstance().RootVisual.KeyUp += new KeyEventHandler(Page_KeyUp);
 
@@ -247,14 +246,12 @@ namespace TetrisHTW
                         
                         if (animBoardRotate.To == null || animBoardRotate.To == 360)
                         {
-                            rotated = true;
                             animBoardRotate.To = 180;
                             animBoardTranslateX.To = 210;
                             animBoardTranslateY.To = 400;
                         }
                         else if (animBoardRotate.To == 180)
                         {
-                            rotated = false;
                             animBoardRotate.To = 360;
                             animBoardTranslateX.To = 0;
                             animBoardTranslateY.To = 0;
@@ -571,11 +568,6 @@ namespace TetrisHTW
                     Rectangle bottomLeftRect = getRectangleAt(minX, maxY);
                     Rectangle upperRightRect = getRectangleAt(maxX, minY);
 
-                    //if (rotated)
-                    //{
-                    //    upperLeftRect = getRectangleAt(maxX, maxY);
-                    //    bottomRightRect = getRectangleAt(minX, minY);
-                    //}
 
                     Point upperLeftPoint = upperLeftRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
                     Point bottomRightPoint = bottomRightRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
@@ -592,12 +584,10 @@ namespace TetrisHTW
                     effectRectangle.Width = width;
                     effectRectangle.Height = height;
 
-                    if (rotated)
-                    {
-                        CompositeTransform ct = new CompositeTransform();
-                        ct.Rotation = animBoardRotate.To.Value;
-                        effectRectangle.RenderTransform = ct;  
-                    }
+                    CompositeTransform ct = (CompositeTransform)boardBorder.RenderTransform;
+                    CompositeTransform ct2 = new CompositeTransform();
+                    ct2.Rotation = ct.Rotation;
+                    effectRectangle.RenderTransform = ct2;
 
 
 
@@ -831,7 +821,6 @@ namespace TetrisHTW
                 previousLevel = 0;
                 playerName = "Unbekannt";
                 hardFall = false;
-                rotated = false;
                 mod = 1;
                 CompositeTransform ct = new CompositeTransform();
                 ct.Rotation = 0;
@@ -848,7 +837,6 @@ namespace TetrisHTW
         {
             ExitGame();
             iv.rootContainer.Child = ov;
-           
         }
     }
 }

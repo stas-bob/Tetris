@@ -36,7 +36,6 @@ namespace TetrisHTW
             
             shouldStop = false;
             while (!shouldStop) {
-                Debug.WriteLine(Thread.CurrentThread.ManagedThreadId);
                 switch (level) {
                     case 0: Thread.Sleep(1000); break;
                     case 1: Thread.Sleep(900); break;

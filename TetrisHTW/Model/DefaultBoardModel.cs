@@ -99,15 +99,15 @@ namespace TetrisHTW.Model
                 switch (level)
                 {
                     case 0: tmpScore += Math.Pow(50 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
-                    case 1: tmpScore += Math.Pow(100, calcLines(i)); break;
-                    case 2: tmpScore += Math.Pow(150, calcLines(i)); break;
-                    case 3: tmpScore += Math.Pow(200, calcLines(i)); break;
-                    case 4: tmpScore += Math.Pow(250, calcLines(i)); break;
-                    case 5: tmpScore += Math.Pow(300, calcLines(i)); break;
-                    case 6: tmpScore += Math.Pow(350, calcLines(i)); break;
-                    case 7: tmpScore += Math.Pow(400, calcLines(i)); break;
-                    case 8: tmpScore += Math.Pow(450, calcLines(i)); break;
-                    case 9: tmpScore += Math.Pow(500, calcLines(i)); break;
+                    case 1: tmpScore += Math.Pow(100 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
+                    case 2: tmpScore += Math.Pow(150 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
+                    case 3: tmpScore += Math.Pow(200 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
+                    case 4: tmpScore += Math.Pow(250 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
+                    case 5: tmpScore += Math.Pow(300 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
+                    case 6: tmpScore += Math.Pow(350 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
+                    case 7: tmpScore += Math.Pow(400 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
+                    case 8: tmpScore += Math.Pow(450 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
+                    case 9: tmpScore += Math.Pow(500 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
                 }
             }
             return (int)tmpScore;
