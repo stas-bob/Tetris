@@ -50,9 +50,7 @@ namespace TetrisHTW
             InitializeComponent();
             /*Hier werden die Grids initialisiert*/
             initBoard();
-            /*Das sind die Listener für das Keyboard*/
-            App.getInstance().RootVisual.KeyDown += new KeyEventHandler(Page_KeyDown);
-            App.getInstance().RootVisual.KeyUp += new KeyEventHandler(Page_KeyUp);
+            
             /* Hier kommen die Event Listener fuers Spiel*/
             boardModel.BoardChanged += new BoardChangedEventHandler(OnBoardChanged);
             boardModel.ScoreChanged += new ScoreChangedEventHandler(OnScoreChanged);
@@ -113,33 +111,39 @@ namespace TetrisHTW
                 {
                     if (!pause)
                     {
-                        GamePause();
-                        pause = true;
-                        pauseOnSB.Begin();
+                        showHint("Pause", 40);
+
                     }
                     else
                     {
-                        pauseOffSB.Begin();
-                        pause = false;
+
                         GameResume();
                     }
                 }
                 else
                 {
-                    if (!pause)
+                    if (e.Key == Key.Escape)
                     {
-                        switch (e.Key)
+                        if (pause)
+                            GameResume();
+                    }
+                    else
+                    {
+                        if (!pause)
                         {
-                            case Key.Up: boardModel.getCurrentFigure().rotate(); break;
-                            case Key.Space: boardModel.getCurrentFigure().fallCompletely(); break;
-                            default:
-                                /* Dieser Timer ist fuer das fluessige links rechts und nach unten Bewegen */
-                                if (timer == null)
-                                {
-                                    lastKey = e.Key;
-                                    timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 70 : 140);
-                                }
-                                break;
+                            switch (e.Key)
+                            {
+                                case Key.Up: boardModel.getCurrentFigure().rotate(); break;
+                                case Key.Space: boardModel.getCurrentFigure().fallCompletely(); break;
+                                default:
+                                    /* Dieser Timer ist fuer das fluessige links rechts und nach unten Bewegen */
+                                    if (timer == null)
+                                    {
+                                        lastKey = e.Key;
+                                        timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 70 : 140);
+                                    }
+                                    break;
+                            }
                         }
                     }
                 }
@@ -167,6 +171,10 @@ namespace TetrisHTW
 
         public void InitGame()
         {
+            /*Das sind die Listener für das Keyboard. TODO Das muss doch auch anders gehn!! this.keydown geht net.*/
+            App.getInstance().RootVisual.KeyDown += new KeyEventHandler(Page_KeyDown);
+            App.getInstance().RootVisual.KeyUp += new KeyEventHandler(Page_KeyUp);
+
             Figure preview = boardModel.generateRandomFigure();
             Figure current = boardModel.generateRandomFigure();
 
@@ -692,18 +700,13 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
-                Debug.WriteLine("game over");
-                scoreText.Text = "game over";
                 GameOver();
             });
         }
 
         private void GameOver()
         {
-            if (fallWorker != null)
-            {
-                fallWorker.RequestStop();
-            }
+            showHint("Game Over", 20);
             gameOver = true;
             timeList.Add(DateTime.Now.Ticks - time);
             time = 0;
@@ -711,7 +714,27 @@ namespace TetrisHTW
             {
                 time += t;
             }
-            sqlClient.writeScore(playerName, boardModel.getScore(), boardModel.getLevel(), time, MOD);
+            sqlClient.writeScore(SQLClientError, playerName, boardModel.getScore(), boardModel.getLevel(), time, MOD);
+        }
+
+        private void showHint(string msg, int fontSize)
+        {
+            pause = true;
+            if (fallWorker != null)
+            {
+                fallWorker.RequestStop();
+            }
+            timeList.Add(DateTime.Now.Ticks - time);
+            HintBoxTextBlock.FontSize = fontSize;
+            HintBoxTextBlock.Text = msg;
+            HintBoxOnSB.Begin();
+        }
+        private void SQLClientError(string msg)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                showHint(msg + ".Ihre Punktezahl ist eventuell verloren gegangen.", 8);   
+            });
         }
 
         private void GameStart()
@@ -724,18 +747,8 @@ namespace TetrisHTW
 
 
 
-        private void GamePause()
-        {
-            if (!gameOver) 
-            {
-                pause = true;
-                if (fallWorker != null)
-                {
-                    fallWorker.RequestStop();
-                }
-                timeList.Add(DateTime.Now.Ticks - time);
-            }
-        }
+       
+
 
         private void GameResume()
         {
@@ -745,6 +758,7 @@ namespace TetrisHTW
                 fallWorker = new FallWorker(boardModel.getLevel());
                 new Thread(fallWorker.InvokeFalling).Start();
                 time = DateTime.Now.Ticks;
+                HintBoxOffSB.Begin();
                 
             }
         }
@@ -761,12 +775,14 @@ namespace TetrisHTW
             time = 0;
             gameOver = false;
             pause = false;
-            levelHint.Opacity = 0;
+            HintBox.Opacity = 0;
             boardModel.clearBoard();
             lastKey = 0;
             previousLevel = 0;
             playerName = "Unbekannt";
             hardFall = false;
+            App.getInstance().RootVisual.KeyDown -= Page_KeyDown;
+            App.getInstance().RootVisual.KeyUp -= Page_KeyUp;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

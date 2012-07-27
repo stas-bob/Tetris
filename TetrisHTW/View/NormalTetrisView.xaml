@@ -8,11 +8,11 @@
              d:DesignHeight="515" d:DesignWidth="800">
     <Canvas Name="canvas" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,230,400">
         <Canvas.Resources>
-            <Storyboard x:Name="pauseOnSB">
-                <DoubleAnimation x:Name="animPauseOn" Storyboard.TargetName="levelHint" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="1"/>
+            <Storyboard x:Name="HintBoxOnSB">
+                <DoubleAnimation x:Name="animHintBoxOn" Storyboard.TargetName="HintBox" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="1"/>
             </Storyboard>
-            <Storyboard x:Name="pauseOffSB">
-                <DoubleAnimation x:Name="animPauseOff" Storyboard.TargetName="levelHint" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="0"/>
+            <Storyboard x:Name="HintBoxOffSB">
+                <DoubleAnimation x:Name="animHintBoxOff" Storyboard.TargetName="HintBox" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="0"/>
             </Storyboard>
             <Storyboard x:Name="levelFontSizeSB">
                 <!--<DoubleAnimation x:Name="animLevelFontSize" Storyboard.TargetName="levelText" Storyboard.TargetProperty="FontSize" Duration="0:0:1" From="30" To="12"/>-->
@@ -20,13 +20,13 @@
             </Storyboard>
         </Canvas.Resources>
         
-        <Border Name="levelHint" Width="150" Height="70" Canvas.ZIndex="1" CornerRadius="20" Canvas.Left="28" Canvas.Top="100" Opacity="0">
+        <Border Name="HintBox" Width="150" Height="70" Canvas.ZIndex="1" CornerRadius="20" Canvas.Left="28" Canvas.Top="100" Opacity="0">
             <Canvas Background="DarkSlateBlue">
                 <Canvas.Clip>
                     <RectangleGeometry RadiusX="20" RadiusY="20" Rect="0,0,150,70"/>
                 </Canvas.Clip>
-                <TextBlock Text="Pause" Name="levelHintTextBlock" FontSize="40" Foreground="White" Width="150" TextAlignment="Center"/>
-                <Rectangle RadiusX="20" RadiusY="20" Width="200" Height="70">
+                <TextBlock Name="HintBoxTextBlock" TextWrapping="Wrap" Foreground="White" Width="150" TextAlignment="Center"/>
+                <Rectangle RadiusX="20" RadiusY="20" Width="150" Height="70">
                     <Rectangle.Fill>
                         <LinearGradientBrush>
                             <LinearGradientBrush.Transform>

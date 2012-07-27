@@ -5,7 +5,7 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
-           d:DesignWidth="640" d:DesignHeight="480">
+           d:DesignWidth="673" d:DesignHeight="480">
     <StackPanel x:Name="LayoutRoot">
         <TextBlock HorizontalAlignment="Center" Name="textBlock1" Text="{StaticResource AboutText}" VerticalAlignment="Top" Margin="130" TextWrapping="Wrap"/>
 

@@ -33,8 +33,9 @@ namespace TetrisHTW.Util
             this.proxy = proxy;
         }
 
-        public void writeScore(string playerName, int score, int level, long time, int mod)
+        public void writeScore(ErrorCallback ecb, string playerName, int score, int level, long time, int mod)
         {
+            this.ecb = ecb;
             time /= 10000;
             XDocument doc = new XDocument(
                 new XElement("scoreentry",
@@ -55,34 +56,48 @@ namespace TetrisHTW.Util
                 request.BeginGetRequestStream(new AsyncCallback(RequestReady), request);
             }
             catch (Exception e)
-            { Debug.WriteLine(e.Message); }
+            { ecb(e.Message); }
             
         }
 
         void RequestReady(IAsyncResult asyncResult)
         {
-            HttpWebRequest request = asyncResult.AsyncState as HttpWebRequest;
-            using (Stream stream = request.EndGetRequestStream(asyncResult))
+            try
             {
-                byte[] bytes = Encoding.UTF8.GetBytes(postData);
-                stream.Write(bytes, 0, bytes.Length);
-                
+                HttpWebRequest request = asyncResult.AsyncState as HttpWebRequest;
+                using (Stream stream = request.EndGetRequestStream(asyncResult))
+                {
+                    byte[] bytes = Encoding.UTF8.GetBytes(postData);
+                    stream.Write(bytes, 0, bytes.Length);
+
+                }
+                request.BeginGetResponse(new AsyncCallback(ResponseReady), request);
             }
-            request.BeginGetResponse(new AsyncCallback(ResponseReady), request);
+            catch (Exception e)
+            {
+                ecb(e.Message);
+            }
         }
 
         void ResponseReady(IAsyncResult asyncResult)
         {
-            HttpWebRequest request = asyncResult.AsyncState as HttpWebRequest;
-            using (HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(asyncResult))
+            try
             {
-                using (Stream responseStream = response.GetResponseStream())
+                HttpWebRequest request = asyncResult.AsyncState as HttpWebRequest;
+                using (HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(asyncResult))
                 {
-                    using (StreamReader reader = new StreamReader(responseStream))
+                    using (Stream responseStream = response.GetResponseStream())
                     {
-                        Debug.WriteLine(reader.ReadToEnd());
+                        using (StreamReader reader = new StreamReader(responseStream))
+                        {
+                            Debug.WriteLine(reader.ReadToEnd());
+                        }
                     }
                 }
+            }   
+            catch (Exception e)
+            {
+                ecb(e.Message);
             }
         }
 
