@@ -18,6 +18,7 @@ namespace TetrisHTW.View
         private Random rnd = new Random();
         private IndexView iv;
         private NormalTetrisView ntv;
+        private SpecialTetrisView stv;
 
         public OptionsView(IndexView iv)
         {
@@ -27,36 +28,44 @@ namespace TetrisHTW.View
 
         private void Spielen_Click(object sender, RoutedEventArgs e)
         {
-            int mode = -1;
-            if (normalModeRadioButton.IsChecked == true)
+            UserControl uc = null;
+            if (spezialModeRadioButton.IsChecked == true)
             {
-                mode = 1;
+                if (stv == null)
+                {
+                    stv = new SpecialTetrisView();
+                }
+                uc = stv;
             }
-            else if (spezialModeRadioButton.IsChecked == true)
+            else
             {
-                mode = 2;
+                int mode = -1;
+                if (normalModeRadioButton.IsChecked == true)
+                {
+                    mode = 1;
+                }
+                else if (kretschmerModeRadioButton.IsChecked == true)
+                {
+                    mode = 3;
+                }
+                if (ntv == null)
+                {
+                    ntv = new NormalTetrisView(this, iv);
+                }
+                uc = ntv;
+                bool unknown = false;
+                if (playerNameTextBox.Text == null || playerNameTextBox.Text.Equals(""))
+                {
+                    unknown = true;
+                }
+                if (!unknown)
+                {
+                    ntv.setPlayerName(playerNameTextBox.Text);
+                }
+                ntv.setMode(mode);
+                ntv.InitGame();
             }
-            else if (kretschmerModeRadioButton.IsChecked == true)
-            {
-                mode = 3;
-            }
-
-            if (ntv == null)
-            {
-                ntv = new NormalTetrisView(this, iv);
-            }
-            bool unknown = false;
-            if (playerNameTextBox.Text == null || playerNameTextBox.Text.Equals(""))
-            {
-                unknown = true;
-            }
-            if (!unknown)
-            {
-                ntv.setPlayerName(playerNameTextBox.Text);
-            }
-            ntv.setMode(mode);
-            ntv.InitGame();
-            iv.rootContainer.Child = ntv;
+            iv.rootContainer.Child = uc;
         }
 
         

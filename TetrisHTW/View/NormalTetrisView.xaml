@@ -19,9 +19,7 @@
             </Storyboard>
 
             <Storyboard x:Name="boardRotateSB">
-                <DoubleAnimation x:Name="animBoardRotate" Storyboard.TargetName="boardBorder" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Duration="0:0:1.5"/>
-                <DoubleAnimation x:Name="animBoardTranslateX" Storyboard.TargetName="boardBorder" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Duration="0:0:1.5"/>
-                <DoubleAnimation x:Name="animBoardTranslateY" Storyboard.TargetName="boardBorder" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Duration="0:0:1.5"/>
+                <DoubleAnimation x:Name="animBoardRotate" Storyboard.TargetName="boardBorder" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Duration="0:0:5" To="0"/>
             </Storyboard>
         </Canvas.Resources>
         
@@ -114,7 +112,7 @@
                     <BitmapCache/>
                 </Border.CacheMode>
                 <Border.RenderTransform>
-                    <CompositeTransform/>
+                    <CompositeTransform CenterX="105" CenterY="200"/>
                 </Border.RenderTransform>
                 <Grid Name="boardGrid" >
                     <Grid.Background>

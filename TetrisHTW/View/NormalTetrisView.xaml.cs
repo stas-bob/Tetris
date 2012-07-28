@@ -248,19 +248,16 @@ namespace TetrisHTW
                 {
                     if (mod == 3)
                     {
-                        
-                        if (animBoardRotate.To == null || animBoardRotate.To == 360)
+                        int random = rnd.Next(2);
+                        if (random == 0)
                         {
-                            animBoardRotate.To = 180;
-                            animBoardTranslateX.To = 210;
-                            animBoardTranslateY.To = 400;
-                        }
-                        else if (animBoardRotate.To == 180)
+                            animBoardRotate.To = 180 * (rnd.Next(7) + 3);
+                        } else
                         {
-                            animBoardRotate.To = 360;
-                            animBoardTranslateX.To = 0;
-                            animBoardTranslateY.To = 0;
+                            animBoardRotate.To = 90 * (rnd.Next(7) + 3);
                         }
+                    
+
                         boardRotateSB.Begin();
                     }
                     if (hardFall)
