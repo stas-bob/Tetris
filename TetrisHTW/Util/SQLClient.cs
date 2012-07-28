@@ -90,7 +90,11 @@ namespace TetrisHTW.Util
                     {
                         using (StreamReader reader = new StreamReader(responseStream))
                         {
-                            Debug.WriteLine(reader.ReadToEnd());
+                            string str = reader.ReadToEnd();
+                            if (str.Contains("error"))
+                            {
+                                ecb(str);
+                            }
                         }
                     }
                 }

@@ -33,24 +33,13 @@ namespace TetrisHTW
 
         public event FigureFallenEventHandler FigureFallenEvent;
         public event GameOverEventHandler GameOverEvent;
-        public static bool DEBUG;
+        public static bool DEBUG = true;
         
         public App()
         {
-            DEBUG = false;
             if (DEBUG)
             {
-                // The Host object, which represents the host Silverlight plug-in.
-                System.Windows.Interop.SilverlightHost host =
-                    Application.Current.Host;
-
-                // The Settings object, which represents Web browser settings.
-                System.Windows.Interop.Settings settings = host.Settings;
-
-                // Read/write properties of the Settings object.
-                settings.EnableFrameRateCounter = true;
-                settings.MaxFrameRate = 60;
-
+                Application.Current.Host.Settings.EnableFrameRateCounter = true;
             }
             instance = this;
             this.Startup += this.Application_Startup;

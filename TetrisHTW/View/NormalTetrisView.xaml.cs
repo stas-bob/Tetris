@@ -165,6 +165,11 @@ namespace TetrisHTW
 
         public void MoveFigure(Object stateInfo)
         {
+            if (gameOver)
+            {
+                timer.Dispose();
+                timer = null;
+            }
             switch (lastKey)
             {
                 case Key.Left: boardModel.getCurrentFigure().left(); break;

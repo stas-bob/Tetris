@@ -110,6 +110,9 @@
                 </StackPanel>
 
             <Border Name="boardBorder" BorderThickness="10" Grid.Column="0" Grid.RowSpan="4" BorderBrush="{StaticResource WallImageBrush}">
+                <Border.CacheMode>
+                    <BitmapCache/>
+                </Border.CacheMode>
                 <Border.RenderTransform>
                     <CompositeTransform/>
                 </Border.RenderTransform>
