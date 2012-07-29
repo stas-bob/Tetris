@@ -94,6 +94,7 @@
     <Compile Include="Model\FigureFallenEventArgs.cs" />
     <Compile Include="Model\LineEventArgs.cs" />
     <Compile Include="Tools\Point.cs" />
+    <Compile Include="Util\ScoresData.cs" />
     <Compile Include="Util\SQLClient.cs" />
     <Compile Include="View\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
