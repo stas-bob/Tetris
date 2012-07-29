@@ -46,7 +46,7 @@ namespace TetrisHTW
                     case 6: Thread.Sleep(400); break;
                     case 7: Thread.Sleep(300); break;
                     case 8: Thread.Sleep(200); break;
-                    case 9: Thread.Sleep(100); break;
+                    case 9: Thread.Sleep(160); break;
                 }
 
                 lock (App.myLock)

@@ -146,15 +146,15 @@ namespace TetrisHTW
                                         lastKey = e.Key;
                                         if (boardModel.getLevel() >= 9)
                                         {
-                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 110);
+                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 125);
                                         }
                                         else if (boardModel.getLevel() == 8)
                                         {
-                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 125);
+                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 130);
                                         }
                                         else if (boardModel.getLevel() == 7)
                                         {
-                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 130);
+                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 135);
                                         }
                                         else
                                         {
