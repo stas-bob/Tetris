@@ -144,7 +144,22 @@ namespace TetrisHTW
                                     if (timer == null)
                                     {
                                         lastKey = e.Key;
-                                        timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 70 : 140);
+                                        if (boardModel.getLevel() >= 9)
+                                        {
+                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 110);
+                                        }
+                                        else if (boardModel.getLevel() == 8)
+                                        {
+                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 125);
+                                        }
+                                        else if (boardModel.getLevel() == 7)
+                                        {
+                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 130);
+                                        }
+                                        else
+                                        {
+                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 140);
+                                        }
                                     }
                                     break;
                             }
@@ -170,11 +185,14 @@ namespace TetrisHTW
                 timer.Dispose();
                 timer = null;
             }
-            switch (lastKey)
+            else
             {
-                case Key.Left: boardModel.getCurrentFigure().left(); break;
-                case Key.Right: boardModel.getCurrentFigure().right(); break;
-                case Key.Down: boardModel.getCurrentFigure().fall(); break;
+                switch (lastKey)
+                {
+                    case Key.Left: boardModel.getCurrentFigure().left(); break;
+                    case Key.Right: boardModel.getCurrentFigure().right(); break;
+                    case Key.Down: boardModel.getCurrentFigure().fall(); break;
+                }
             }
         }
 

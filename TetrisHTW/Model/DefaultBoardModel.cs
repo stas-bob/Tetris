@@ -270,7 +270,7 @@ namespace TetrisHTW.Model
             {
                 this.level = 8;
             }
-            else if (lines >= 100)
+            else if (lines < 100)
             {
                 this.level = 9;
             }
