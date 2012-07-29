@@ -42,9 +42,9 @@ namespace TetrisHTW.Model
                     board[j, i] = boardColor;
                 }
             }
-            score = 0;
-            level = 0;
-            lines = 0;
+            setLines(0);
+            addScore(-1*getScore());
+            
             currentFigure = null;
             previewFigure = null;
         }
@@ -82,7 +82,7 @@ namespace TetrisHTW.Model
             NotifyBoardChanged(bae);
             if (linesToRemove.Count > 0)
             {
-                setScore(calcScore(linesToRemove));
+                addScore(calcScore(linesToRemove));
                 setLines(lines);
             }
         }
@@ -217,7 +217,7 @@ namespace TetrisHTW.Model
             return level;
         }
 
-        public void setScore(int score)
+        public void addScore(int score)
         {
             this.score += score;
             ScoreEventArgs sea = new ScoreEventArgs();

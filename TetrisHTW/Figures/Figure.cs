@@ -260,7 +260,7 @@ namespace TetrisHTW.Figures
                 }
                 else
                 {
-                    board.setScore(5);
+                    board.addScore(5);
                 }
             }
         }

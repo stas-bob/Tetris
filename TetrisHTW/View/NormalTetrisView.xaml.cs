@@ -797,16 +797,10 @@ namespace TetrisHTW
 
         private void GameStart()
         {
-            gameOver = false;
             fallWorker = new FallWorker(boardModel.getLevel());
             new Thread(fallWorker.InvokeFalling).Start();
             time = DateTime.Now.Ticks;
         }
-
-
-
-       
-
 
         private void GameResume()
         {
@@ -836,9 +830,10 @@ namespace TetrisHTW
                 gameOver = false;
                 pause = false;
                 HintBox.Opacity = 0;
+                previousLevel = 0;
                 boardModel.clearBoard();
                 lastKey = 0;
-                previousLevel = 0;
+                
                 playerName = "Unbekannt";
                 hardFall = false;
                 mod = 1;
@@ -847,7 +842,7 @@ namespace TetrisHTW
                 ct.TranslateX = 0;
                 ct.TranslateY = 0;
                 boardBorder.RenderTransform = ct;
-                animBoardRotate.To = null;
+                animBoardRotate.To = 0;
                 App.getInstance().RootVisual.KeyDown -= Page_KeyDown;
                 App.getInstance().RootVisual.KeyUp -= Page_KeyUp;
             });
