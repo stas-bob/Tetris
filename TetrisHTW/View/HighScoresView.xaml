@@ -7,14 +7,19 @@
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     <StackPanel x:Name="LayoutRoot">
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <sdk:DataGrid x:Name="dataGrid1" AutoGenerateColumns="True" Background="Transparent"
-                HeadersVisibility="All"
-                RowBackground="Transparent" AlternatingRowBackground="Lavender"
-                ColumnWidth="*" RowHeight="25"
-                IsReadOnly="True" CanUserResizeColumns="False" MaxHeight="350" MaxWidth="620"/>
-        </ScrollViewer>
-
+        <sdk:DataGrid x:Name="dataGrid1" AutoGenerateColumns="False" Background="Transparent"
+            HeadersVisibility="All"
+            RowBackground="Transparent" AlternatingRowBackground="Lavender"
+            ColumnWidth="*" RowHeight="25"
+            IsReadOnly="True" CanUserResizeColumns="False" MaxHeight="350" MaxWidth="620">
+            <sdk:DataGrid.Columns>
+                <sdk:DataGridTextColumn Header="Player" Binding="{Binding playerName}" />
+                <sdk:DataGridTextColumn Header="Score" Binding="{Binding score}" />
+                <sdk:DataGridTextColumn Header="Level" Binding="{Binding level}" />
+                <sdk:DataGridTextColumn Header="Time" Binding="{Binding time}" />
+                <sdk:DataGridTextColumn Header="Mode" Binding="{Binding mode}" />
+            </sdk:DataGrid.Columns>
+        </sdk:DataGrid>
         <Button Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="Button_Click" Margin="10"/>
     </StackPanel>
 </UserControl>
