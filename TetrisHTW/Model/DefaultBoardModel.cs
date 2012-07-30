@@ -21,9 +21,11 @@ namespace TetrisHTW.Model
         private Color fallenPreviewColor = Color.FromArgb(255, 201, 201, 201);
         private int score;
         private int lines;
+        private int tempLines;
         private int level;
         private Figure currentFigure;
         private Figure previewFigure;
+        private Figure memoryFigure = null;
         private const int columns = 10;
         private const int rows = 20;
         private volatile Color[,] board = new Color[columns, rows];
@@ -94,9 +96,18 @@ namespace TetrisHTW.Model
         {
             linesToRemove.Reverse();
             double tmpScore = 0;
+            int localLevel;
+            if (lines > tempLines)
+            {
+                localLevel = level;
+            } else 
+            {
+                localLevel = (tempLines / 10) - 1;
+            }
+
             for (int i = 1; i <= linesToRemove.Count; i++)
             {
-                switch (level)
+                switch (localLevel)
                 {
                     case 0: tmpScore += Math.Pow(50 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
                     case 1: tmpScore += Math.Pow(100 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
@@ -207,6 +218,11 @@ namespace TetrisHTW.Model
             return currentFigure;
         }
 
+        public Figure getMemoryFigure()
+        {
+            return memoryFigure;
+        }
+
         public int getScore()
         {
             return score;
@@ -217,6 +233,16 @@ namespace TetrisHTW.Model
             return level;
         }
 
+        public int getLines()
+        {
+            return lines;
+        }
+
+        public void setTempLines(int lines)
+        {
+            this.tempLines = lines;
+        }
+
         public void addScore(int score)
         {
             this.score += score;
@@ -224,55 +250,62 @@ namespace TetrisHTW.Model
             sea.score = this.score;
 
             updateLevel();
-            
-            sea.level = this.level;
-            NotifyScoreChanged(sea);
-        }
 
-      
+            if (lines > tempLines)
+            {
+                sea.level = this.level;
+            }
+            else
+            {
+                sea.level = (this.tempLines / 10) - 1;
+            }
+            NotifyScoreChanged(sea);
+        }     
 
         private void updateLevel()
         {
-            
-            if (lines < 10)
+            if (lines > (tempLines - 1))
             {
-                this.level = 0;
-            }
-            else if (lines < 20)
-            {
-                this.level = 1;
-            }
-            else if (lines < 30)
-            {
-                this.level = 2;
-            }
-            else if (lines < 40)
-            {
-                this.level = 3;
-            }
-            else if (lines < 50)
-            {
-                this.level = 4;
-            }
-            else if (lines < 60)
-            {
-                this.level = 5;
-            }
-            else if (lines < 70)
-            {
-                this.level = 6;
-            }
-            else if (lines < 80)
-            {
-                this.level = 7;
-            }
-            else if (lines < 90)
-            {
-                this.level = 8;
-            }
-            else if (lines < 100)
-            {
-                this.level = 9;
+                if (lines < 10)
+                {
+                    this.level = 0;
+                }
+                else if (lines < 20)
+                {
+                    this.level = 1;
+                }
+                else if (lines < 30)
+                {
+                    this.level = 2;
+                }
+                else if (lines < 40)
+                {
+                    this.level = 3;
+                }
+                else if (lines < 50)
+                {
+                    this.level = 4;
+                }
+                else if (lines < 60)
+                {
+                    this.level = 5;
+                }
+                else if (lines < 70)
+                {
+                    this.level = 6;
+                }
+                else if (lines < 80)
+                {
+                    this.level = 7;
+                }
+                else if (lines < 90)
+                {
+                    this.level = 8;
+                }
+                else if (lines < 100)
+                {
+                    this.level = 9;
+                }
             }
         }
 
@@ -311,6 +344,11 @@ namespace TetrisHTW.Model
         public void setCurrentFigure(Figure figure)
         {
             this.currentFigure = figure;
+        }
+
+        public void setMemoryFigure(Figure figure)
+        {
+            this.memoryFigure = figure;
         }
 
         public void clearPoints(Point[] points)

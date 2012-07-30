@@ -14,8 +14,6 @@ using System.Collections.Generic;
 namespace TetrisHTW.Model
 {
 
-
-
     public interface BoardModel
     {
 
@@ -41,14 +39,17 @@ namespace TetrisHTW.Model
 
         void writeCell(Point[] points, Color c);
 
-
         Figure getCurrentFigure();
 
         Figure getPreviewFigure();
 
+        Figure getMemoryFigure();
+
         int getScore();
 
         int getLevel();
+
+        int getLines();
 
         void addScore(int score);
 
@@ -58,6 +59,8 @@ namespace TetrisHTW.Model
 
         void setCurrentFigure(Figure figure);
 
+        void setMemoryFigure(Figure figure);
+
         void clearPoints(Point[] points);
 
         void shiftToLine(int y);
@@ -65,5 +68,7 @@ namespace TetrisHTW.Model
         void clearBoard();
 
         void setLines(int lines);
+
+        void setTempLines(int level);
     }
 }
