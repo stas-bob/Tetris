@@ -926,7 +926,6 @@ namespace TetrisHTW.View
                 gameOver = false;
                 pause = false;
                 HintBox.Opacity = 0;
-                previousLevel = 0;
                 boardModel.clearBoard();
                 lastKey = 0;
                 

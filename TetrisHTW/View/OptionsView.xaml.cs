@@ -46,7 +46,6 @@ namespace TetrisHTW.View
                 {
                     stv.setPlayerName(playerNameTextBox.Text);
                 }
-                stv.setMode(1);
                 stv.InitGame();
             }
             else
@@ -62,7 +61,7 @@ namespace TetrisHTW.View
                 }
                 if (ntv == null)
                 {
-                    ntv = new NormalTetrisView(this, iv, (level + 1) * 10);
+                    ntv = new NormalTetrisView(this, iv);
                 }
                 uc = ntv;
                 bool unknown = false;
@@ -74,6 +73,7 @@ namespace TetrisHTW.View
                 {
                     ntv.setPlayerName(playerNameTextBox.Text);
                 }
+                ntv.setTempLines((level + 1) * 10);
                 ntv.setMode(mode);
                 ntv.InitGame();
             }

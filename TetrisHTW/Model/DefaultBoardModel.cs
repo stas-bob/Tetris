@@ -37,18 +37,21 @@ namespace TetrisHTW.Model
 
         public void clearBoard()
         {
-            for (int i = 0; i < rows; i++)
+            lock (App.myLock)
             {
-                for (int j = 0; j < columns; j++)
+                for (int i = 0; i < rows; i++)
                 {
-                    board[j, i] = boardColor;
+                    for (int j = 0; j < columns; j++)
+                    {
+                        board[j, i] = boardColor;
+                    }
                 }
+                setLines(0);
+                addScore(-1 * getScore());
+
+                currentFigure = null;
+                previewFigure = null;
             }
-            setLines(0);
-            addScore(-1*getScore());
-            
-            currentFigure = null;
-            previewFigure = null;
         }
 
         public Color getBoardColor()
@@ -249,11 +252,15 @@ namespace TetrisHTW.Model
             ScoreEventArgs sea = new ScoreEventArgs();
             sea.score = this.score;
 
-            updateLevel();
 
-            if (lines > tempLines)
+            if (lines >= tempLines)
             {
-                sea.level = this.level;
+                int tmpLvl = (lines / 10) - 1;
+                if (tmpLvl > 9)
+                {
+                    tmpLvl = 9;
+                }
+                sea.level = tmpLvl;
             }
             else
             {
@@ -262,52 +269,7 @@ namespace TetrisHTW.Model
             NotifyScoreChanged(sea);
         }     
 
-        private void updateLevel()
-        {
-            if (lines > (tempLines - 1))
-            {
-                if (lines < 10)
-                {
-                    this.level = 0;
-                }
-                else if (lines < 20)
-                {
-                    this.level = 1;
-                }
-                else if (lines < 30)
-                {
-                    this.level = 2;
-                }
-                else if (lines < 40)
-                {
-                    this.level = 3;
-                }
-                else if (lines < 50)
-                {
-                    this.level = 4;
-                }
-                else if (lines < 60)
-                {
-                    this.level = 5;
-                }
-                else if (lines < 70)
-                {
-                    this.level = 6;
-                }
-                else if (lines < 80)
-                {
-                    this.level = 7;
-                }
-                else if (lines < 90)
-                {
-                    this.level = 8;
-                }
-                else if (lines < 100)
-                {
-                    this.level = 9;
-                }
-            }
-        }
+       
 
         public void setLines(int lines)
         {

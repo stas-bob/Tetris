@@ -41,7 +41,7 @@ namespace TetrisHTW
         private int mod;
         private int tempLines;
 
-        public NormalTetrisView(OptionsView ov, IndexView iv, int tempLines)
+        public NormalTetrisView(OptionsView ov, IndexView iv)
         {
             this.iv = iv;
             this.ov = ov;
@@ -58,8 +58,7 @@ namespace TetrisHTW
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(OnFigureFallen);
             playerName = "Unbekannt";
             mod = 1;
-            this.tempLines = tempLines;
-            this.boardModel.setTempLines(tempLines);
+            
         }
 
         void initBoard()
@@ -262,67 +261,71 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
-                Color[,] data = bea.boardData;
-                if (bea.removedLines.Count > 0)
+                if (iv.rootContainer.Child == this)
                 {
-                    if (mod == 3)
+                    Color[,] data = bea.boardData;
+                    if (bea.removedLines.Count > 0)
                     {
-                        int random = rnd.Next(2);
-                        if (random == 0)
+                        if (mod == 3)
                         {
-                            animBoardRotate.To = 180 * (rnd.Next(7) + 3);
-                        } else
-                        {
-                            animBoardRotate.To = 90 * (rnd.Next(7) + 3);
-                        }
-                    
+                            int random = rnd.Next(2);
+                            if (random == 0)
+                            {
+                                animBoardRotate.To = 180 * (rnd.Next(7) + 3);
+                            }
+                            else
+                            {
+                                animBoardRotate.To = 90 * (rnd.Next(7) + 3);
+                            }
 
-                        boardRotateSB.Begin();
+
+                            boardRotateSB.Begin();
+                        }
+                        if (hardFall)
+                        {
+                            animateRemovedLinesHard(bea.removedLines);
+                        }
+                        else
+                        {
+                            animateRemovedLinesSoft(bea.removedLines);
+                        }
+
                     }
-                    if (hardFall)
+                    foreach (FrameworkElement frameWorkElement in boardGrid.Children)
                     {
-                        animateRemovedLinesHard(bea.removedLines);
+                        Rectangle rect = (Rectangle)frameWorkElement;
+                        int x = Grid.GetColumn(frameWorkElement);
+                        int y = Grid.GetRow(frameWorkElement);
+                        Color currentCellColor = data[x, y];
+
+                        if (currentCellColor == boardModel.getBoardColor())
+                        {
+                            rect.Fill = new SolidColorBrush(Colors.Transparent);
+                        }
+                        else if (currentCellColor == boardModel.getFallenPreviewColor())
+                        {
+                            rect.Fill = getBrushByColor(boardModel.getFallenPreviewColor());
+                        }
+                        else
+                        {
+                            rect.Fill = getBrushByColor(currentCellColor);
+                        }
+
                     }
-                    else
+                    tools.Point[] previewPoints = boardModel.getPreviewFigure().getPoints();
+
+                    List<Rectangle> previewRectangles = getPreviewBoardRectangles(previewPoints);
+
+                    foreach (FrameworkElement frameWorkElement in previewGrid.Children)
                     {
-                        animateRemovedLinesSoft(bea.removedLines);
-                    }
-                    
-                }
-                foreach(FrameworkElement frameWorkElement in boardGrid.Children)
-                {
-                    Rectangle rect = (Rectangle)frameWorkElement;
-                    int x = Grid.GetColumn(frameWorkElement);
-                    int y = Grid.GetRow(frameWorkElement);
-                    Color currentCellColor = data[x, y];
-                    
-                    if (currentCellColor == boardModel.getBoardColor())
-                    {
+                        Rectangle rect = (Rectangle)frameWorkElement;
                         rect.Fill = new SolidColorBrush(Colors.Transparent);
                     }
-                    else if (currentCellColor == boardModel.getFallenPreviewColor())
+                    Color currentPreviewFigureColor = boardModel.getPreviewFigure().getColor();
+                    foreach (Rectangle rect in previewRectangles)
                     {
-                        rect.Fill = getBrushByColor(boardModel.getFallenPreviewColor());
+                        rect.Fill = getBrushByColor(currentPreviewFigureColor);
                     }
-                    else
-                    {
-                        rect.Fill = getBrushByColor(currentCellColor);
-                    }
-
-                }
-                tools.Point[] previewPoints = boardModel.getPreviewFigure().getPoints();
-
-                List<Rectangle> previewRectangles = getPreviewBoardRectangles(previewPoints);
-
-                foreach (FrameworkElement frameWorkElement in previewGrid.Children)
-                {
-                    Rectangle rect = (Rectangle)frameWorkElement;
-                    rect.Fill = new SolidColorBrush(Colors.Transparent);
-                }
-                Color currentPreviewFigureColor = boardModel.getPreviewFigure().getColor();
-                foreach (Rectangle rect in previewRectangles)
-                {
-                    rect.Fill = getBrushByColor(currentPreviewFigureColor);
                 }
             });
         }
@@ -531,13 +534,16 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
-                scoreText.Text = bea.score + "";
-                levelText.Text = bea.level + "";
-                if (previousLevel != bea.level)
+                if (iv.rootContainer.Child == this)
                 {
-                    fallWorker.setLevel(bea.level);
-                    previousLevel = bea.level;
-                    levelFontSizeSB.Begin();
+                    scoreText.Text = bea.score + "";
+                    levelText.Text = bea.level + "";
+                    if (previousLevel != bea.level)
+                    {
+                        fallWorker.setLevel(bea.level);
+                        previousLevel = bea.level;
+                        levelFontSizeSB.Begin();
+                    }
                 }
             });
             
@@ -557,98 +563,100 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
-                
-                hardFall = false;
-                tools.Point[] points = ffea.figurePoints;
-                List<Rectangle> rectangles = getBoardRectangles(points);
-                Storyboard sb = new Storyboard();
-                sb.Duration = TimeSpan.FromMilliseconds(400);
-                foreach (Rectangle rectangle in rectangles)
+                if (iv.rootContainer.Child == this)
                 {
-                    Duration duration = TimeSpan.FromMilliseconds(200);
-                    DoubleAnimation myDoubleAnimation = new DoubleAnimation();
-                    myDoubleAnimation.Duration = duration;
-                    myDoubleAnimation.AutoReverse = true;
-                    Storyboard.SetTarget(myDoubleAnimation, rectangle);
-                    Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath("Opacity"));
-                    myDoubleAnimation.To = 0.5;
-                    myDoubleAnimation.From = 1;
-                    sb.Children.Add(myDoubleAnimation);
-                }
-                if (!ffea.PointsAreEqual())
-                {
-                    sb.Duration = TimeSpan.FromMilliseconds(3000);
-                    hardFall = true;
-                    int maxY = getMax(points, false);
-                    int minY = getMin(ffea.previousFigurePoints, false);
-                    int minX = getMin(points, true);
-                    int maxX = getMax(points, true);
-
-                    Rectangle upperLeftRect = getRectangleAt(minX, minY);
-                    Rectangle bottomRightRect = getRectangleAt(maxX, maxY);
-                    Rectangle bottomLeftRect = getRectangleAt(minX, maxY);
-                    Rectangle upperRightRect = getRectangleAt(maxX, minY);
-
-
-                    Point upperLeftPoint = upperLeftRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
-                    Point bottomRightPoint = bottomRightRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
-                    Point bottomLeftPoint = bottomLeftRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
-                    Point upperRightPoint = upperRightRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
-
-
-                    double width = Math.Sqrt(Math.Pow(bottomRightPoint.X - bottomLeftPoint.X, 2) + Math.Pow(bottomRightPoint.Y - bottomLeftPoint.Y, 2)) + upperLeftRect.ActualWidth;
-                    double height = Math.Sqrt(Math.Pow(bottomRightPoint.X - upperRightPoint.X, 2) + Math.Pow(bottomRightPoint.Y - upperRightPoint.Y, 2));
-
-                    
-                    
-                    Rectangle effectRectangle = new Rectangle();
-                    effectRectangle.Width = width;
-                    effectRectangle.Height = height;
-
-                    CompositeTransform ct = (CompositeTransform)boardBorder.RenderTransform;
-                    CompositeTransform ct2 = new CompositeTransform();
-                    ct2.Rotation = ct.Rotation;
-                    effectRectangle.RenderTransform = ct2;
-
-
-
-                    LinearGradientBrush lgb = new LinearGradientBrush();
-                    RotateTransform rt = new RotateTransform();
-                    rt.Angle = 0;
-                    lgb.Transform = rt;
-                    GradientStop gs1 = new GradientStop();
-                    gs1.Color = Colors.Transparent;
-                    gs1.Offset = 0.0;
-                    GradientStop gs2 = new GradientStop();
-                    gs2.Color = Color.FromArgb(100, ffea.color.R, ffea.color.G, ffea.color.B);
-                    gs2.Offset = 0.0;
-                    lgb.GradientStops.Add(gs1);
-                    lgb.GradientStops.Add(gs2);
-
-                    effectRectangle.Fill = lgb;
-                    canvas.Children.Add(effectRectangle);
-                    Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot));
-                    Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot));
-                    
-
-                    Duration duration = TimeSpan.FromMilliseconds(3000);
-                    DoubleAnimation myDoubleAnimation = new DoubleAnimation();
-                    myDoubleAnimation.Duration = duration;
-                    Storyboard.SetTarget(myDoubleAnimation, gs2);
-                    Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath("Offset"));
-                    myDoubleAnimation.To = 10.0;
-                    sb.Children.Add(myDoubleAnimation);
-                    sb.Completed += new EventHandler((a, b) =>
+                    hardFall = false;
+                    tools.Point[] points = ffea.figurePoints;
+                    List<Rectangle> rectangles = getBoardRectangles(points);
+                    Storyboard sb = new Storyboard();
+                    sb.Duration = TimeSpan.FromMilliseconds(400);
+                    foreach (Rectangle rectangle in rectangles)
                     {
-                        canvas.Children.Remove(effectRectangle);
-                    });
+                        Duration duration = TimeSpan.FromMilliseconds(200);
+                        DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+                        myDoubleAnimation.Duration = duration;
+                        myDoubleAnimation.AutoReverse = true;
+                        Storyboard.SetTarget(myDoubleAnimation, rectangle);
+                        Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath("Opacity"));
+                        myDoubleAnimation.To = 0.5;
+                        myDoubleAnimation.From = 1;
+                        sb.Children.Add(myDoubleAnimation);
+                    }
+                    if (!ffea.PointsAreEqual())
+                    {
+                        sb.Duration = TimeSpan.FromMilliseconds(3000);
+                        hardFall = true;
+                        int maxY = getMax(points, false);
+                        int minY = getMin(ffea.previousFigurePoints, false);
+                        int minX = getMin(points, true);
+                        int maxX = getMax(points, true);
+
+                        Rectangle upperLeftRect = getRectangleAt(minX, minY);
+                        Rectangle bottomRightRect = getRectangleAt(maxX, maxY);
+                        Rectangle bottomLeftRect = getRectangleAt(minX, maxY);
+                        Rectangle upperRightRect = getRectangleAt(maxX, minY);
+
+
+                        Point upperLeftPoint = upperLeftRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+                        Point bottomRightPoint = bottomRightRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+                        Point bottomLeftPoint = bottomLeftRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+                        Point upperRightPoint = upperRightRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+
+
+                        double width = Math.Sqrt(Math.Pow(bottomRightPoint.X - bottomLeftPoint.X, 2) + Math.Pow(bottomRightPoint.Y - bottomLeftPoint.Y, 2)) + upperLeftRect.ActualWidth;
+                        double height = Math.Sqrt(Math.Pow(bottomRightPoint.X - upperRightPoint.X, 2) + Math.Pow(bottomRightPoint.Y - upperRightPoint.Y, 2));
+
+
+
+                        Rectangle effectRectangle = new Rectangle();
+                        effectRectangle.Width = width;
+                        effectRectangle.Height = height;
+
+                        CompositeTransform ct = (CompositeTransform)boardBorder.RenderTransform;
+                        CompositeTransform ct2 = new CompositeTransform();
+                        ct2.Rotation = ct.Rotation;
+                        effectRectangle.RenderTransform = ct2;
+
+
+
+                        LinearGradientBrush lgb = new LinearGradientBrush();
+                        RotateTransform rt = new RotateTransform();
+                        rt.Angle = 0;
+                        lgb.Transform = rt;
+                        GradientStop gs1 = new GradientStop();
+                        gs1.Color = Colors.Transparent;
+                        gs1.Offset = 0.0;
+                        GradientStop gs2 = new GradientStop();
+                        gs2.Color = Color.FromArgb(100, ffea.color.R, ffea.color.G, ffea.color.B);
+                        gs2.Offset = 0.0;
+                        lgb.GradientStops.Add(gs1);
+                        lgb.GradientStops.Add(gs2);
+
+                        effectRectangle.Fill = lgb;
+                        canvas.Children.Add(effectRectangle);
+                        Canvas.SetLeft(effectRectangle, upperLeftPoint.X + Canvas.GetLeft(LayoutRoot));
+                        Canvas.SetTop(effectRectangle, upperLeftPoint.Y + Canvas.GetTop(LayoutRoot));
+
+
+                        Duration duration = TimeSpan.FromMilliseconds(3000);
+                        DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+                        myDoubleAnimation.Duration = duration;
+                        Storyboard.SetTarget(myDoubleAnimation, gs2);
+                        Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath("Offset"));
+                        myDoubleAnimation.To = 10.0;
+                        sb.Children.Add(myDoubleAnimation);
+                        sb.Completed += new EventHandler((a, b) =>
+                        {
+                            canvas.Children.Remove(effectRectangle);
+                        });
+                    }
+
+                    if (!LayoutRoot.Resources.Contains("unique_id"))
+                    {
+                        LayoutRoot.Resources.Add("unique_id", sb);
+                    }
+                    sb.Begin();
                 }
-                
-                if (!LayoutRoot.Resources.Contains("unique_id"))
-                {
-                    LayoutRoot.Resources.Add("unique_id", sb);
-                }
-                sb.Begin();
 
             });
 
@@ -759,7 +767,10 @@ namespace TetrisHTW
         {
             Dispatcher.BeginInvoke(delegate
             {
-                GameOver();
+                if (iv.rootContainer.Child == this)
+                {
+                    GameOver();
+                }
             });
         }
 
@@ -842,10 +853,9 @@ namespace TetrisHTW
                 gameOver = false;
                 pause = false;
                 HintBox.Opacity = 0;
-                previousLevel = 0;
                 boardModel.clearBoard();
                 lastKey = 0;
-                
+
                 playerName = "Unbekannt";
                 hardFall = false;
                 mod = 1;
@@ -853,6 +863,8 @@ namespace TetrisHTW
                 ct.Rotation = 0;
                 ct.TranslateX = 0;
                 ct.TranslateY = 0;
+                ct.CenterX = 105;
+                ct.CenterY = 200;
                 boardBorder.RenderTransform = ct;
                 animBoardRotate.To = 0;
                 App.getInstance().RootVisual.KeyDown -= Page_KeyDown;
@@ -864,6 +876,14 @@ namespace TetrisHTW
         {
             ExitGame();
             iv.rootContainer.Child = ov;
+        }
+
+        internal void setTempLines(int templines)
+        {
+            
+            this.tempLines = templines;
+            this.boardModel.setTempLines(tempLines);
+            previousLevel = (tempLines / 10) - 1;
         }
     }
 }
