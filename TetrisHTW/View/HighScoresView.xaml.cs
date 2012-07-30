@@ -31,7 +31,7 @@ namespace TetrisHTW.View
 
         public void update()
         {
-            sqlClient.requestScores(callback, error, 100);
+            sqlClient.requestScores(callback, error);
         }
 
         public void callback(System.Collections.Generic.List<string> playerNames, System.Collections.Generic.List<int> levels, System.Collections.Generic.List<int> scores, System.Collections.Generic.List<string> times, System.Collections.Generic.List<int> mods)
@@ -55,6 +55,7 @@ namespace TetrisHTW.View
             });
             
         }
+
 
         public void error(string msg)
         {

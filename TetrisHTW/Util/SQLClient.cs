@@ -33,7 +33,7 @@ namespace TetrisHTW.Util
             this.proxy = proxy;
         }
 
-        public void writeScore(ErrorCallback ecb, string playerName, int score, int level, long time, int mod)
+        public void writeScore(ErrorCallback ecb, string playerName, int score, int level, long time, int mode)
         {
             this.ecb = ecb;
             time /= 10000;
@@ -43,7 +43,7 @@ namespace TetrisHTW.Util
                     new XElement("score", score),
                     new XElement("level", level),
                     new XElement("time", time),
-                    new XElement("mod", mod)
+                    new XElement("mode", mode)
                 )
             );
             postData = doc.ToString();
@@ -113,11 +113,25 @@ namespace TetrisHTW.Util
             {
                 WebClient get = new WebClient();
 
+                get.DownloadStringCompleted += client_DownloadStringCompleted;
 
+                get.DownloadStringAsync(new Uri(proxy + "?count=" + lines + "&random=" + rnd.Next(int.MaxValue)));
+            }
+            catch (Exception e)
+            { Debug.WriteLine(e.Message); }
+        }
+
+        internal void requestScores(SuccessCallback cb, ErrorCallback ecb)
+        {
+            this.cb = cb;
+            this.ecb = ecb;
+            try
+            {
+                WebClient get = new WebClient();
 
                 get.DownloadStringCompleted += client_DownloadStringCompleted;
 
-                get.DownloadStringAsync(new Uri(proxy + "?lines=" + lines + "&random=" + rnd.Next(int.MaxValue)));
+                get.DownloadStringAsync(new Uri(proxy + "?random=" + rnd.Next(int.MaxValue)));
             }
             catch (Exception e)
             { Debug.WriteLine(e.Message); }
