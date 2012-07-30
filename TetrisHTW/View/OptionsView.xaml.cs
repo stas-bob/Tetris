@@ -19,6 +19,7 @@ namespace TetrisHTW.View
         private IndexView iv;
         private NormalTetrisView ntv;
         private SpecialTetrisView stv;
+        private int level = 0;
 
         public OptionsView(IndexView iv)
         {
@@ -33,9 +34,20 @@ namespace TetrisHTW.View
             {
                 if (stv == null)
                 {
-                    stv = new SpecialTetrisView();
+                    stv = new SpecialTetrisView(this, iv, (level + 1) * 10);
                 }
                 uc = stv;
+                bool unknown = false;
+                if (playerNameTextBox.Text == null || playerNameTextBox.Text.Equals(""))
+                {
+                    unknown = true;
+                }
+                if (!unknown)
+                {
+                    stv.setPlayerName(playerNameTextBox.Text);
+                }
+                stv.setMode(1);
+                stv.InitGame();
             }
             else
             {
@@ -50,7 +62,7 @@ namespace TetrisHTW.View
                 }
                 if (ntv == null)
                 {
-                    ntv = new NormalTetrisView(this, iv);
+                    ntv = new NormalTetrisView(this, iv, (level + 1) * 10);
                 }
                 uc = ntv;
                 bool unknown = false;
@@ -79,22 +91,30 @@ namespace TetrisHTW.View
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-         
+            tb0.IsChecked = false;
+            tb1.IsChecked = false;
+            tb2.IsChecked = false;
+            tb3.IsChecked = false;
+            tb4.IsChecked = false;
+            tb5.IsChecked = false;
+            tb6.IsChecked = false;
+            tb7.IsChecked = false;
+            tb8.IsChecked = false;
+            tb9.IsChecked = false;
 
-                switch (((ToggleButton)sender).Name)
-                {
-                    case "tb0": tb0.IsChecked= true; tb1.IsChecked= false; tb2.IsChecked= false; tb3.IsChecked= false; tb4.IsChecked= false; tb5.IsChecked= false; tb6.IsChecked= false; tb7.IsChecked= false; tb8.IsChecked= false; tb9.IsChecked= false; break; 
-                    case "tb1": tb0.IsChecked= false; tb1.IsChecked= true; tb2.IsChecked= false; tb3.IsChecked= false; tb4.IsChecked= false; tb5.IsChecked= false; tb6.IsChecked= false; tb7.IsChecked= false; tb8.IsChecked= false; tb9.IsChecked= false; break; 
-                    case "tb2": tb0.IsChecked= false; tb1.IsChecked= false; tb2.IsChecked= true; tb3.IsChecked= false; tb4.IsChecked= false; tb5.IsChecked= false; tb6.IsChecked= false; tb7.IsChecked= false; tb8.IsChecked= false; tb9.IsChecked= false; break; 
-                    case "tb3": tb0.IsChecked= false; tb1.IsChecked= false; tb2.IsChecked= false; tb3.IsChecked= true; tb4.IsChecked= false; tb5.IsChecked= false; tb6.IsChecked= false; tb7.IsChecked= false; tb8.IsChecked= false; tb9.IsChecked= false; break; 
-                    case "tb4": tb0.IsChecked= false; tb1.IsChecked= false; tb2.IsChecked= false; tb3.IsChecked= false; tb4.IsChecked= true; tb5.IsChecked= false; tb6.IsChecked= false; tb7.IsChecked= false; tb8.IsChecked= false; tb9.IsChecked= false; break; 
-                    case "tb5": tb0.IsChecked= false; tb1.IsChecked= false; tb2.IsChecked= false; tb3.IsChecked= false; tb4.IsChecked= false; tb5.IsChecked= true; tb6.IsChecked= false; tb7.IsChecked= false; tb8.IsChecked= false; tb9.IsChecked= false; break; 
-                    case "tb6": tb0.IsChecked= false; tb1.IsChecked= false; tb2.IsChecked= false; tb3.IsChecked= false; tb4.IsChecked= false; tb5.IsChecked= false; tb6.IsChecked= true; tb7.IsChecked= false; tb8.IsChecked= false; tb9.IsChecked= false; break; 
-                    case "tb7": tb0.IsChecked= false; tb1.IsChecked= false; tb2.IsChecked= false; tb3.IsChecked= false; tb4.IsChecked= false; tb5.IsChecked= false; tb6.IsChecked= false; tb7.IsChecked= true; tb8.IsChecked= false; tb9.IsChecked= false; break; 
-                    case "tb8": tb0.IsChecked= false; tb1.IsChecked= false; tb2.IsChecked= false; tb3.IsChecked= false; tb4.IsChecked= false; tb5.IsChecked= false; tb6.IsChecked= false; tb7.IsChecked= false; tb8.IsChecked= true; tb9.IsChecked= false; break; 
-                    case "tb9": tb0.IsChecked= false; tb1.IsChecked= false; tb2.IsChecked= false; tb3.IsChecked= false; tb4.IsChecked= false; tb5.IsChecked= false; tb6.IsChecked= false; tb7.IsChecked= false; tb8.IsChecked= false; tb9.IsChecked= true; break; 
-                   
-                }
+            switch (((ToggleButton)sender).Name)
+            {
+                case "tb0": tb0.IsChecked = true; level = 0; break;
+                case "tb1": tb1.IsChecked = true; level = 1; break;
+                case "tb2": tb2.IsChecked = true; level = 2; break;
+                case "tb3": tb3.IsChecked = true; level = 3; break;
+                case "tb4": tb4.IsChecked = true; level = 4; break;
+                case "tb5": tb5.IsChecked = true; level = 5; break;
+                case "tb6": tb6.IsChecked = true; level = 6; break;
+                case "tb7": tb7.IsChecked = true; level = 7; break;
+                case "tb8": tb8.IsChecked = true; level = 8; break;
+                case "tb9": tb9.IsChecked = true; level = 9; break; 
+            }
         }
     }
 }

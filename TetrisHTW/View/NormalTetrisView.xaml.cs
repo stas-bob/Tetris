@@ -19,8 +19,6 @@ using TetrisHTW.View;
 
 namespace TetrisHTW
 {
-   
-
 
     public partial class NormalTetrisView : UserControl
     {
@@ -41,8 +39,9 @@ namespace TetrisHTW
         private OptionsView ov;
         private IndexView iv;
         private int mod;
+        private int tempLines;
 
-        public NormalTetrisView(OptionsView ov, IndexView iv)
+        public NormalTetrisView(OptionsView ov, IndexView iv, int tempLines)
         {
             this.iv = iv;
             this.ov = ov;
@@ -59,6 +58,8 @@ namespace TetrisHTW
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(OnFigureFallen);
             playerName = "Unbekannt";
             mod = 1;
+            this.tempLines = tempLines;
+            this.boardModel.setTempLines(tempLines);
         }
 
         void initBoard()
@@ -797,7 +798,7 @@ namespace TetrisHTW
 
         private void GameStart()
         {
-            fallWorker = new FallWorker(boardModel.getLevel());
+            setFallWorker();
             new Thread(fallWorker.InvokeFalling).Start();
             time = DateTime.Now.Ticks;
         }
@@ -807,7 +808,7 @@ namespace TetrisHTW
             if (!gameOver)
             {
                 pause = false;
-                fallWorker = new FallWorker(boardModel.getLevel());
+                setFallWorker();                        
                 new Thread(fallWorker.InvokeFalling).Start();
                 time = DateTime.Now.Ticks;
                 HintBoxOffSB.Begin();
@@ -815,6 +816,17 @@ namespace TetrisHTW
             }
         }
 
+        private void setFallWorker()
+        {
+            if (boardModel.getLines() > tempLines)
+            {
+                fallWorker = new FallWorker(boardModel.getLevel());
+            }
+            else
+            {
+                fallWorker = new FallWorker((tempLines / 10) - 1);
+            }
+        }
 
         private void ExitGame()
         {

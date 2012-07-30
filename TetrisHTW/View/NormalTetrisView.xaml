@@ -42,13 +42,15 @@
                 </Rectangle>
             </Canvas>
         </Border>
-        <Button Canvas.Left="227" Canvas.Top="320" Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="Button_Click" IsTabStop="False" IsHitTestVisible="True" IsEnabled="True" />
+        
             <Grid x:Name="LayoutRoot" Height="400" Width="295">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="72" />
                     <RowDefinition Height="72" />
                     <RowDefinition Height="72" />
-                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="72" />
+                    <RowDefinition Height="72" />
+                    <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="210" />
@@ -106,8 +108,9 @@
                         </TextBlock.RenderTransform>
                     </TextBlock>
                 </StackPanel>
+            <Button Grid.Column="1" Grid.Row="5" Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="Button_Click" IsTabStop="False" IsHitTestVisible="True" IsEnabled="True" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0" Width="75" Height="30" FontSize="16" />
 
-            <Border Name="boardBorder" BorderThickness="10" Grid.Column="0" Grid.RowSpan="4" BorderBrush="{StaticResource WallImageBrush}">
+            <Border Name="boardBorder" BorderThickness="10" Grid.Column="0" Grid.RowSpan="6" BorderBrush="{StaticResource WallImageBrush}">
                 <Border.CacheMode>
                     <BitmapCache/>
                 </Border.CacheMode>

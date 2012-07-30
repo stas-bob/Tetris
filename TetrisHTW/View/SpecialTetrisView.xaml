@@ -6,7 +6,147 @@
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
              d:DesignWidth="640" d:DesignHeight="480">
-    <Grid x:Name="LayoutRoot">
-        <TextBlock Text="throw new UnsupportedOperationException();"/>
-    </Grid>
+    <Canvas Name="canvas" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,230,400">
+        <Canvas.Resources>
+            <Storyboard x:Name="HintBoxOnSB">
+                <DoubleAnimation x:Name="animHintBoxOn" Storyboard.TargetName="HintBox" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="1"/>
+            </Storyboard>
+            <Storyboard x:Name="HintBoxOffSB">
+                <DoubleAnimation x:Name="animHintBoxOff" Storyboard.TargetName="HintBox" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="0"/>
+            </Storyboard>
+            <Storyboard x:Name="levelFontSizeSB">
+                <DoubleAnimation x:Name="animLevelFontScale" Storyboard.TargetName="levelTextFontScale" Storyboard.TargetProperty="ScaleX" Duration="0:0:1" From="30" To="1"/>
+            </Storyboard>
+
+            <Storyboard x:Name="boardRotateSB">
+                <DoubleAnimation x:Name="animBoardRotate" Storyboard.TargetName="boardBorder" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Duration="0:0:5" To="0"/>
+            </Storyboard>
+        </Canvas.Resources>
+
+        <Border Name="HintBox" Width="150" Height="70" Canvas.ZIndex="1" CornerRadius="20" Canvas.Left="28" Canvas.Top="100" Opacity="0">
+            <Canvas Background="DarkSlateBlue">
+                <Canvas.Clip>
+                    <RectangleGeometry RadiusX="20" RadiusY="20" Rect="0,0,150,70"/>
+                </Canvas.Clip>
+                <TextBlock Name="HintBoxTextBlock" TextWrapping="Wrap" Foreground="White" Width="150" TextAlignment="Center"/>
+                <Rectangle RadiusX="20" RadiusY="20" Width="150" Height="70">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush>
+                            <LinearGradientBrush.Transform>
+                                <RotateTransform Angle="30"/>
+                            </LinearGradientBrush.Transform>
+                            <GradientStop Color="Transparent" Offset="0"/>
+                            <GradientStop Color="DarkOrchid" Offset="0.7"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Canvas>
+        </Border>
+       
+        <Grid x:Name="LayoutRoot" Height="400" Width="295">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="72" />
+                <RowDefinition Height="72" />
+                <RowDefinition Height="72" />
+                <RowDefinition Height="72" />
+                <RowDefinition Height="72" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="210" />
+                <ColumnDefinition Width="85" />
+                <ColumnDefinition Width="59*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="1">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="#eee"/>
+                </StackPanel.Background>
+                <StackPanel.Clip>
+                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="5, 3, 75, 50"/>
+                </StackPanel.Clip>
+                <TextBlock Text="Score" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="0" Name="scoreText" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="1">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="#eee"/>
+                </StackPanel.Background>
+                <StackPanel.Clip>
+                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="5, 3, 75, 50"/>
+                </StackPanel.Clip>
+                <TextBlock Text="Lines" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="0" Name="linesText" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="3">
+                <TextBlock Text="Vorschau" HorizontalAlignment="Center" Height="17" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Name="previewGrid" HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14" />
+                        <RowDefinition Height="14" />
+                        <RowDefinition Height="14" />
+                        <RowDefinition Height="14" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14" />
+                        <ColumnDefinition Width="14" />
+                        <ColumnDefinition Width="14" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="4">
+                <TextBlock Text="Speicher" HorizontalAlignment="Center" Height="17" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Name="memoryGrid" HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14" />
+                        <RowDefinition Height="14" />
+                        <RowDefinition Height="14" />
+                        <RowDefinition Height="14" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14" />
+                        <ColumnDefinition Width="14" />
+                        <ColumnDefinition Width="14" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="2">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="#eee"/>
+                </StackPanel.Background>
+                <StackPanel.Clip>
+                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="5, 3, 75, 50"/>
+                </StackPanel.Clip>
+                <TextBlock Text="Level" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="0" Name="levelText" HorizontalAlignment="Center" Width="7">
+                        <TextBlock.RenderTransform>
+                            <ScaleTransform x:Name="levelTextFontScale" CenterX="3.5"/>
+                        </TextBlock.RenderTransform>
+                </TextBlock>
+            </StackPanel>
+            <Button Grid.Column="1" Grid.Row="5" Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="Button_Click" IsTabStop="False" IsHitTestVisible="True" IsEnabled="True" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0" Width="75" Height="30" FontSize="16" />
+            
+            <Border Name="boardBorder" BorderThickness="10" Grid.Column="0" Grid.RowSpan="6" BorderBrush="{StaticResource WallImageBrush}">
+                <Border.CacheMode>
+                    <BitmapCache/>
+                </Border.CacheMode>
+                <Border.RenderTransform>
+                    <CompositeTransform CenterX="105" CenterY="200"/>
+                </Border.RenderTransform>
+                <Grid Name="boardGrid" >
+                    <Grid.Background>
+                        <LinearGradientBrush Opacity="0.8">
+                            <LinearGradientBrush.Transform>
+                                <RotateTransform Angle="20"/>
+                            </LinearGradientBrush.Transform>
+                            <GradientStop Color="DarkBlue" Offset="0"/>
+                            <GradientStop Color="Violet" Offset="0.9"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                </Grid>
+
+            </Border>
+        </Grid>
+
+    </Canvas>
 </UserControl>
