@@ -23,23 +23,13 @@
             </Storyboard>
         </Canvas.Resources>
         
-        <Border Name="HintBox" Width="150" Height="70" Canvas.ZIndex="1" CornerRadius="20" Canvas.Left="28" Canvas.Top="100" Opacity="0">
-            <Canvas Background="DarkSlateBlue">
+        <Border Name="HintBox" Width="150" Height="70" Canvas.ZIndex="1" CornerRadius="10" Canvas.Left="28" Canvas.Top="100" Opacity="0" BorderBrush="White" BorderThickness="3">
+            <Canvas Background="Black">
                 <Canvas.Clip>
-                    <RectangleGeometry RadiusX="20" RadiusY="20" Rect="0,0,150,70"/>
+                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,144, 65"/>
                 </Canvas.Clip>
-                <TextBlock Name="HintBoxTextBlock" TextWrapping="Wrap" Foreground="White" Width="150" TextAlignment="Center"/>
-                <Rectangle RadiusX="20" RadiusY="20" Width="150" Height="70">
-                    <Rectangle.Fill>
-                        <LinearGradientBrush>
-                            <LinearGradientBrush.Transform>
-                                <RotateTransform Angle="30"/>
-                            </LinearGradientBrush.Transform>
-                            <GradientStop Color="Transparent" Offset="0"/>
-                            <GradientStop Color="DarkOrchid" Offset="0.7"/>
-                        </LinearGradientBrush>
-                    </Rectangle.Fill>
-                </Rectangle>
+                <TextBlock Name="HintBoxTextBlock" TextWrapping="Wrap" Foreground="White" Width="144" TextAlignment="Center" Height="65" FontFamily="Verdana"/>
+                    
             </Canvas>
         </Border>
         
