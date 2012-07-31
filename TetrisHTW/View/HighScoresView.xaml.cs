@@ -31,7 +31,7 @@ namespace TetrisHTW.View
         public void update(int score)
         {
             tmpScore = score;
-            sqlClient.requestScores(callbackWithScore, error, score, 10);
+            sqlClient.requestScores(callback, error, score, 10);
         }
 
         public void update()
@@ -39,27 +39,7 @@ namespace TetrisHTW.View
             sqlClient.requestScores(callback, error);
         }
 
-        public void callbackWithScore(System.Collections.Generic.List<string> playerNames, System.Collections.Generic.List<int> levels, System.Collections.Generic.List<int> scores, System.Collections.Generic.List<string> times, System.Collections.Generic.List<int> mods)
-        {
-            Dispatcher.BeginInvoke(() => {
-
-                List<ScoresData> source = new List<ScoresData>();
-
-                for (int i = 0; i < playerNames.Count; i++)
-                {
-                    source.Add(new ScoresData()
-                    {
-                        playerName = playerNames[i],
-                        score = scores[i],
-                        level = levels[i],
-                        time = times[i],
-                        mode = mods[i]
-                    });
-                }
-                dataGrid1.ItemsSource = source;
-            });
-            
-        }
+       
 
         public void callback(System.Collections.Generic.List<string> playerNames, System.Collections.Generic.List<int> levels, System.Collections.Generic.List<int> scores, System.Collections.Generic.List<string> times, System.Collections.Generic.List<int> mods)
         {

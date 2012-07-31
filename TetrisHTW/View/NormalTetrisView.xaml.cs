@@ -829,14 +829,7 @@ namespace TetrisHTW
 
         private void setFallWorker()
         {
-            if (boardModel.getLines() > boardModel.getTempLines())
-            {
-                fallWorker = new FallWorker(boardModel.getLevel());
-            }
-            else
-            {
-                fallWorker = new FallWorker((boardModel.getTempLines() / 10) - 1);
-            }
+            fallWorker = new FallWorker(boardModel.getLevel());
         }
 
         private void ExitGame()

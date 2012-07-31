@@ -266,7 +266,7 @@ namespace TetrisHTW.Model
 
             if (lines >= tempLines)
             {
-                int tmpLvl = (lines / 10) - 1;
+                int tmpLvl = (lines / 10);
                 if (tmpLvl > 9)
                 {
                     tmpLvl = 9;

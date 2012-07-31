@@ -54,18 +54,21 @@ namespace TetrisHTW
                     {
                         break;
                     }
-                    Debug.WriteLine("fall()");
+                    if (App.DEBUG)
+                        Debug.WriteLine("fall()");
                     App.getInstance().getBoardModel().getCurrentFigure().fall();
                 }
 
             }
-            Debug.WriteLine("dead");
+            if (App.DEBUG)
+                Debug.WriteLine("dead");
         }
 
         public void RequestStop()
         {
             shouldStop = true;
-            Debug.WriteLine("RequestStop()");
+            if (App.DEBUG)
+                Debug.WriteLine("RequestStop()");
         }
 
         

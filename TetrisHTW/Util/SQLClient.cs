@@ -118,7 +118,7 @@ namespace TetrisHTW.Util
                 get.DownloadStringAsync(new Uri(proxy + "?count=" + count + "&score=" + score + "&random=" + rnd.Next(int.MaxValue)));
             }
             catch (Exception e)
-            { Debug.WriteLine(e.Message); }
+            { if (App.DEBUG) Debug.WriteLine(e.Message); }
         }
 
         internal void requestScores(SuccessCallback cb, ErrorCallback ecb)
@@ -134,7 +134,7 @@ namespace TetrisHTW.Util
                 get.DownloadStringAsync(new Uri(proxy + "?random=" + rnd.Next(int.MaxValue)));
             }
             catch (Exception e)
-            { Debug.WriteLine(e.Message); }
+            { if (App.DEBUG) Debug.WriteLine(e.Message); }
         }
 
         void client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
@@ -173,7 +173,14 @@ namespace TetrisHTW.Util
                 }
             }
             else
-                ecb(e.Error.Message);
+                if (e.Error.Message == null || e.Error.Message.Equals(""))
+                {
+                    ecb(e.Error.ToString());
+                } 
+                else
+                {
+                    ecb(e.Error.Message);
+                }
         }
 
     }
