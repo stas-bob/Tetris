@@ -105,7 +105,7 @@ namespace TetrisHTW.Util
             }
         }
 
-        internal void requestScores(SuccessCallback cb, ErrorCallback ecb,  int lines)
+        internal void requestScores(SuccessCallback cb, ErrorCallback ecb,  int score, int count)
         {
             this.cb = cb;
             this.ecb = ecb;
@@ -115,7 +115,7 @@ namespace TetrisHTW.Util
 
                 get.DownloadStringCompleted += client_DownloadStringCompleted;
 
-                get.DownloadStringAsync(new Uri(proxy + "?count=" + lines + "&random=" + rnd.Next(int.MaxValue)));
+                get.DownloadStringAsync(new Uri(proxy + "?count=" + count + "&score=" + score + "&random=" + rnd.Next(int.MaxValue)));
             }
             catch (Exception e)
             { Debug.WriteLine(e.Message); }

@@ -108,6 +108,7 @@
                         </TextBlock.RenderTransform>
                     </TextBlock>
                 </StackPanel>
+            <Button Name="scoreButton" Grid.Column="1" Grid.Row="4" Content="Score" Style="{StaticResource ButtonStyle1}" Click="ScoreButton_Click" IsTabStop="False" IsHitTestVisible="True" IsEnabled="True" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0" Width="75" Height="30" FontSize="16" Visibility="Collapsed" />
             <Button Grid.Column="1" Grid.Row="5" Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="Button_Click" IsTabStop="False" IsHitTestVisible="True" IsEnabled="True" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0" Width="75" Height="30" FontSize="16" />
 
             <Border Name="boardBorder" BorderThickness="10" Grid.Column="0" Grid.RowSpan="6" BorderBrush="{StaticResource WallImageBrush}">

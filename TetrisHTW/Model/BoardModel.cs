@@ -70,5 +70,7 @@ namespace TetrisHTW.Model
         void setLines(int lines);
 
         void setTempLines(int level);
+
+        int getTempLines();
     }
 }

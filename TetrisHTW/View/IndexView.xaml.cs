@@ -39,12 +39,18 @@ namespace TetrisHTW.View
             rootContainer.Child = ov;
         }
 
-        private void Highscore_Click(object sender, RoutedEventArgs e)
+        public HighScoresView getHighScoreView()
         {
             if (hv == null)
             {
                 hv = new HighScoresView(this);
             }
+            return hv;
+        }
+
+        private void Highscore_Click(object sender, RoutedEventArgs e)
+        {
+            getHighScoreView();
             rootContainer.Child = hv;
             hv.update();
         }

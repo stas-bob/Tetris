@@ -39,7 +39,6 @@ namespace TetrisHTW
         private OptionsView ov;
         private IndexView iv;
         private int mod;
-        private int tempLines;
 
         public NormalTetrisView(OptionsView ov, IndexView iv)
         {
@@ -778,6 +777,7 @@ namespace TetrisHTW
         {
             showHint("Game Over", 20);
             gameOver = true;
+            scoreButton.Visibility = System.Windows.Visibility.Visible;
             timeList.Add(DateTime.Now.Ticks - time);
             time = 0;
             foreach (long t in timeList)
@@ -829,13 +829,13 @@ namespace TetrisHTW
 
         private void setFallWorker()
         {
-            if (boardModel.getLines() > tempLines)
+            if (boardModel.getLines() > boardModel.getTempLines())
             {
                 fallWorker = new FallWorker(boardModel.getLevel());
             }
             else
             {
-                fallWorker = new FallWorker((tempLines / 10) - 1);
+                fallWorker = new FallWorker((boardModel.getTempLines() / 10) - 1);
             }
         }
 
@@ -869,6 +869,7 @@ namespace TetrisHTW
                 animBoardRotate.To = 0;
                 App.getInstance().RootVisual.KeyDown -= Page_KeyDown;
                 App.getInstance().RootVisual.KeyUp -= Page_KeyUp;
+                scoreButton.Visibility = System.Windows.Visibility.Collapsed;
             });
         }
 
@@ -878,12 +879,18 @@ namespace TetrisHTW
             iv.rootContainer.Child = ov;
         }
 
+        private void ScoreButton_Click(object sender, RoutedEventArgs e)
+        {
+            ExitGame();
+            iv.getHighScoreView().update(boardModel.getScore());
+            iv.rootContainer.Child = iv.getHighScoreView();
+        }
+
         internal void setTempLines(int templines)
         {
             
-            this.tempLines = templines;
-            this.boardModel.setTempLines(tempLines);
-            previousLevel = (tempLines / 10) - 1;
+            this.boardModel.setTempLines(templines);
+            previousLevel = boardModel.getLevel();
         }
     }
 }

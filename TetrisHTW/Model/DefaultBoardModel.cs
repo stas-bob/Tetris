@@ -22,7 +22,6 @@ namespace TetrisHTW.Model
         private int score;
         private int lines;
         private int tempLines;
-        private int level;
         private Figure currentFigure;
         private Figure previewFigure;
         private Figure memoryFigure = null;
@@ -69,6 +68,11 @@ namespace TetrisHTW.Model
             clearBoard();
         }
 
+        public int getTempLines()
+        {
+            return tempLines;
+        }
+
         public void collapse(List<int> linesToRemove)
         {
             linesToRemove.Sort(delegate(int a, int b) {
@@ -102,7 +106,7 @@ namespace TetrisHTW.Model
             int localLevel;
             if (lines > tempLines)
             {
-                localLevel = level;
+                localLevel = (lines / 10) - 1;
             } else 
             {
                 localLevel = (tempLines / 10) - 1;
@@ -233,7 +237,14 @@ namespace TetrisHTW.Model
 
         public int getLevel()
         {
-            return level;
+            if (lines > tempLines)
+            {
+                return (lines / 10) - 1;
+            }
+            else
+            {
+                return (tempLines / 10) - 1;
+            }
         }
 
         public int getLines()
