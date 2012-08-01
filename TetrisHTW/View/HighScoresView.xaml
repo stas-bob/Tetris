@@ -7,11 +7,32 @@
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     <StackPanel x:Name="LayoutRoot">
+        <Grid HorizontalAlignment="Center" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="85"/>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="85"/>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="85"/>
+                <ColumnDefinition Width="35"/>
+            </Grid.ColumnDefinitions>
+            <RadioButton Name="normalModeRadioButton" Grid.Column="1" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="false" Checked="normalModeRadioButton_Checked"/>
+            <TextBlock Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5,0,0,0" TextWrapping="Wrap" Text="Normal" FontFamily="Buxton Sketch" FontSize="18"/>
+            <RadioButton Name="spezialModeRadioButton" Grid.Column="3" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="False" Checked="spezialModeRadioButton_Checked"/>
+            <TextBlock Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"   TextWrapping="Wrap" Text="Spezial" FontFamily="Buxton Sketch" FontSize="18"/>
+            <RadioButton Name="kretschmerModeRadioButton" Grid.Column="5" HorizontalAlignment="Center" Height="25" Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top" Width="25" GroupName="mode" IsChecked="False" Checked="kretschmerModeRadioButton_Checked"/>
+            <TextBlock Grid.Column="6" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="5,0,0,0"  TextWrapping="Wrap" Text="Kretschmer"  FontFamily="Buxton Sketch" FontSize="18"/>
+        </Grid>
         <sdk:DataGrid x:Name="dataGrid1" AutoGenerateColumns="False" Background="Transparent"
             HeadersVisibility="All"
             RowBackground="Transparent" AlternatingRowBackground="Lavender"
             ColumnWidth="*" RowHeight="25"
-            IsReadOnly="True" CanUserResizeColumns="False" MaxHeight="350" MaxWidth="620">
+            IsReadOnly="True" CanUserResizeColumns="False" MaxHeight="300" MaxWidth="620">
             <sdk:DataGrid.Columns>
                 <sdk:DataGridTextColumn Header="Player" Binding="{Binding playerName}" />
                 <sdk:DataGridTextColumn Header="Score" Binding="{Binding score}" />

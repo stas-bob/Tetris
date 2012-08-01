@@ -875,7 +875,7 @@ namespace TetrisHTW
         private void ScoreButton_Click(object sender, RoutedEventArgs e)
         {
             ExitGame();
-            iv.getHighScoreView().update(boardModel.getScore());
+            iv.getHighScoreView().update(boardModel.getScore(), mod);
             iv.rootContainer.Child = iv.getHighScoreView();
         }
 

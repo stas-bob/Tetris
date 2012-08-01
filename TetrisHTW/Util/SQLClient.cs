@@ -105,7 +105,7 @@ namespace TetrisHTW.Util
             }
         }
 
-        internal void requestScores(SuccessCallback cb, ErrorCallback ecb,  int score, int count)
+        internal void requestScores(SuccessCallback cb, ErrorCallback ecb,  int score, int count, int mode)
         {
             this.cb = cb;
             this.ecb = ecb;
@@ -115,13 +115,13 @@ namespace TetrisHTW.Util
 
                 get.DownloadStringCompleted += client_DownloadStringCompleted;
 
-                get.DownloadStringAsync(new Uri(proxy + "?count=" + count + "&score=" + score + "&random=" + rnd.Next(int.MaxValue)));
+                get.DownloadStringAsync(new Uri(proxy + "?count=" + count + "&score=" + score + "&mode=" + mode + "&random=" + rnd.Next(int.MaxValue)));
             }
             catch (Exception e)
             { if (App.DEBUG) Debug.WriteLine(e.Message); }
         }
 
-        internal void requestScores(SuccessCallback cb, ErrorCallback ecb)
+        internal void requestScores(SuccessCallback cb, ErrorCallback ecb, int mode)
         {
             this.cb = cb;
             this.ecb = ecb;
@@ -131,7 +131,7 @@ namespace TetrisHTW.Util
 
                 get.DownloadStringCompleted += client_DownloadStringCompleted;
 
-                get.DownloadStringAsync(new Uri(proxy + "?random=" + rnd.Next(int.MaxValue)));
+                get.DownloadStringAsync(new Uri(proxy + "?mode=" + mode + "&random=" + rnd.Next(int.MaxValue)));
             }
             catch (Exception e)
             { if (App.DEBUG) Debug.WriteLine(e.Message); }

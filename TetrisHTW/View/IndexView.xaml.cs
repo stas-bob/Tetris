@@ -52,7 +52,7 @@ namespace TetrisHTW.View
         {
             getHighScoreView();
             rootContainer.Child = hv;
-            hv.update();
+            hv.update(1);
         }
 
         private void Ueber_Click(object sender, RoutedEventArgs e)
