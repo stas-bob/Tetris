@@ -239,6 +239,10 @@ namespace TetrisHTW.Model
         {
             if (lines > tempLines)
             {
+                if ((lines / 10) -1 > 9)
+                {
+                    return 9;
+                }
                 return (lines / 10) - 1;
             }
             else
