@@ -8,7 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using TetrisHTW.Model;
-using TetrisHTW.tools;
+using TetrisHTW.Util;
 
 namespace TetrisHTW.Figures
 {

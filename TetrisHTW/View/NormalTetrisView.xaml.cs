@@ -23,7 +23,7 @@ namespace TetrisHTW
     public partial class NormalTetrisView : UserControl
     {
 
-        private BoardModel boardModel;
+        private DefaultBoardModel boardModel;
         private FallWorker fallWorker;
         private Timer timer;
         private Key lastKey;
@@ -311,7 +311,7 @@ namespace TetrisHTW
                         }
 
                     }
-                    tools.Point[] previewPoints = boardModel.getPreviewFigure().getPoints();
+                    Util.Point[] previewPoints = boardModel.getPreviewFigure().getPoints();
 
                     List<Rectangle> previewRectangles = getPreviewBoardRectangles(previewPoints);
 
@@ -343,7 +343,7 @@ namespace TetrisHTW
                     rect.Width = rectOnBoard.ActualWidth;
                     rect.Fill = rectOnBoard.Fill;
 
-                    Point p = rectOnBoard.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+                    System.Windows.Point p = rectOnBoard.TransformToVisual(this.LayoutRoot).Transform(new System.Windows.Point(0, 0));
 
                     canvas.Children.Add(rect);
                     Canvas.SetLeft(rect, p.X + Canvas.GetLeft(LayoutRoot));
@@ -367,8 +367,8 @@ namespace TetrisHTW
                     sdk.SetValue(SplineDoubleKeyFrame.ValueProperty, (double)(-1 * rnd.Next(200)));
                     sdk.KeyTime = TimeSpan.FromMilliseconds(rnd.Next(400));
                     KeySpline ks = new KeySpline();
-                    ks.ControlPoint1 = new Point(0, 0.5);
-                    ks.ControlPoint2 = new Point(1, 1);
+                    ks.ControlPoint1 = new System.Windows.Point(0, 0.5);
+                    ks.ControlPoint2 = new System.Windows.Point(1, 1);
                     sdk.KeySpline = ks;
                     dauk.KeyFrames.Add(sdk);
 
@@ -376,8 +376,8 @@ namespace TetrisHTW
                     sdk0.SetValue(SplineDoubleKeyFrame.ValueProperty, (double)rnd.Next(474));
                     sdk0.KeyTime = TimeSpan.FromMilliseconds(1000);
                     KeySpline ks0 = new KeySpline();
-                    ks0.ControlPoint1 = new Point(1, 0);
-                    ks0.ControlPoint2 = new Point(1, 1);
+                    ks0.ControlPoint1 = new System.Windows.Point(1, 0);
+                    ks0.ControlPoint2 = new System.Windows.Point(1, 1);
                     sdk0.KeySpline = ks0;
                     dauk.KeyFrames.Add(sdk0);
                     //Drehung
@@ -400,8 +400,8 @@ namespace TetrisHTW
                     SplineDoubleKeyFrame sdk3 = new SplineDoubleKeyFrame();
                     sdk3.SetValue(SplineDoubleKeyFrame.ValueProperty, 0.0);
                     KeySpline ks3 = new KeySpline();
-                    ks3.ControlPoint1 = new Point(0, 0.5);
-                    ks3.ControlPoint2 = new Point(1, 0.5);
+                    ks3.ControlPoint1 = new System.Windows.Point(0, 0.5);
+                    ks3.ControlPoint2 = new System.Windows.Point(1, 0.5);
                     sdk3.KeySpline = ks3;
                     sdk3.KeyTime = TimeSpan.FromMilliseconds(1000);
                     dauk2.KeyFrames.Add(sdk3);
@@ -444,7 +444,7 @@ namespace TetrisHTW
                     rect.Width = rectOnBoard.ActualWidth;
                     rect.Fill = rectOnBoard.Fill;
 
-                    Point p = rectOnBoard.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+                    System.Windows.Point p = rectOnBoard.TransformToVisual(this.LayoutRoot).Transform(new System.Windows.Point(0, 0));
 
                     canvas.Children.Add(rect);
                     Canvas.SetLeft(rect, p.X + Canvas.GetLeft(LayoutRoot));
@@ -467,8 +467,8 @@ namespace TetrisHTW
                     sdk.SetValue(SplineDoubleKeyFrame.ValueProperty, (double)(-1 * rnd.Next(10)));
                     sdk.KeyTime = TimeSpan.FromMilliseconds(rnd.Next(400));
                     KeySpline ks = new KeySpline();
-                    ks.ControlPoint1 = new Point(0, 1);
-                    ks.ControlPoint2 = new Point(1, 1);
+                    ks.ControlPoint1 = new System.Windows.Point(0, 1);
+                    ks.ControlPoint2 = new System.Windows.Point(1, 1);
                     sdk.KeySpline = ks;
                     dauk.KeyFrames.Add(sdk);
 
@@ -476,8 +476,8 @@ namespace TetrisHTW
                     sdk0.SetValue(SplineDoubleKeyFrame.ValueProperty, (double)rnd.Next(474));
                     sdk0.KeyTime = TimeSpan.FromMilliseconds(1000);
                     KeySpline ks0 = new KeySpline();
-                    ks0.ControlPoint1 = new Point(1, 0);
-                    ks0.ControlPoint2 = new Point(1, 1);
+                    ks0.ControlPoint1 = new System.Windows.Point(1, 0);
+                    ks0.ControlPoint2 = new System.Windows.Point(1, 1);
                     sdk0.KeySpline = ks0;
                     dauk.KeyFrames.Add(sdk0);
                     //Drehung
@@ -500,8 +500,8 @@ namespace TetrisHTW
                     SplineDoubleKeyFrame sdk3 = new SplineDoubleKeyFrame();
                     sdk3.SetValue(SplineDoubleKeyFrame.ValueProperty, 0.0);
                     KeySpline ks3 = new KeySpline();
-                    ks3.ControlPoint1 = new Point(0, 0.5);
-                    ks3.ControlPoint2 = new Point(1, 0.5);
+                    ks3.ControlPoint1 = new System.Windows.Point(0, 0.5);
+                    ks3.ControlPoint2 = new System.Windows.Point(1, 0.5);
                     sdk3.KeySpline = ks3;
                     sdk3.KeyTime = TimeSpan.FromMilliseconds(1000);
                     dauk2.KeyFrames.Add(sdk3);
@@ -565,7 +565,7 @@ namespace TetrisHTW
                 if (iv.rootContainer.Child == this)
                 {
                     hardFall = false;
-                    tools.Point[] points = ffea.figurePoints;
+                    Util.Point[] points = ffea.figurePoints;
                     List<Rectangle> rectangles = getBoardRectangles(points);
                     Storyboard sb = new Storyboard();
                     sb.Duration = TimeSpan.FromMilliseconds(400);
@@ -596,10 +596,10 @@ namespace TetrisHTW
                         Rectangle upperRightRect = getRectangleAt(maxX, minY);
 
 
-                        Point upperLeftPoint = upperLeftRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
-                        Point bottomRightPoint = bottomRightRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
-                        Point bottomLeftPoint = bottomLeftRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
-                        Point upperRightPoint = upperRightRect.TransformToVisual(this.LayoutRoot).Transform(new Point(0, 0));
+                        System.Windows.Point upperLeftPoint = upperLeftRect.TransformToVisual(this.LayoutRoot).Transform(new System.Windows.Point(0, 0));
+                        System.Windows.Point bottomRightPoint = bottomRightRect.TransformToVisual(this.LayoutRoot).Transform(new System.Windows.Point(0, 0));
+                        System.Windows.Point bottomLeftPoint = bottomLeftRect.TransformToVisual(this.LayoutRoot).Transform(new System.Windows.Point(0, 0));
+                        System.Windows.Point upperRightPoint = upperRightRect.TransformToVisual(this.LayoutRoot).Transform(new System.Windows.Point(0, 0));
 
 
                         double width = Math.Sqrt(Math.Pow(bottomRightPoint.X - bottomLeftPoint.X, 2) + Math.Pow(bottomRightPoint.Y - bottomLeftPoint.Y, 2)) + upperLeftRect.ActualWidth;
@@ -662,7 +662,7 @@ namespace TetrisHTW
         }
 
 
-        public int getMax(tools.Point[] points, bool x)
+        public int getMax(Util.Point[] points, bool x)
         {
             if (!x)
             {
@@ -691,7 +691,7 @@ namespace TetrisHTW
             }
         }
 
-        public int getMin(tools.Point[] points, bool x)
+        public int getMin(Util.Point[] points, bool x)
         {
             if (!x)
             {
@@ -734,20 +734,20 @@ namespace TetrisHTW
             return null;
         }
 
-        public List<Rectangle> getBoardRectangles(tools.Point[] points)
+        public List<Rectangle> getBoardRectangles(Util.Point[] points)
         {
             List<Rectangle> rectangles = new List<Rectangle>();
-            foreach (tools.Point point in points)
+            foreach (Util.Point point in points)
             {
                 rectangles.Add(getRectangleAt(point.X, point.Y));
             }
             return rectangles;
         }
 
-        public List<Rectangle> getPreviewBoardRectangles(tools.Point[] points)
+        public List<Rectangle> getPreviewBoardRectangles(Util.Point[] points)
         {
             List<Rectangle> rectangles = new List<Rectangle>();
-            foreach (tools.Point point in points)
+            foreach (Util.Point point in points)
             {
                 foreach (FrameworkElement frameWorkElement in previewGrid.Children)
                 {

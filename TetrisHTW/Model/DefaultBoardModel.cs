@@ -8,13 +8,13 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using TetrisHTW.Figures;
-using TetrisHTW.tools;
+using TetrisHTW.Util;
 using TetrisHTW;
 using System.Collections.Generic;
 
 namespace TetrisHTW.Model
 {
-    public class DefaultBoardModel : BoardModel
+    public class DefaultBoardModel
     {
         private Random rnd = new Random();
         private Color boardColor = Color.FromArgb(255, 200, 200, 200);

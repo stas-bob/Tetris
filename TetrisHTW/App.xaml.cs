@@ -27,7 +27,7 @@ namespace TetrisHTW
         
 
         public static Lock myLock = new Lock();
-        private BoardModel boardModel = new DefaultBoardModel();
+        private DefaultBoardModel boardModel = new DefaultBoardModel();
         
         private static App instance;
 
@@ -56,12 +56,12 @@ namespace TetrisHTW
             return instance;
         }
 
-        public BoardModel getBoardModel()
+        public DefaultBoardModel getBoardModel()
         {
             return boardModel;
         }
 
-        public void NotifyFigureFallen(tools.Point[] previousPoints, tools.Point[] points, Color c)
+        public void NotifyFigureFallen(Util.Point[] previousPoints, Util.Point[] points, Color c)
         {
             if (FigureFallenEvent != null)
             {

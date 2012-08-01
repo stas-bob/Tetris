@@ -13,7 +13,7 @@ namespace TetrisHTW.Model
 {
     public class FigureFallenEventArgs: EventArgs
     {
-         public FigureFallenEventArgs(tools.Point[] previousPoints, tools.Point[] points, Color c)
+        public FigureFallenEventArgs(Util.Point[] previousPoints, Util.Point[] points, Color c)
         {
             this.figurePoints = points;
             this.previousFigurePoints = previousPoints;
@@ -21,8 +21,8 @@ namespace TetrisHTW.Model
         }
 
 
-        public tools.Point[] figurePoints { get; set; }
-        public tools.Point[] previousFigurePoints { get; set; }
+         public Util.Point[] figurePoints { get; set; }
+         public Util.Point[] previousFigurePoints { get; set; }
         public Color color { get; set; }
 
         public bool PointsAreEqual()
