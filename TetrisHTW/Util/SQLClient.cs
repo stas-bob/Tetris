@@ -21,7 +21,7 @@ namespace TetrisHTW.Util
         private string proxy;
         private string postData;
         private Random rnd = new Random();
-        public delegate void SuccessCallback(System.Collections.Generic.List<string> playerNames, System.Collections.Generic.List<int> levels, System.Collections.Generic.List<int> scores, System.Collections.Generic.List<string> times, System.Collections.Generic.List<int> mods);
+        public delegate void SuccessCallback(System.Collections.Generic.List<string> playerNames, System.Collections.Generic.List<int> levels, System.Collections.Generic.List<int> scores, System.Collections.Generic.List<string> times, System.Collections.Generic.List<int> modes, System.Collections.Generic.List<int> ranks);
         public delegate void ErrorCallback(string msg);
 
 
@@ -146,7 +146,8 @@ namespace TetrisHTW.Util
                 List<int> levels = new List<int>();
                 List<int> scores = new List<int>();
                 List<string> times = new List<string>();
-                List<int> mods = new List<int>();
+                List<int> modes = new List<int>();
+                List<int> ranks = new List<int>();
                 try
                 {
                     XElement root = XElement.Parse(e.Result);
@@ -157,15 +158,17 @@ namespace TetrisHTW.Util
                         int level = int.Parse((string)scoreentry.Element("level"));
                         int score = int.Parse((string)scoreentry.Element("score"));
                         string time = (string)scoreentry.Element("time");
-                        int mod = int.Parse((string)scoreentry.Element("mod"));
+                        int mode = int.Parse((string)scoreentry.Element("mode"));
+                        int rank = int.Parse((string)scoreentry.Element("rank"));
 
                         playerNames.Add(playerName);
                         levels.Add(level);
                         scores.Add(score);
                         times.Add(time);
-                        mods.Add(mod);
+                        modes.Add(mode);
+                        ranks.Add(rank);
                     }
-                    cb(playerNames, levels, scores, times, mods);
+                    cb(playerNames, levels, scores, times, modes, ranks);
                 }
                 catch (Exception exc)
                 {

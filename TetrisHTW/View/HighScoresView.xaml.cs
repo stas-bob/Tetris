@@ -49,9 +49,9 @@ namespace TetrisHTW.View
             }
         }
 
-       
 
-        public void callback(System.Collections.Generic.List<string> playerNames, System.Collections.Generic.List<int> levels, System.Collections.Generic.List<int> scores, System.Collections.Generic.List<string> times, System.Collections.Generic.List<int> mods)
+
+        public void callback(System.Collections.Generic.List<string> playerNames, System.Collections.Generic.List<int> levels, System.Collections.Generic.List<int> scores, System.Collections.Generic.List<string> times, System.Collections.Generic.List<int> modes, System.Collections.Generic.List<int> ranks)
         {
             Dispatcher.BeginInvoke(() => {
 
@@ -65,7 +65,8 @@ namespace TetrisHTW.View
                         score = scores[i],
                         level = levels[i],
                         time = times[i],
-                        mode = mods[i]
+                        mode = modes[i],
+                        rank = ranks[i]
                     });
                 }
                 dataGrid1.ItemsSource = source;

@@ -17,6 +17,7 @@ namespace TetrisHTW.Util
         public int score { get; set; }
         public int level { get; set; }
         public int mode { get; set; }
+        public int rank { get; set; }
         public string time { get; set; }
     }
 }

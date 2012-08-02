@@ -38,7 +38,7 @@
                 <sdk:DataGridTextColumn Header="Score" Binding="{Binding score}" />
                 <sdk:DataGridTextColumn Header="Level" Binding="{Binding level}" />
                 <sdk:DataGridTextColumn Header="Time" Binding="{Binding time}" />
-                <sdk:DataGridTextColumn Header="Mode" Binding="{Binding mode}" />
+                <sdk:DataGridTextColumn Header="Rank" Binding="{Binding rank}" />
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
         <Button Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="Button_Click" Margin="10"/>
