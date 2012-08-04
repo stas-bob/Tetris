@@ -35,6 +35,10 @@ namespace TetrisHTW.View
             {
                 mode = 1;
             }
+            else if (spezialModeRadioButton.IsChecked == true)
+            {
+                mode = 2;
+            }
             else if (kretschmerModeRadioButton.IsChecked == true)
             {
                 mode = 3;
@@ -53,8 +57,8 @@ namespace TetrisHTW.View
                 ntv.setPlayerName(playerNameTextBox.Text);
             }
             ntv.setTempLines((level + 1) * 10);
-            ntv.setMode(mode);
             ntv.InitGame();
+            ntv.setMode(mode);
             iv.rootContainer.Child = ntv;
         }
 

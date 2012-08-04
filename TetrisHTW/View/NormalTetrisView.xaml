@@ -28,87 +28,103 @@
                 <Canvas.Clip>
                     <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,144, 65"/>
                 </Canvas.Clip>
-                <TextBlock Name="HintBoxTextBlock" TextWrapping="Wrap" Foreground="White" Width="144" TextAlignment="Center" Height="65" FontFamily="Verdana"/>
-                    
+                <TextBlock Name="HintBoxTextBlock" TextWrapping="Wrap" Foreground="White" Width="144" TextAlignment="Center" Height="65" FontFamily="Verdana"/>  
             </Canvas>
         </Border>
         
-            <Grid x:Name="LayoutRoot" Height="400" Width="295">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="72" />
-                    <RowDefinition Height="72" />
-                    <RowDefinition Height="72" />
-                    <RowDefinition Height="92" />
-                    <RowDefinition Height="52" />
-                    <RowDefinition Height="1*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="210" />
-                    <ColumnDefinition Width="85" />
-                    <ColumnDefinition Width="59*" />
-                </Grid.ColumnDefinitions>
+        <Grid x:Name="LayoutRoot" Height="400" Width="295">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="72" />
+                <RowDefinition Height="72" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="210" />
+                <ColumnDefinition Width="85" />
+                <ColumnDefinition Width="59*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="#eee"/>
+                </StackPanel.Background>
+                <StackPanel.Clip>
+                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="5, 3, 75, 50"/>
+                </StackPanel.Clip>
+                <TextBlock Text="Score" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="0" Name="scoreText" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="1">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="#eee"/>
+                </StackPanel.Background>
+                <StackPanel.Clip>
+                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="5, 3, 75, 50"/>
+                </StackPanel.Clip>
+                <TextBlock Text="Lines" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="0" Name="linesText" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="2">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="#eee"/>
+                </StackPanel.Background>
+                <StackPanel.Clip>
+                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="5, 3, 75, 50"/>
+                </StackPanel.Clip>
+                <TextBlock Text="Level" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="0" Name="levelText" HorizontalAlignment="Center" Width="7">
+                    <TextBlock.RenderTransform>
+                        <ScaleTransform x:Name="levelTextFontScale" CenterX="3.5"/>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="3">
+                <TextBlock Text="Vorschau" HorizontalAlignment="Center" Height="16" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Name="previewGrid" HorizontalAlignment="Center" Margin="0 5 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="12" />
+                        <RowDefinition Height="12" />
+                        <RowDefinition Height="12" />
+                        <RowDefinition Height="12" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="12" />
+                    </Grid.ColumnDefinitions>
+                 </Grid>
+            </StackPanel>
+            <StackPanel Name="memoryPanel" Grid.Column="1" Grid.Row="4" Visibility="Collapsed">
+                <TextBlock Text="Vorschau" HorizontalAlignment="Center" Height="16" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Name="memoryGrid" HorizontalAlignment="Center" Margin="0 5 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="12" />
+                        <RowDefinition Height="12" />
+                        <RowDefinition Height="12" />
+                        <RowDefinition Height="12" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="12" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </StackPanel>
 
-                <StackPanel Grid.Column="1">
-                    <StackPanel.Background>
-                        <SolidColorBrush Color="#eee"/>
-                    </StackPanel.Background>
-                    <StackPanel.Clip>
-                        <RectangleGeometry RadiusX="10" RadiusY="10" Rect="5, 3, 75, 50"/>
-                    </StackPanel.Clip>
-                    <TextBlock Text="Score" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Text="0" Name="scoreText" HorizontalAlignment="Center"/>
-                </StackPanel>
-                <StackPanel Grid.Column="1" Grid.Row="1">
-                    <StackPanel.Background>
-                        <SolidColorBrush Color="#eee"/>
-                    </StackPanel.Background>
-                    <StackPanel.Clip>
-                        <RectangleGeometry RadiusX="10" RadiusY="10" Rect="5, 3, 75, 50"/>
-                    </StackPanel.Clip>
-                    <TextBlock Text="Lines" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Text="0" Name="linesText" HorizontalAlignment="Center"/>
-                </StackPanel>
-                <StackPanel Grid.Column="1" Grid.Row="3">
-                    <TextBlock Text="Vorschau" HorizontalAlignment="Center" Height="17" Style="{StaticResource TextBlockStyle}"/>
-                    <Grid Name="previewGrid" HorizontalAlignment="Center" Margin="0 10 0 0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="14" />
-                            <RowDefinition Height="14" />
-                            <RowDefinition Height="14" />
-                            <RowDefinition Height="14" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="14" />
-                            <ColumnDefinition Width="14" />
-                            <ColumnDefinition Width="14" />
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-                </StackPanel>
-                <StackPanel Grid.Column="1" Grid.Row="2">
-                    <StackPanel.Background>
-                        <SolidColorBrush Color="#eee"/>
-                    </StackPanel.Background>
-                    <StackPanel.Clip>
-                        <RectangleGeometry RadiusX="10" RadiusY="10" Rect="5, 3, 75, 50"/>
-                    </StackPanel.Clip>
-                    <TextBlock Text="Level" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Text="0" Name="levelText" HorizontalAlignment="Center" Width="7">
-                        <TextBlock.RenderTransform>
-                            <ScaleTransform x:Name="levelTextFontScale" CenterX="3.5"/>
-                        </TextBlock.RenderTransform>
-                    </TextBlock>
-                </StackPanel>
-            <Button Name="scoreButton" Grid.Column="1" Grid.Row="4" Content="Score" Style="{StaticResource ButtonStyle1}" Click="ScoreButton_Click" IsTabStop="False" IsHitTestVisible="True" IsEnabled="True" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0" Width="75" Height="30" FontSize="16" Visibility="Collapsed" />
-            <Button Grid.Column="1" Grid.Row="5" Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="Button_Click" IsTabStop="False" IsHitTestVisible="True" IsEnabled="True" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0" Width="75" Height="30" FontSize="16" />
+            <Button Name="scoreButton" Grid.Column="1" Grid.Row="7" Content="Score" Style="{StaticResource ButtonStyle1}" Click="ScoreButton_Click" IsTabStop="False" IsHitTestVisible="True" IsEnabled="True" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0" Width="75" Height="30" FontSize="16" Visibility="Collapsed" />
+            <Button Grid.Column="1" Grid.Row="6" Content="Zurück" Style="{StaticResource ButtonStyle1}" Click="BackButton_Click" IsTabStop="False" IsHitTestVisible="True" IsEnabled="True" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0" Width="75" Height="30" FontSize="16" />
 
-            <Border Name="boardBorder" BorderThickness="10" Grid.Column="0" Grid.RowSpan="6" BorderBrush="{StaticResource WallImageBrush}" CornerRadius="5">
+            <Border Name="boardBorder" BorderThickness="10" Grid.Column="0" Grid.RowSpan="7" BorderBrush="{StaticResource WallImageBrush}" CornerRadius="5">
                 <Border.CacheMode>
                     <BitmapCache/>
                 </Border.CacheMode>
                 <Border.RenderTransform>
                     <CompositeTransform CenterX="105" CenterY="200"/>
                 </Border.RenderTransform>
-                <Grid Name="boardGrid" >
+                <Grid Name="boardGrid" Visibility="Visible">
                     <Grid.Background>
                         <LinearGradientBrush Opacity="0.8">
                             <LinearGradientBrush.Transform>
@@ -119,9 +135,7 @@
                         </LinearGradientBrush>
                     </Grid.Background>
                 </Grid>
-
             </Border>
-        </Grid>
-        
+        </Grid>    
     </Canvas>
 </UserControl>

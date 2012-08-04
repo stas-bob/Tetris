@@ -56,8 +56,6 @@ namespace TetrisHTW
             App.getInstance().GameOverEvent += new GameOverEventHandler(OnGameOver);
             App.getInstance().FigureFallenEvent += new FigureFallenEventHandler(OnFigureFallen);
             playerName = "Unbekannt";
-            mod = 1;
-            
         }
 
         void initBoard()
@@ -99,13 +97,6 @@ namespace TetrisHTW
                 }
             }
         }
-
-
-        public void setMode(int mode)
-        {
-            this.mod = mode;
-        }
-
 
         /*KeyboardListener fuer druecken einer Taste*/
         void Page_KeyDown(object sender, KeyEventArgs e)
@@ -213,9 +204,16 @@ namespace TetrisHTW
             GameStart();
         }
 
-        public void setPlayerName(string playerName)
+        private void setMeymoryPanel()
         {
-            this.playerName = playerName;
+            if (mod == 2)
+            {
+                memoryPanel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                memoryPanel.Visibility = Visibility.Collapsed;
+            }
         }
 
         public Brush getBrushByColor(Color currentCellColor)
@@ -661,7 +659,6 @@ namespace TetrisHTW
 
         }
 
-
         public int getMax(Util.Point[] points, bool x)
         {
             if (!x)
@@ -762,6 +759,26 @@ namespace TetrisHTW
             return rectangles;
         }
 
+        private void GameStart()
+        {
+            setFallWorker();
+            new Thread(fallWorker.InvokeFalling).Start();
+            time = DateTime.Now.Ticks;
+        }
+
+        private void GameResume()
+        {
+            if (!gameOver)
+            {
+                pause = false;
+                setFallWorker();                        
+                new Thread(fallWorker.InvokeFalling).Start();
+                time = DateTime.Now.Ticks;
+                HintBoxOffSB.Begin();
+                
+            }
+        }
+
         public void OnGameOver(object sender, GameOverEventArgs goea)
         {
             Dispatcher.BeginInvoke(delegate
@@ -785,51 +802,6 @@ namespace TetrisHTW
                 time += t;
             }
             sqlClient.writeScore(SQLClientError, playerName, boardModel.getScore(), boardModel.getLevel(), time, mod);
-        }
-
-        private void showHint(string msg, int fontSize)
-        {
-            pause = true;
-            if (fallWorker != null)
-            {
-                fallWorker.RequestStop();
-            }
-            timeList.Add(DateTime.Now.Ticks - time);
-            HintBoxTextBlock.FontSize = fontSize;
-            HintBoxTextBlock.Text = msg;
-            HintBoxOnSB.Begin();
-        }
-        private void SQLClientError(string msg)
-        {
-            Dispatcher.BeginInvoke(() =>
-            {
-                showHint(msg + ".Ihre Punktezahl ist eventuell verloren gegangen.", 8);   
-            });
-        }
-
-        private void GameStart()
-        {
-            setFallWorker();
-            new Thread(fallWorker.InvokeFalling).Start();
-            time = DateTime.Now.Ticks;
-        }
-
-        private void GameResume()
-        {
-            if (!gameOver)
-            {
-                pause = false;
-                setFallWorker();                        
-                new Thread(fallWorker.InvokeFalling).Start();
-                time = DateTime.Now.Ticks;
-                HintBoxOffSB.Begin();
-                
-            }
-        }
-
-        private void setFallWorker()
-        {
-            fallWorker = new FallWorker(boardModel.getLevel());
         }
 
         private void ExitGame()
@@ -866,7 +838,28 @@ namespace TetrisHTW
             });
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void showHint(string msg, int fontSize)
+        {
+            pause = true;
+            if (fallWorker != null)
+            {
+                fallWorker.RequestStop();
+            }
+            timeList.Add(DateTime.Now.Ticks - time);
+            HintBoxTextBlock.FontSize = fontSize;
+            HintBoxTextBlock.Text = msg;
+            HintBoxOnSB.Begin();
+        }
+
+        private void SQLClientError(string msg)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                showHint(msg + ".Ihre Punktezahl ist eventuell verloren gegangen.", 8);
+            });
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             ExitGame();
             iv.rootContainer.Child = ov;
@@ -879,11 +872,27 @@ namespace TetrisHTW
             iv.rootContainer.Child = iv.getHighScoreView();
         }
 
+        private void setFallWorker()
+        {
+            fallWorker = new FallWorker(boardModel.getLevel());
+        }
+
         internal void setTempLines(int templines)
         {
             
             this.boardModel.setTempLines(templines);
             previousLevel = boardModel.getLevel();
+        }
+
+        public void setMode(int mode)
+        {
+            this.mod = mode;
+            setMeymoryPanel();
+        }
+
+        public void setPlayerName(string playerName)
+        {
+            this.playerName = playerName;
         }
     }
 }
