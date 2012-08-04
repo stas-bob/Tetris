@@ -49,9 +49,11 @@
         <sdk:DataGrid x:Name="dataGrid1" AutoGenerateColumns="False"
 			Background="Transparent" HeadersVisibility="All" RowBackground="Transparent"
 			AlternatingRowBackground="Lavender" ColumnWidth="*" RowHeight="25"
-			IsReadOnly="True" CanUserResizeColumns="False" MaxHeight="300"
+			IsReadOnly="True" CanUserResizeColumns="False" MaxHeight="200" Height="200"
 			MaxWidth="620">
             <sdk:DataGrid.Columns>
+                <sdk:DataGridTextColumn Header="Rank"
+					Binding="{Binding rank}" />
                 <sdk:DataGridTextColumn Header="Player"
 					Binding="{Binding playerName}" />
                 <sdk:DataGridTextColumn Header="Score"
@@ -60,10 +62,10 @@
 					Binding="{Binding level}" />
                 <sdk:DataGridTextColumn Header="Time"
 					Binding="{Binding time}" />
-                <sdk:DataGridTextColumn Header="Rank"
-					Binding="{Binding rank}" />
+                
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
+        <TextBlock Name="ownScoreBlock" HorizontalAlignment="Center"/>
         <Button Content="Zurück" Style="{StaticResource ButtonStyle1}"
 			Click="Button_Click" Margin="10" />
     </StackPanel>

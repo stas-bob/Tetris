@@ -22,10 +22,12 @@ namespace TetrisHTW.Util
         private string postData;
         private Random rnd = new Random();
         public delegate void SuccessCallback(System.Collections.Generic.List<string> playerNames, System.Collections.Generic.List<int> levels, System.Collections.Generic.List<int> scores, System.Collections.Generic.List<string> times, System.Collections.Generic.List<int> modes, System.Collections.Generic.List<int> ranks);
+        public delegate void SuccessCallbackEntry(string playerName, int level, int score,string time, int mode, int rank);
         public delegate void ErrorCallback(string msg);
 
 
         SuccessCallback cb;
+        SuccessCallbackEntry cbe;
         ErrorCallback ecb;
 
         public SQLClient(string proxy)
@@ -105,7 +107,23 @@ namespace TetrisHTW.Util
             }
         }
 
-        internal void requestScores(SuccessCallback cb, ErrorCallback ecb,  int score, int count, int mode)
+        internal void requestScoreEntry(SuccessCallbackEntry cbe, ErrorCallback ecb, int score, int mode)
+        {
+            this.cbe = cbe;
+            this.ecb = ecb;
+            try
+            {
+                WebClient get = new WebClient();
+
+                get.DownloadStringCompleted += client_DownloadStringCompletedEntry;
+
+                get.DownloadStringAsync(new Uri(proxy + "?mode=" + mode + "&score=" + score + "&random=" + rnd.Next(int.MaxValue)));
+            }
+            catch (Exception e)
+            { if (App.DEBUG) Debug.WriteLine(e.Message); }
+        }
+
+        internal void requestScores(SuccessCallback cb, ErrorCallback ecb,  int rows, int mode)
         {
             this.cb = cb;
             this.ecb = ecb;
@@ -115,7 +133,7 @@ namespace TetrisHTW.Util
 
                 get.DownloadStringCompleted += client_DownloadStringCompleted;
 
-                get.DownloadStringAsync(new Uri(proxy + "?count=" + count + "&score=" + score + "&mode=" + mode + "&random=" + rnd.Next(int.MaxValue)));
+                get.DownloadStringAsync(new Uri(proxy + "?count=" + rows + "&mode=" + mode + "&random=" + rnd.Next(int.MaxValue)));
             }
             catch (Exception e)
             { if (App.DEBUG) Debug.WriteLine(e.Message); }
@@ -139,7 +157,6 @@ namespace TetrisHTW.Util
 
         void client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-
             if (e.Error == null)
             {
                 List<string> playerNames = new List<string>();
@@ -180,6 +197,42 @@ namespace TetrisHTW.Util
                 {
                     ecb(e.Error.ToString());
                 } 
+                else
+                {
+                    ecb(e.Error.Message);
+                }
+        }
+
+        void client_DownloadStringCompletedEntry(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                try
+                {
+                    XElement root = XElement.Parse(e.Result);
+
+                    foreach (XElement scoreentry in root.Nodes())
+                    {
+                        string playerName = (string)scoreentry.Element("playername");
+                        int level = int.Parse((string)scoreentry.Element("level"));
+                        int score = int.Parse((string)scoreentry.Element("score"));
+                        string time = (string)scoreentry.Element("time");
+                        int mode = int.Parse((string)scoreentry.Element("mode"));
+                        int rank = int.Parse((string)scoreentry.Element("rank"));
+
+                        cbe(playerName, level, score, time, mode, rank);
+                    }
+                }
+                catch (Exception exc)
+                {
+                    ecb(exc.Message + " Fehler, eventuell ist der Server nicht erreichbar.");
+                }
+            }
+            else
+                if (e.Error.Message == null || e.Error.Message.Equals(""))
+                {
+                    ecb(e.Error.ToString());
+                }
                 else
                 {
                     ecb(e.Error.Message);
