@@ -25,6 +25,7 @@ namespace TetrisHTW.View
         {
             InitializeComponent();
             this.iv = iv;
+            anleitung.Text = "Dies ist das orginal Tetris wie man es vom Gameboy kennt!"; 
         }
 
         private void Spielen_Click(object sender, RoutedEventArgs e)
@@ -97,6 +98,26 @@ namespace TetrisHTW.View
                 case "tb8": tb8.IsChecked = true; level = 8; break;
                 case "tb9": tb9.IsChecked = true; level = 9; break; 
             }
+        }
+
+        private void RadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (normalModeRadioButton.IsChecked == true)
+            {
+                memoryKey.Visibility = Visibility.Collapsed;
+                anleitung.Text = "Dies ist das orginal Tetris wie man es vom Gameboy kennt!"; 
+            }
+            else if (spezialModeRadioButton.IsChecked == true)
+            {
+                memoryKey.Visibility = Visibility.Visible;
+                anleitung.Text = "Dies ist das orginal Tetris mit der Erweiterung, dads man Steine speichern kann."; 
+            }
+            else 
+            {
+                memoryKey.Visibility = Visibility.Collapsed;
+                anleitung.Text = "Dies ist das orginal Tetris mit der Erweiterung, dads sich das Spielfeld nach entfernen einer Zeile dreht."; 
+            }
+        
         }
     }
 }

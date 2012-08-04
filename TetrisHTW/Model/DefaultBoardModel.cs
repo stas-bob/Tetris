@@ -50,6 +50,7 @@ namespace TetrisHTW.Model
 
                 currentFigure = null;
                 previewFigure = null;
+                memoryFigure = null;
             }
         }
 

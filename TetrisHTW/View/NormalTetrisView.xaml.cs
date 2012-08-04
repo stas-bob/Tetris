@@ -125,7 +125,7 @@ namespace TetrisHTW
                         GameResume();
                     }
                 }
-                else if (e.Key == Key.S)
+                else if (e.Key == Key.S && mod == 2)
                 {
                     handleSpecailMode();
                 }
@@ -248,6 +248,7 @@ namespace TetrisHTW
                 boardModel.setCurrentFigure(memory);
                 boardModel.getCurrentFigure().setInitPoints();
                 boardModel.getCurrentFigure().newOnBoard();
+                boardModel.addScore(-5); 
             }
         }
 
