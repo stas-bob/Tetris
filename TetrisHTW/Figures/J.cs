@@ -17,6 +17,11 @@ namespace TetrisHTW.Figures
             : base(boardModel)
         {
             color = Colors.Blue;
+            setInitPoints(boardModel);
+        }
+
+        public void setInitPoints(Model.DefaultBoardModel boardModel)
+        {
             points[0] = new Point(boardModel.getColumns() / 2, 0);
             points[1] = new Point(boardModel.getColumns() / 2, 1);
             points[2] = new Point(boardModel.getColumns() / 2, 2);

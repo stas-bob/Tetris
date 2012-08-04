@@ -96,6 +96,17 @@ namespace TetrisHTW
                     previewGrid.Children.Add(rect);
                 }
             }
+            /*Rechtecke für Memory*/
+            for (int i = 0; i < memoryGrid.RowDefinitions.Count; i++)
+            {
+                for (int j = 0; j < memoryGrid.ColumnDefinitions.Count; j++)
+                {
+                    Rectangle rect = new Rectangle();
+                    rect.SetValue(Grid.RowProperty, i);
+                    rect.SetValue(Grid.ColumnProperty, j);
+                    memoryGrid.Children.Add(rect);
+                }
+            }
         }
 
         /*KeyboardListener fuer druecken einer Taste*/
@@ -114,7 +125,11 @@ namespace TetrisHTW
                         GameResume();
                     }
                 }
-                else
+                else if (e.Key == Key.S)
+                {
+                    handleSpecailMode();
+                }
+                else 
                 {
                     if (e.Key == Key.Escape)
                     {
@@ -202,6 +217,38 @@ namespace TetrisHTW
             boardModel.getCurrentFigure().newOnBoard();
 
             GameStart();
+        }
+
+        private void handleSpecailMode()
+        {
+            if (boardModel.getMemoryFigure() == null)
+            {
+                Figure current = boardModel.getCurrentFigure();
+                boardModel.setMemoryFigure(current);
+                boardModel.clearPoints(current.getPoints());
+                boardModel.getMemoryFigure().setInitPoints();          
+
+                Figure preview = boardModel.generateRandomFigure();
+                current = boardModel.generateRandomFigure();
+
+                boardModel.setCurrentFigure(current);
+                boardModel.setPreviewFigure(preview);
+
+                boardModel.getCurrentFigure().newOnBoard();
+            }
+            else
+            {
+                Figure memory = boardModel.getMemoryFigure();
+                Figure current = boardModel.getCurrentFigure();
+
+                boardModel.setMemoryFigure(current);
+                boardModel.clearPoints(current.getPoints());
+                boardModel.getMemoryFigure().setInitPoints();
+
+                boardModel.setCurrentFigure(memory);
+                boardModel.getCurrentFigure().setInitPoints();
+                boardModel.getCurrentFigure().newOnBoard();
+            }
         }
 
         private void setMeymoryPanel()
@@ -322,6 +369,24 @@ namespace TetrisHTW
                     foreach (Rectangle rect in previewRectangles)
                     {
                         rect.Fill = getBrushByColor(currentPreviewFigureColor);
+                    }
+
+                    if (boardModel.getMemoryFigure() != null)
+                    {
+                        Util.Point[] memoryPoints = boardModel.getMemoryFigure().getPoints();
+
+                        List<Rectangle> memoryRectangles = getMemoryBoardRectangles(memoryPoints);
+
+                        foreach (FrameworkElement frameWorkElement in memoryGrid.Children)
+                        {
+                            Rectangle rect = (Rectangle)frameWorkElement;
+                            rect.Fill = new SolidColorBrush(Colors.Transparent);
+                        }
+                        Color currentMemoryFigureColor = boardModel.getMemoryFigure().getColor();
+                        foreach (Rectangle rect in memoryRectangles)
+                        {
+                            rect.Fill = getBrushByColor(currentPreviewFigureColor);
+                        }
                     }
                 }
             });
@@ -749,6 +814,24 @@ namespace TetrisHTW
                 foreach (FrameworkElement frameWorkElement in previewGrid.Children)
                 {
                     int xx = Grid.GetColumn(frameWorkElement) + (boardGrid.ColumnDefinitions.Count/2 - previewGrid.ColumnDefinitions.Count/2);
+                    int yy = Grid.GetRow(frameWorkElement);
+                    if (xx == point.X && yy == point.Y)
+                    {
+                        rectangles.Add((Rectangle)frameWorkElement);
+                    }
+                }
+            }
+            return rectangles;
+        }
+
+        public List<Rectangle> getMemoryBoardRectangles(Util.Point[] points)
+        {
+            List<Rectangle> rectangles = new List<Rectangle>();
+            foreach (Util.Point point in points)
+            {
+                foreach (FrameworkElement frameWorkElement in memoryGrid.Children)
+                {
+                    int xx = Grid.GetColumn(frameWorkElement) + (boardGrid.ColumnDefinitions.Count / 2 - memoryGrid.ColumnDefinitions.Count / 2);
                     int yy = Grid.GetRow(frameWorkElement);
                     if (xx == point.X && yy == point.Y)
                     {

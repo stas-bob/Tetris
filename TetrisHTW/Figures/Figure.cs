@@ -296,6 +296,38 @@ namespace TetrisHTW.Figures
             return points;
         }
 
+        public void setInitPoints()
+        {
+            if (this is I) 
+            {
+                (this as I).setInitPoints(board);
+            }
+            else if (this is J)
+            {
+                (this as J).setInitPoints(board);
+            }
+            else if (this is L)
+            {
+                (this as L).setInitPoints(board);
+            }
+            else if (this is O)
+            {
+                (this as O).setInitPoints(board);
+            }
+            else if (this is S)
+            {
+                (this as S).setInitPoints(board);
+            }
+            else if (this is T)
+            {
+                (this as T).setInitPoints(board);
+            }
+            else
+            {
+                (this as Z).setInitPoints(board);
+            }
+        }
+
         public Color getColor()
         {
             return color;

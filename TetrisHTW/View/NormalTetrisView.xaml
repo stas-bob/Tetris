@@ -98,7 +98,7 @@
                  </Grid>
             </StackPanel>
             <StackPanel Name="memoryPanel" Grid.Column="1" Grid.Row="4" Visibility="Collapsed">
-                <TextBlock Text="Vorschau" HorizontalAlignment="Center" Height="16" Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="Speicher" HorizontalAlignment="Center" Height="16" Style="{StaticResource TextBlockStyle}"/>
                 <Grid Name="memoryGrid" HorizontalAlignment="Center" Margin="0 5 0 0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="12" />
