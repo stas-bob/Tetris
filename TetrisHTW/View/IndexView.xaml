@@ -6,93 +6,7 @@
 	xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
 	d:DesignHeight="515" d:DesignWidth="800">
 
-    <UserControl.Resources>
-        <Style x:Key="ButtonStyle1" TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="MouseOver" />
-                                    <VisualState x:Name="Pressed">
-                                        <Storyboard>
-                                            <ColorAnimation Duration="0" To="Red"
-												Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)"
-												Storyboard.TargetName="rectangle" d:IsOptimized="True" />
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Disabled" />
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Rectangle x:Name="rectangle" Stroke="Black" RadiusX="12"
-								RadiusY="12">
-                                <Rectangle.Effect>
-                                    <DropShadowEffect />
-                                </Rectangle.Effect>
-                                <Rectangle.Fill>
-                                    <LinearGradientBrush EndPoint="0.5,1"
-										StartPoint="0.5,0">
-                                        <GradientStop Color="DarkBlue" Offset="0" />
-                                        <GradientStop Color="#FFE68AE6" Offset="1" />
-                                    </LinearGradientBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-								VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                <ContentPresenter.Effect>
-                                    <DropShadowEffect />
-                                </ContentPresenter.Effect>
-                            </ContentPresenter>
-                            <Grid Margin="0,-37,0,-38" Opacity="0.5">
-                                <Rectangle x:Name="InnerShadow" Margin="0,37,0,38"
-									RadiusX="12" RadiusY="12">
-                                    <Rectangle.Fill>
-                                        <LinearGradientBrush EndPoint="0.5,1"
-											StartPoint="0.5,0">
-                                            <GradientStop Offset="0.853" />
-                                            <GradientStop Color="Black" Offset="0.996" />
-                                        </LinearGradientBrush>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                                <Rectangle x:Name="InnerShadow_Right"
-									RenderTransformOrigin="0.5,0.5" Margin="37.664,0,37.336,0"
-									UseLayoutRounding="False" d:LayoutRounding="Auto" Height="150"
-									Width="75" RadiusX="12" RadiusY="12">
-                                    <Rectangle.RenderTransform>
-                                        <CompositeTransform Rotation="-89.873" />
-                                    </Rectangle.RenderTransform>
-                                    <Rectangle.Fill>
-                                        <LinearGradientBrush EndPoint="0.5,1"
-											StartPoint="0.5,0">
-                                            <GradientStop Offset="0.909" />
-                                            <GradientStop Color="Black" Offset="0.996" />
-                                        </LinearGradientBrush>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                                <Rectangle x:Name="InnerShadow_Left"
-									RenderTransformOrigin="0.5,0.5" Margin="37.664,0,37.336,0"
-									UseLayoutRounding="False" d:LayoutRounding="Auto" Height="150"
-									Width="75" RadiusX="12" RadiusY="12">
-                                    <Rectangle.RenderTransform>
-                                        <CompositeTransform Rotation="-270.325" />
-                                    </Rectangle.RenderTransform>
-                                    <Rectangle.Fill>
-                                        <LinearGradientBrush EndPoint="0.5,1"
-											StartPoint="0.5,0">
-                                            <GradientStop Offset="0.935" Color="Transparent" />
-                                            <GradientStop Color="White" Offset="0.996" />
-                                        </LinearGradientBrush>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </Grid>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
+
 
     <Canvas Name="canvas" HorizontalAlignment="Center"
 		VerticalAlignment="Center" Margin="0,0,250,400">
@@ -218,7 +132,7 @@
             </Path.RenderTransform>
         </Path>
 
-        <Border Name="rootContainer" Height="600" Width="640"
+        <Border Name="rootContainer" Height="480" Width="640"
 			BorderThickness="5" CornerRadius="10" Margin="-200 -40 0 0"
 			BorderBrush="DarkBlue">
             <Grid x:Name="LayoutRoot" Height="400" Width="285">
@@ -241,91 +155,80 @@
                 <Button Grid.Column="0" Grid.Row="3" Content="Über" Height="75"
 					Style="{StaticResource ButtonStyle1}" Width="150" Foreground="White"
 					FontSize="24" FontWeight="Bold" Click="Ueber_Click" />
-                <TextBlock Margin="0" TextWrapping="Wrap" FontSize="96"
-					FontFamily="Buxton Sketch" Height="100" Width="285" TextAlignment="Center">
-					<TextBlock.Foreground>
-						<LinearGradientBrush EndPoint="0.5,1"
-							StartPoint="0.5,0">
-							<GradientStop Color="Black" Offset="0" />
-							<GradientStop Color="White" Offset="1" />
-						</LinearGradientBrush>
-					</TextBlock.Foreground>
-					<Run Text="T">
-						<Run.Foreground>
-							<SolidColorBrush Color="#FF1616F3">
-								<SolidColorBrush.RelativeTransform>
-									<MatrixTransform Matrix="Identity" />
-								</SolidColorBrush.RelativeTransform>
-								<SolidColorBrush.Transform>
-									<MatrixTransform Matrix="Identity" />
-								</SolidColorBrush.Transform>
-							</SolidColorBrush>
-						</Run.Foreground>
-					</Run>
-					<Run Text="E">
-						<Run.Foreground>
-							<SolidColorBrush Color="#FF12EF48">
-								<SolidColorBrush.RelativeTransform>
-									<MatrixTransform Matrix="Identity" />
-								</SolidColorBrush.RelativeTransform>
-								<SolidColorBrush.Transform>
-									<MatrixTransform Matrix="Identity" />
-								</SolidColorBrush.Transform>
-							</SolidColorBrush>
-						</Run.Foreground>
-					</Run>
-					<Run Text="T">
-						<Run.Foreground>
-							<SolidColorBrush Color="#FFF92D0D">
-								<SolidColorBrush.RelativeTransform>
-									<MatrixTransform Matrix="Identity" />
-								</SolidColorBrush.RelativeTransform>
-								<SolidColorBrush.Transform>
-									<MatrixTransform Matrix="Identity" />
-								</SolidColorBrush.Transform>
-							</SolidColorBrush>
-						</Run.Foreground>
-					</Run>
-					<Run Text="R">
-						<Run.Foreground>
-							<SolidColorBrush Color="#FFE2F90D">
-								<SolidColorBrush.RelativeTransform>
-									<MatrixTransform Matrix="Identity" />
-								</SolidColorBrush.RelativeTransform>
-								<SolidColorBrush.Transform>
-									<MatrixTransform Matrix="Identity" />
-								</SolidColorBrush.Transform>
-							</SolidColorBrush>
-						</Run.Foreground>
-					</Run>
-					<Run Text="I">
-						<Run.Foreground>
-							<LinearGradientBrush ColorInterpolationMode="SRgbLinearInterpolation"
-								EndPoint="0.5,1" MappingMode="RelativeToBoundingBox"
-								SpreadMethod="Pad" StartPoint="0.5,0">
-								<LinearGradientBrush.RelativeTransform>
-									<MatrixTransform Matrix="Identity" />
-								</LinearGradientBrush.RelativeTransform>
-								<LinearGradientBrush.Transform>
-									<MatrixTransform Matrix="Identity" />
-								</LinearGradientBrush.Transform>
-								<GradientStop Color="Black" Offset="0" />
-								<GradientStop Color="#FF1B1919" Offset="1" />
-							</LinearGradientBrush>
-						</Run.Foreground>
-					</Run>
-					<Run Text="S">
-						<Run.Foreground>
-							<SolidColorBrush Color="#FFDF4EEF">
-								<SolidColorBrush.RelativeTransform>
-									<MatrixTransform Matrix="Identity" />
-								</SolidColorBrush.RelativeTransform>
-								<SolidColorBrush.Transform>
-									<MatrixTransform Matrix="Identity" />
-								</SolidColorBrush.Transform>
-							</SolidColorBrush>
-						</Run.Foreground>
-					</Run>
+                <TextBlock Margin="0" TextWrapping="Wrap" FontSize="96" FontFamily="Buxton Sketch" Height="100" Width="285" TextAlignment="Center"><TextBlock.Foreground>
+				    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					    <GradientStop Color="Black" Offset="0"/>
+					    <GradientStop Color="White" Offset="1"/>
+				    </LinearGradientBrush>
+			        </TextBlock.Foreground><Run Text="T">
+				        <Run.Foreground>
+					        <SolidColorBrush Color="#FF1616F3">
+						        <SolidColorBrush.RelativeTransform>
+							        <MatrixTransform Matrix="Identity"/>
+						        </SolidColorBrush.RelativeTransform>
+						        <SolidColorBrush.Transform>
+							        <MatrixTransform Matrix="Identity"/>
+						        </SolidColorBrush.Transform>
+					        </SolidColorBrush>
+				        </Run.Foreground>
+			        </Run><Run Text="E">
+				        <Run.Foreground>
+					        <SolidColorBrush Color="#FF12EF48">
+						        <SolidColorBrush.RelativeTransform>
+							        <MatrixTransform Matrix="Identity"/>
+						        </SolidColorBrush.RelativeTransform>
+						        <SolidColorBrush.Transform>
+							        <MatrixTransform Matrix="Identity"/>
+						        </SolidColorBrush.Transform>
+					        </SolidColorBrush>
+				        </Run.Foreground>
+			        </Run><Run Text="T">
+				        <Run.Foreground>
+					        <SolidColorBrush Color="#FFF92D0D">
+						        <SolidColorBrush.RelativeTransform>
+							        <MatrixTransform Matrix="Identity"/>
+						        </SolidColorBrush.RelativeTransform>
+						        <SolidColorBrush.Transform>
+							        <MatrixTransform Matrix="Identity"/>
+						        </SolidColorBrush.Transform>
+					        </SolidColorBrush>
+				        </Run.Foreground>
+			        </Run><Run Text="R">
+				        <Run.Foreground>
+					        <SolidColorBrush Color="#FFE2F90D">
+						        <SolidColorBrush.RelativeTransform>
+							        <MatrixTransform Matrix="Identity"/>
+						        </SolidColorBrush.RelativeTransform>
+						        <SolidColorBrush.Transform>
+							        <MatrixTransform Matrix="Identity"/>
+						        </SolidColorBrush.Transform>
+					        </SolidColorBrush>
+				        </Run.Foreground>
+			        </Run><Run Text="I">
+				        <Run.Foreground>
+					        <LinearGradientBrush ColorInterpolationMode="SRgbLinearInterpolation" EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad" StartPoint="0.5,0">
+						        <LinearGradientBrush.RelativeTransform>
+							        <MatrixTransform Matrix="Identity"/>
+						        </LinearGradientBrush.RelativeTransform>
+						        <LinearGradientBrush.Transform>
+							        <MatrixTransform Matrix="Identity"/>
+						        </LinearGradientBrush.Transform>
+						        <GradientStop Color="Black" Offset="0"/>
+						        <GradientStop Color="#FF1B1919" Offset="1"/>
+					        </LinearGradientBrush>
+				        </Run.Foreground>
+			        </Run><Run Text="S">
+				        <Run.Foreground>
+					        <SolidColorBrush Color="#FFDF4EEF">
+						        <SolidColorBrush.RelativeTransform>
+							        <MatrixTransform Matrix="Identity"/>
+						        </SolidColorBrush.RelativeTransform>
+						        <SolidColorBrush.Transform>
+							        <MatrixTransform Matrix="Identity"/>
+						        </SolidColorBrush.Transform>
+					        </SolidColorBrush>
+				        </Run.Foreground>
+			        </Run>
                 </TextBlock>
             </Grid>
         </Border>

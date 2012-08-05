@@ -127,7 +127,7 @@ namespace TetrisHTW
                 }
                 else if (e.Key == Key.S && mod == 2)
                 {
-                    handleSpecailMode();
+                    handleSpecialMode();
                 }
                 else 
                 {
@@ -219,36 +219,39 @@ namespace TetrisHTW
             GameStart();
         }
 
-        private void handleSpecailMode()
+        private void handleSpecialMode()
         {
-            if (boardModel.getMemoryFigure() == null)
-            {
-                Figure current = boardModel.getCurrentFigure();
-                boardModel.setMemoryFigure(current);
-                boardModel.clearPoints(current.getPoints());
-                boardModel.getMemoryFigure().setInitPoints();          
+            lock (App.myLock) {
+                if (boardModel.getMemoryFigure() == null)
+                {
+                    Figure current = boardModel.getCurrentFigure();
+                    boardModel.setMemoryFigure(current);
+                    current.removeFromBoard();
+                    current.setInitPoints();         
+                    
+                    
+                    Figure preview = boardModel.generateRandomFigure();
+                    current = boardModel.generateRandomFigure();
 
-                Figure preview = boardModel.generateRandomFigure();
-                current = boardModel.generateRandomFigure();
+                    boardModel.setCurrentFigure(current);
+                    boardModel.setPreviewFigure(preview);
 
-                boardModel.setCurrentFigure(current);
-                boardModel.setPreviewFigure(preview);
+                    boardModel.getCurrentFigure().newOnBoard();
+                }
+                else
+                {
+                    Figure memory = boardModel.getMemoryFigure();
+                    Figure current = boardModel.getCurrentFigure();
 
-                boardModel.getCurrentFigure().newOnBoard();
-            }
-            else
-            {
-                Figure memory = boardModel.getMemoryFigure();
-                Figure current = boardModel.getCurrentFigure();
+                    boardModel.setMemoryFigure(current);
+                    current.removeFromBoard();
+                    current.setInitPoints();
 
-                boardModel.setMemoryFigure(current);
-                boardModel.clearPoints(current.getPoints());
-                boardModel.getMemoryFigure().setInitPoints();
+                    boardModel.setCurrentFigure(memory);
+                    boardModel.getCurrentFigure().newOnBoard();
+                    boardModel.addScore(-5);
 
-                boardModel.setCurrentFigure(memory);
-                boardModel.getCurrentFigure().setInitPoints();
-                boardModel.getCurrentFigure().newOnBoard();
-                boardModel.addScore(-5); 
+                }
             }
         }
 
@@ -366,6 +369,7 @@ namespace TetrisHTW
                         Rectangle rect = (Rectangle)frameWorkElement;
                         rect.Fill = new SolidColorBrush(Colors.Transparent);
                     }
+
                     Color currentPreviewFigureColor = boardModel.getPreviewFigure().getColor();
                     foreach (Rectangle rect in previewRectangles)
                     {
@@ -386,7 +390,7 @@ namespace TetrisHTW
                         Color currentMemoryFigureColor = boardModel.getMemoryFigure().getColor();
                         foreach (Rectangle rect in memoryRectangles)
                         {
-                            rect.Fill = getBrushByColor(currentPreviewFigureColor);
+                            rect.Fill = getBrushByColor(currentMemoryFigureColor);
                         }
                     }
                 }

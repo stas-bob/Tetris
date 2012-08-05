@@ -19,7 +19,7 @@ namespace TetrisHTW.Figures
         protected DefaultBoardModel board;
         protected Color color;
         protected Point[] points = new Point[4];
-        private Point[] fallenPoints = new Point[4];
+        private Point[] ghostPoints = new Point[4];
         protected int rotateState;
 
 
@@ -196,9 +196,9 @@ namespace TetrisHTW.Figures
                     newPoints[i] = new Point(points[i].X - 1, points[i].Y);
                 }
                 board.clearPoints(points);
-                if (this.fallenPoints != null)
+                if (this.ghostPoints != null)
                 {
-                    board.clearPoints(this.fallenPoints);
+                    board.clearPoints(this.ghostPoints);
                 }
                 
                 bool doFit = doPointsFit(newPoints);
@@ -207,7 +207,7 @@ namespace TetrisHTW.Figures
                     points = newPoints;
                 }
                 Point[] fallenPoints = simulatedFall();
-                this.fallenPoints = fallenPoints;
+                this.ghostPoints = fallenPoints;
                 board.writeCell(points, fallenPoints, color, board.getFallenPreviewColor());
                 return doFit;
             }
@@ -219,9 +219,9 @@ namespace TetrisHTW.Figures
             lock (App.myLock)
             {
                 board.clearPoints(points);
-                if (this.fallenPoints != null)
+                if (this.ghostPoints != null)
                 {
-                    board.clearPoints(this.fallenPoints);
+                    board.clearPoints(this.ghostPoints);
                 }
                 Point[] newPoints = new Point[4];
                 for (int i = 0; i < points.Length; i++)
@@ -235,7 +235,7 @@ namespace TetrisHTW.Figures
                     points = newPoints;
                 }
                 Point[] fallenPoints = simulatedFall();
-                this.fallenPoints = fallenPoints;
+                this.ghostPoints = fallenPoints;
                 board.writeCell(points, fallenPoints, color, board.getFallenPreviewColor());
                 return doFit;
             }
@@ -246,13 +246,13 @@ namespace TetrisHTW.Figures
         {
             lock (App.myLock)
             {
-                if (this.fallenPoints != null)
+                if (this.ghostPoints != null)
                 {
-                    board.clearPoints(this.fallenPoints);
+                    board.clearPoints(this.ghostPoints);
                 }
                 bool fitsOnBoard = doPointsFit(points);
                 Point[] fallenPoints = simulatedFall();
-                this.fallenPoints = fallenPoints;
+                this.ghostPoints = fallenPoints;
                 board.writeCell(points, fallenPoints, color, board.getFallenPreviewColor());
                 if (!fitsOnBoard)
                 {
@@ -270,16 +270,16 @@ namespace TetrisHTW.Figures
             //Wegen Fallthread
             lock (App.myLock)
             {
-                if (this.fallenPoints != null)
+                if (this.ghostPoints != null)
                 {
-                    board.clearPoints(this.fallenPoints);
+                    board.clearPoints(this.ghostPoints);
                 }
                 board.clearPoints(points);
 
                 doRotate();
                 
                 Point[] fallenPoints = simulatedFall();
-                this.fallenPoints = fallenPoints;
+                this.ghostPoints = fallenPoints;
                 board.writeCell(points, fallenPoints, color, board.getFallenPreviewColor());
             }
         }
@@ -291,46 +291,28 @@ namespace TetrisHTW.Figures
 
         public abstract string toString();
 
+        public abstract void setInitPoints();
+ 
+
         public Point[] getPoints()
         {
             return points;
         }
 
-        public void setInitPoints()
-        {
-            if (this is I) 
-            {
-                (this as I).setInitPoints(board);
-            }
-            else if (this is J)
-            {
-                (this as J).setInitPoints(board);
-            }
-            else if (this is L)
-            {
-                (this as L).setInitPoints(board);
-            }
-            else if (this is O)
-            {
-                (this as O).setInitPoints(board);
-            }
-            else if (this is S)
-            {
-                (this as S).setInitPoints(board);
-            }
-            else if (this is T)
-            {
-                (this as T).setInitPoints(board);
-            }
-            else
-            {
-                (this as Z).setInitPoints(board);
-            }
-        }
 
         public Color getColor()
         {
             return color;
+        }
+
+        internal void removeFromBoard()
+        {
+            if (this.ghostPoints != null)
+            {
+                board.clearPoints(this.ghostPoints);
+                board.clearPoints(points);
+            }
+
         }
     }
 }
