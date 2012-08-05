@@ -885,7 +885,7 @@ namespace TetrisHTW
             {
                 time += t;
             }
-            sqlClient.writeScore(SQLClientError, playerName, boardModel.getScore(), boardModel.getLevel(), new DateTime(time).ToLongTimeString(), mod);
+            sqlClient.writeScore(SQLClientError, playerName, boardModel.getScore(), boardModel.getLevel(), time, mod);
         }
 
         private void ExitGame()

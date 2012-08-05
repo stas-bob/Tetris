@@ -35,8 +35,9 @@ namespace TetrisHTW.Util
             this.proxy = proxy;
         }
 
-        public void writeScore(ErrorCallback ecb, string playerName, int score, int level, string time, int mode)
+        public void writeScore(ErrorCallback ecb, string playerName, int score, int level, long time, int mode)
         {
+            time /= 10000;
             this.ecb = ecb;
             XDocument doc = new XDocument(
                 new XElement("scoreentry",
@@ -166,9 +167,9 @@ namespace TetrisHTW.Util
                 List<int> ranks = new List<int>();
                 try
                 {
-                    XElement root = XElement.Parse(e.Result);
+                    XElement scoreentries = XElement.Parse(e.Result);
 
-                    foreach (XElement scoreentry in root.Nodes())
+                    foreach (XElement scoreentry in scoreentries.Nodes())
                     {
                         string playerName = (string)scoreentry.Element("playername");
                         int level = int.Parse((string)scoreentry.Element("level"));
@@ -208,13 +209,14 @@ namespace TetrisHTW.Util
             {
                 try
                 {
-                    XElement root = XElement.Parse(e.Result);
+                    XElement scoreentries = XElement.Parse(e.Result);
 
-                    foreach (XElement scoreentry in root.Nodes())
+                    foreach (XElement scoreentry in scoreentries.Nodes())
                     {
                         int rank = int.Parse((string)scoreentry.Element("rank"));
 
                         cbe(rank);
+                        break; //ein entry reicht.
                     }
                 }
                 catch (Exception exc)
