@@ -310,9 +310,11 @@ namespace TetrisHTW.Figures
             if (this.ghostPoints != null)
             {
                 board.clearPoints(this.ghostPoints);
-                board.clearPoints(points);
+                this.ghostPoints = null;
+               
             }
-
+            board.clearPoints(points);
+            Debug.WriteLine("removing " + toString());
         }
     }
 }

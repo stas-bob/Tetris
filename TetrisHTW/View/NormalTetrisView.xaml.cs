@@ -225,9 +225,10 @@ namespace TetrisHTW
                 if (boardModel.getMemoryFigure() == null)
                 {
                     Figure current = boardModel.getCurrentFigure();
-                    boardModel.setMemoryFigure(current);
                     current.removeFromBoard();
-                    current.setInitPoints();         
+                    current.setInitPoints(); 
+                    boardModel.setMemoryFigure(current);
+                            
                     
                     
                     Figure preview = boardModel.generateRandomFigure();
@@ -243,9 +244,11 @@ namespace TetrisHTW
                     Figure memory = boardModel.getMemoryFigure();
                     Figure current = boardModel.getCurrentFigure();
 
-                    boardModel.setMemoryFigure(current);
                     current.removeFromBoard();
                     current.setInitPoints();
+                    boardModel.setMemoryFigure(current);
+                    
+                    
 
                     boardModel.setCurrentFigure(memory);
                     boardModel.getCurrentFigure().newOnBoard();

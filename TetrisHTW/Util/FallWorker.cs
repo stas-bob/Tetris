@@ -47,7 +47,7 @@ namespace TetrisHTW
                     case 8: Thread.Sleep(200); break;
                     case 9: Thread.Sleep(160); break;
                 }
-
+                
                 lock (App.myLock)
                 {
                     if (shouldStop)
@@ -55,7 +55,7 @@ namespace TetrisHTW
                         break;
                     }
                     if (App.DEBUG)
-                        Debug.WriteLine("fall()");
+                        Debug.WriteLine("fall()" + " current = " + App.getInstance().getBoardModel().getCurrentFigure() + " preview = " + App.getInstance().getBoardModel().getPreviewFigure() + " memory = " + App.getInstance().getBoardModel().getMemoryFigure());
                     App.getInstance().getBoardModel().getCurrentFigure().fall();
                 }
 
