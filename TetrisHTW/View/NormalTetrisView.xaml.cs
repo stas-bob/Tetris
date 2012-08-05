@@ -885,7 +885,7 @@ namespace TetrisHTW
             {
                 time += t;
             }
-            sqlClient.writeScore(SQLClientError, playerName, boardModel.getScore(), boardModel.getLevel(), time, mod);
+            sqlClient.writeScore(SQLClientError, playerName, boardModel.getScore(), boardModel.getLevel(), new DateTime(time).ToLongTimeString(), mod);
         }
 
         private void ExitGame()
@@ -952,7 +952,13 @@ namespace TetrisHTW
         private void ScoreButton_Click(object sender, RoutedEventArgs e)
         {
             ExitGame();
-            iv.getHighScoreView().update(boardModel.getScore(), mod);
+            ScoresData sd = new ScoresData();
+            sd.level = boardModel.getLevel();
+            sd.mode = mod;
+            sd.playerName = playerName;
+            sd.score = boardModel.getScore();
+            sd.time = new DateTime(time).ToLongTimeString();
+            iv.getHighScoreView().update(sd);
             iv.rootContainer.Child = iv.getHighScoreView();
         }
 

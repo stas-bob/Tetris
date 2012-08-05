@@ -19,7 +19,7 @@ namespace TetrisHTW.View
     {
         private SQLClient sqlClient = new SQLClient("http://stl-l-18.htw-saarland.de:8080/TetrisSQLProxy/SQLProxyServlet");
         private IndexView iv;
-        private bool gameOver;
+        private ScoresData tmpScoresData;
 
         public HighScoresView(IndexView iv)
         {
@@ -28,16 +28,16 @@ namespace TetrisHTW.View
             InitializeComponent();
         }
 
-        public void update(int score, int mode)
+        public void update(ScoresData scoresData)
         {
-            gameOver = true;
-            switch (mode)
+            tmpScoresData = scoresData;
+            switch (scoresData.mode)
             {
                 case 1: normalModeRadioButton.IsChecked = true; break;
                 case 2: spezialModeRadioButton.IsChecked = true; break;
                 case 3: kretschmerModeRadioButton.IsChecked = true; break;
             }
-            sqlClient.requestScoreEntry(callbackEntry, error, score, mode);
+            sqlClient.requestScoreEntry(callbackEntry, error, scoresData.score, scoresData.mode);
         }
 
         public void update(int mode)
@@ -50,11 +50,11 @@ namespace TetrisHTW.View
             }
         }
 
-        public void callbackEntry(string playerName, int level, int score, string time, int mode, int rank)
+        public void callbackEntry(int rank)
         {
             Dispatcher.BeginInvoke(() =>
             {
-                ownScoreBlock.Text = "dein ergebnis: rank: " + rank + " score: " + score + " level " + level + " time " + time + " mode " + mode;
+                ownScoreBlock.Text = "dein ergebnis: rank: " + rank + " score: " + tmpScoresData.score + " level " + tmpScoresData.level + " time " + tmpScoresData.time + " mode " + tmpScoresData.mode;
             });
         }
 
@@ -99,7 +99,7 @@ namespace TetrisHTW.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            gameOver = false;
+            tmpScoresData = null;
             normalModeRadioButton.IsChecked = false;
             spezialModeRadioButton.IsChecked = false;
             kretschmerModeRadioButton.IsChecked = false;
@@ -108,7 +108,7 @@ namespace TetrisHTW.View
 
         private void spezialModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (gameOver)
+            if (tmpScoresData != null)
             {
                 sqlClient.requestScores(callback, error, 5, 2);
             }
@@ -120,7 +120,7 @@ namespace TetrisHTW.View
 
         private void normalModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (gameOver)
+            if (tmpScoresData != null)
             {
                 sqlClient.requestScores(callback, error, 5, 1);
             }
@@ -132,7 +132,7 @@ namespace TetrisHTW.View
 
         private void kretschmerModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (gameOver)
+            if (tmpScoresData != null)
             {
                 sqlClient.requestScores(callback, error, 5, 3);
             }

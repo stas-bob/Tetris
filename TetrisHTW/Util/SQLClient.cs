@@ -22,7 +22,7 @@ namespace TetrisHTW.Util
         private string postData;
         private Random rnd = new Random();
         public delegate void SuccessCallback(System.Collections.Generic.List<string> playerNames, System.Collections.Generic.List<int> levels, System.Collections.Generic.List<int> scores, System.Collections.Generic.List<string> times, System.Collections.Generic.List<int> modes, System.Collections.Generic.List<int> ranks);
-        public delegate void SuccessCallbackEntry(string playerName, int level, int score,string time, int mode, int rank);
+        public delegate void SuccessCallbackEntry(int rank);
         public delegate void ErrorCallback(string msg);
 
 
@@ -35,10 +35,9 @@ namespace TetrisHTW.Util
             this.proxy = proxy;
         }
 
-        public void writeScore(ErrorCallback ecb, string playerName, int score, int level, long time, int mode)
+        public void writeScore(ErrorCallback ecb, string playerName, int score, int level, string time, int mode)
         {
             this.ecb = ecb;
-            time /= 10000;
             XDocument doc = new XDocument(
                 new XElement("scoreentry",
                     new XElement("playername", playerName),
@@ -213,14 +212,9 @@ namespace TetrisHTW.Util
 
                     foreach (XElement scoreentry in root.Nodes())
                     {
-                        string playerName = (string)scoreentry.Element("playername");
-                        int level = int.Parse((string)scoreentry.Element("level"));
-                        int score = int.Parse((string)scoreentry.Element("score"));
-                        string time = (string)scoreentry.Element("time");
-                        int mode = int.Parse((string)scoreentry.Element("mode"));
                         int rank = int.Parse((string)scoreentry.Element("rank"));
 
-                        cbe(playerName, level, score, time, mode, rank);
+                        cbe(rank);
                     }
                 }
                 catch (Exception exc)
