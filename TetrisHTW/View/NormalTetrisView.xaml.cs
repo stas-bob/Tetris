@@ -892,6 +892,7 @@ namespace TetrisHTW
             {
                 time += t;
             }
+            time /= 2;
             sqlClient.writeScore(SQLClientError, playerName, boardModel.getScore(), boardModel.getLevel(), time, mod);
         }
 

@@ -91,9 +91,7 @@ namespace TetrisHTW.View
         {
             Dispatcher.BeginInvoke(() =>
             {
-                TextBlock tb = new TextBlock();
-                tb.Text = msg;
-                LayoutRoot.Children.Add(tb);
+                errorBlock.Text = msg;
             });
         }
 
@@ -103,6 +101,8 @@ namespace TetrisHTW.View
             normalModeRadioButton.IsChecked = false;
             spezialModeRadioButton.IsChecked = false;
             kretschmerModeRadioButton.IsChecked = false;
+            errorBlock.Text = "";
+            ownScoreBlock.Text = "";
             iv.rootContainer.Child = iv.LayoutRoot;
         }
 
@@ -110,7 +110,7 @@ namespace TetrisHTW.View
         {
             if (tmpScoresData != null)
             {
-                sqlClient.requestScores(callback, error, 5, 2);
+                sqlClient.requestScores(callback, error, 10, 2);
             }
             else
             {
@@ -122,7 +122,7 @@ namespace TetrisHTW.View
         {
             if (tmpScoresData != null)
             {
-                sqlClient.requestScores(callback, error, 5, 1);
+                sqlClient.requestScores(callback, error, 10, 1);
             }
             else
             {
@@ -134,7 +134,7 @@ namespace TetrisHTW.View
         {
             if (tmpScoresData != null)
             {
-                sqlClient.requestScores(callback, error, 5, 3);
+                sqlClient.requestScores(callback, error, 10, 3);
             }
             else
             {
