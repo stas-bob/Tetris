@@ -157,7 +157,7 @@
 					</Run>
                 </TextBlock>
 
-                <TextBlock Text="Modus:" FontSize="18" FontFamily="Comic Sans MS" />
+                <TextBlock Text="Modus:" FontSize="14" FontFamily="Comic Sans MS" FontWeight="Bold" />
                 <Grid HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
@@ -192,7 +192,7 @@
 						Text="Kretschmer" FontFamily="Comic Sans MS" FontSize="12" />
                 </Grid>
 
-                <TextBlock Text="Level:" FontSize="14" FontFamily="Comic Sans MS" />
+                <TextBlock Text="Level:" FontSize="14" FontFamily="Comic Sans MS" FontWeight="Bold"/>
                 <Grid HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
@@ -248,11 +248,11 @@
 						Click="ToggleButton_Click" />
                 </Grid>
 
-                <TextBlock Text="Anleitung:" FontSize="14" FontFamily="Comic Sans MS"
+                <TextBlock Text="Anleitung:" FontSize="14" FontFamily="Comic Sans MS" FontWeight="Bold"
 					Margin="0,5,0,0" />
-                <TextBlock Name="anleitung" FontSize="14" FontFamily="Comic Sans MS"
+                <TextBlock Name="anleitung" FontSize="12" FontFamily="Comic Sans MS"
 					Margin="0,5,0,0" TextWrapping="Wrap" />
-                <TextBlock Text="Steuerung:" FontSize="14" FontFamily="Comic Sans MS"
+                <TextBlock Text="Steuerung:" FontSize="14" FontFamily="Comic Sans MS" FontWeight="Bold"
 					Margin="0,5,0,0" />
                 <Grid>
                     <Grid.RowDefinitions>
@@ -284,9 +284,9 @@
 						Visibility="Collapsed" TextWrapping="Wrap" />
                 </Grid>
 
-                <TextBlock Text="Spielername:" FontSize="14" FontFamily="Comic Sans MS"
+                <TextBlock Text="Spielername:" FontSize="14" FontFamily="Comic Sans MS" FontWeight="Bold"
 					Margin="0,5,0,0" />
-                <TextBox Name="playerNameTextBox" Margin="0,0,0,5" />
+                <TextBox Name="playerNameTextBox" Margin="0,0,0,5"/>
 
                 <Grid HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
