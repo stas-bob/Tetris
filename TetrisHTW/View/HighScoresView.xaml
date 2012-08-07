@@ -7,7 +7,7 @@
 	d:DesignWidth="640" d:DesignHeight="480"
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     <StackPanel x:Name="LayoutRoot">
-        <Grid HorizontalAlignment="Center" Margin="20">
+        <Grid HorizontalAlignment="Center" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25" />
             </Grid.RowDefinitions>
@@ -65,9 +65,11 @@
                 
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
-        <TextBlock Name="ownScoreBlock" HorizontalAlignment="Center"/>
-        <TextBlock Name="errorBlock" HorizontalAlignment="Center"/>
-        <Button Content="Zurück" Style="{StaticResource ButtonStyle1}"
-			Click="Button_Click" Margin="10" />
+        <TextBlock Name="ownScoreBlock" HorizontalAlignment="Center" MaxHeight="30"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="70">
+            <TextBlock Name="errorBlock" HorizontalAlignment="Center"/>
+        </ScrollViewer>
+        <Button Content="Zurück" Style="{StaticResource ButtonStyle1}" Height="50"
+			Click="Button_Click" Margin="5" />
     </StackPanel>
 </UserControl>
