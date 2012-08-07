@@ -155,7 +155,7 @@
                 <Button Grid.Column="0" Grid.Row="3" Content="Über" Height="75"
 					Style="{StaticResource ButtonStyle1}" Width="150" Foreground="White"
 					FontSize="24" FontWeight="Bold" Click="Ueber_Click" />
-                <TextBlock Margin="0" TextWrapping="Wrap" FontSize="96" FontFamily="Buxton Sketch" Height="100" Width="285" TextAlignment="Center"><TextBlock.Foreground>
+                <TextBlock Margin="0" TextWrapping="Wrap" FontSize="66" FontFamily="Comic Sans MS" Height="100" Width="285" TextAlignment="Center"><TextBlock.Foreground>
 				    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 					    <GradientStop Color="Black" Offset="0"/>
 					    <GradientStop Color="White" Offset="1"/>

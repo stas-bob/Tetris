@@ -8,7 +8,7 @@
         <Grid x:Name="LayoutRoot">
             <StackPanel>
                 <TextBlock Height="50" TextWrapping="Wrap"
-					VerticalAlignment="Top" FontSize="40" FontFamily="Buxton Sketch"
+					VerticalAlignment="Top" FontSize="30" FontFamily="Comic Sans MS"
 					TextAlignment="Center">
 					<Run Text="S">
 						<Run.Foreground>
@@ -157,45 +157,42 @@
 					</Run>
                 </TextBlock>
 
-                <TextBlock Text="Modus:" FontSize="18" FontFamily="Buxton Sketch" />
+                <TextBlock Text="Modus:" FontSize="18" FontFamily="Comic Sans MS" />
                 <Grid HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="35" />
-                        <ColumnDefinition Width="25" />
                         <ColumnDefinition Width="85" />
                         <ColumnDefinition Width="25" />
                         <ColumnDefinition Width="85" />
                         <ColumnDefinition Width="25" />
                         <ColumnDefinition Width="85" />
-                        <ColumnDefinition Width="35" />
                     </Grid.ColumnDefinitions>
                     <RadioButton Name="normalModeRadioButton" Click="RadioButton_Click"
 						HorizontalAlignment="Center" Height="25"
 						Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top"
 						Width="25" GroupName="mode" IsChecked="True" />
-                    <TextBlock Grid.Column="2" HorizontalAlignment="Left"
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Left"
 						VerticalAlignment="Center" Margin="5,0,0,0" TextWrapping="Wrap"
-						Text="Normal" FontFamily="Buxton Sketch" FontSize="14" />
+						Text="Normal" FontFamily="Comic Sans MS" FontSize="12"/>
                     <RadioButton Name="spezialModeRadioButton" Click="RadioButton_Click"
-						Grid.Column="3" HorizontalAlignment="Center" Height="25"
+						Grid.Column="2" HorizontalAlignment="Center" Height="25"
 						Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top"
 						Width="25" GroupName="mode" IsChecked="False" />
-                    <TextBlock Grid.Column="4" HorizontalAlignment="Left"
-						VerticalAlignment="Center" Margin="5,0,0,0" TextWrapping="Wrap"
-						Text="Spezial" FontFamily="Buxton Sketch" FontSize="14" />
+                    <TextBlock Grid.Column="3" VerticalAlignment="Center" Margin="5,0,32,0" TextWrapping="Wrap"
+						Text="Spezial" FontFamily="Comic Sans MS" FontSize="12" />
                     <RadioButton Name="kretschmerModeRadioButton" Click="RadioButton_Click"
-						Grid.Column="5" HorizontalAlignment="Center" Height="25"
+						Grid.Column="4" HorizontalAlignment="Center" Height="25"
 						Style="{StaticResource RadioButtonStyle1}" VerticalAlignment="Top"
 						Width="25" GroupName="mode" IsChecked="False" />
-                    <TextBlock Grid.Column="6" HorizontalAlignment="Left"
+                    <TextBlock Grid.Column="5" HorizontalAlignment="Left"
 						VerticalAlignment="Center" Margin="5,0,0,0" TextWrapping="Wrap"
-						Text="Kretschmer" FontFamily="Buxton Sketch" FontSize="14" />
+						Text="Kretschmer" FontFamily="Comic Sans MS" FontSize="12" />
                 </Grid>
 
-                <TextBlock Text="Level:" FontSize="18" FontFamily="Buxton Sketch" />
+                <TextBlock Text="Level:" FontSize="14" FontFamily="Comic Sans MS" />
                 <Grid HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
@@ -251,11 +248,11 @@
 						Click="ToggleButton_Click" />
                 </Grid>
 
-                <TextBlock Text="Anleitung:" FontSize="18" FontFamily="Buxton Sketch"
+                <TextBlock Text="Anleitung:" FontSize="14" FontFamily="Comic Sans MS"
 					Margin="0,5,0,0" />
-                <TextBlock Name="anleitung" FontSize="14" FontFamily="Buxton Sketch"
+                <TextBlock Name="anleitung" FontSize="14" FontFamily="Comic Sans MS"
 					Margin="0,5,0,0" TextWrapping="Wrap" />
-                <TextBlock Text="Steuerung:" FontSize="18" FontFamily="Buxton Sketch"
+                <TextBlock Text="Steuerung:" FontSize="14" FontFamily="Comic Sans MS"
 					Margin="0,5,0,0" />
                 <Grid>
                     <Grid.RowDefinitions>
@@ -268,28 +265,28 @@
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0"
-						Text="Pfeiltaste links: Stein nach links bewegen" FontSize="14"
-						FontFamily="Buxton Sketch" TextWrapping="Wrap" />
+						Text="Pfeiltaste links: Stein nach links bewegen" FontSize="12"
+						FontFamily="Comic Sans MS" TextWrapping="Wrap" />
                     <TextBlock Grid.Column="1" Grid.Row="0"
-						Text="Pfeiltaste rechts: Stein nach rechts bewegen" FontSize="14"
-						FontFamily="Buxton Sketch" TextWrapping="Wrap" />
+						Text="Pfeiltaste rechts: Stein nach rechts bewegen" FontSize="12"
+						FontFamily="Comic Sans MS" TextWrapping="Wrap" />
                     <TextBlock Grid.Column="0" Grid.Row="1"
-						Text="Pfeiltaste oben: Stein drehen" FontSize="14" FontFamily="Buxton Sketch"
+						Text="Pfeiltaste oben: Stein drehen" FontSize="14" FontFamily="Comic Sans MS"
 						TextWrapping="Wrap" />
                     <TextBlock Grid.Column="1" Grid.Row="1"
-						Text="Pfeiltaste unten: Stein nach unten bewegen" FontSize="14"
-						FontFamily="Buxton Sketch" TextWrapping="Wrap" />
+						Text="Pfeiltaste unten: Stein nach unten bewegen" FontSize="12"
+						FontFamily="Comic Sans MS" TextWrapping="Wrap" />
                     <TextBlock Grid.Column="0" Grid.Row="2"
-						Text="Leertaste: Stein fallen lassen" FontSize="14" FontFamily="Buxton Sketch"
+						Text="Leertaste: Stein fallen lassen" FontSize="12" FontFamily="Comic Sans MS"
 						TextWrapping="Wrap" />
                     <TextBlock Grid.Column="1" Grid.Row="2" Text="S: Stein speichern"
-						Name="memoryKey" FontSize="14" FontFamily="Buxton Sketch"
+						Name="memoryKey" FontSize="12" FontFamily="Comic Sans MS"
 						Visibility="Collapsed" TextWrapping="Wrap" />
                 </Grid>
 
-                <TextBlock Text="Spielername:" FontSize="18" FontFamily="Buxton Sketch"
+                <TextBlock Text="Spielername:" FontSize="14" FontFamily="Comic Sans MS"
 					Margin="0,5,0,0" />
-                <TextBox Name="playerNameTextBox" Margin="0,10,0,10" />
+                <TextBox Name="playerNameTextBox" Margin="0,0,0,5" />
 
                 <Grid HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
@@ -300,9 +297,9 @@
                         <ColumnDefinition Width="200" />
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Grid.Row="0" Content="Spielen"
-						Height="75" Style="{StaticResource ButtonStyle1}" Click="Spielen_Click" />
+						 Style="{StaticResource ButtonStyle1}" Click="Spielen_Click" />
                     <Button Grid.Column="1" Grid.Row="0" Content="Zurück"
-						Height="75" Style="{StaticResource ButtonStyle1}" Click="Zurueck_Click" />
+						 Style="{StaticResource ButtonStyle1}" Click="Zurueck_Click" />
                 </Grid>
             </StackPanel>
         </Grid>
