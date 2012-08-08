@@ -319,17 +319,7 @@ namespace TetrisHTW
                     {
                         if (mod == 3)
                         {
-                            int random = rnd.Next(2);
-                            if (random == 0)
-                            {
-                                animBoardRotate.To = 180 * (rnd.Next(7) + 3);
-                            }
-                            else
-                            {
-                                animBoardRotate.To = 90 * (rnd.Next(7) + 3);
-                            }
-
-
+                            animBoardRotate.To = animBoardRotate.To + 90;
                             boardRotateSB.Begin();
                         }
                         if (hardFall)
