@@ -26,7 +26,7 @@ namespace TetrisHTW.View
             this.iv = iv;        
 
             InitializeComponent();
-            update(1);
+            
         }
 
         /*highscores wenn man nach gameover auf scores drückt. hier wird noch der eigene score angezeigt*/

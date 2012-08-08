@@ -51,6 +51,8 @@ namespace TetrisHTW.View
 
         private void Highscore_Click(object sender, RoutedEventArgs e)
         {
+            hv = getHighScoreView();
+            hv.update(1);
             rootContainer.Child = getHighScoreView();
         }
 
