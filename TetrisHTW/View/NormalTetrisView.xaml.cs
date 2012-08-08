@@ -923,6 +923,11 @@ namespace TetrisHTW
                     fallWorker.RequestStop();
                     fallWorker.setLevel(0);
                 }
+                if (timer != null)
+                {
+                    timer.Dispose();
+                    timer = null;
+                }
                 keypressedTime = 0;
                 clearMemoryBoard();
                 timeList.Clear();
