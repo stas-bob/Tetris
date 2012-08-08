@@ -46,6 +46,7 @@ namespace TetrisHTW.Figures
         /*Punkte vor dem Fall = previousPoints*/
         private void FigureIsFallen(Point[] previousPoints)
         {
+            ghostPoints = null;
             board.writeCell(points, color);
             bool gameOver = false;
             /*Pruefen ob GameOver*/
@@ -246,10 +247,7 @@ namespace TetrisHTW.Figures
         {
             lock (App.myLock)
             {
-                if (this.ghostPoints != null)
-                {
-                    board.clearPoints(this.ghostPoints);
-                }
+                
                 bool fitsOnBoard = doPointsFit(points);
                 Point[] fallenPoints = simulatedFall();
                 this.ghostPoints = fallenPoints;

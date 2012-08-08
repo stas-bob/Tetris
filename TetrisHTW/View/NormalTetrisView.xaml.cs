@@ -371,15 +371,10 @@ namespace TetrisHTW
 
                     if (boardModel.getMemoryFigure() != null)
                     {
+                        
+                        clearMemoryBoard();
                         Util.Point[] memoryPoints = boardModel.getMemoryFigure().getPoints();
-
                         List<Rectangle> memoryRectangles = getMemoryBoardRectangles(memoryPoints);
-
-                        foreach (FrameworkElement frameWorkElement in memoryGrid.Children)
-                        {
-                            Rectangle rect = (Rectangle)frameWorkElement;
-                            rect.Fill = new SolidColorBrush(Colors.Transparent);
-                        }
                         Color currentMemoryFigureColor = boardModel.getMemoryFigure().getColor();
                         foreach (Rectangle rect in memoryRectangles)
                         {
@@ -388,6 +383,15 @@ namespace TetrisHTW
                     }
                 }
             });
+        }
+
+        private void clearMemoryBoard()
+        {
+            foreach (FrameworkElement frameWorkElement in memoryGrid.Children)
+            {
+                Rectangle rect = (Rectangle)frameWorkElement;
+                rect.Fill = new SolidColorBrush(Colors.Transparent);
+            }
         }
 
         private void animateRemovedLinesHard(List<int> removedLines)
@@ -895,6 +899,7 @@ namespace TetrisHTW
                     fallWorker.RequestStop();
                     fallWorker.setLevel(0);
                 }
+                clearMemoryBoard();
                 timeList.Clear();
                 time = 0;
                 gameOver = false;

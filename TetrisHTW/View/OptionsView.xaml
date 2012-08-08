@@ -206,46 +206,44 @@
                         <ColumnDefinition Width="50" />
                         <ColumnDefinition Width="50" />
                     </Grid.ColumnDefinitions>
-                    <ToggleButton Name="tb0" Grid.Column="0" Grid.Row="0"
-						Content="0" HorizontalAlignment="Center" Height="25"
-						Style="{StaticResource ToggleButtonStyle1}" Width="25" IsChecked="True"
-						Click="ToggleButton_Click" />
-                    <ToggleButton Name="tb1" Grid.Column="1" Grid.Row="0"
+                    <RadioButton Style="{StaticResource RadioButtonStyle2}" Name="tb0" Grid.Column="0" Grid.Row="0" Content="0" Height="25" Width="25" Click="ToggleButton_Click"
+                                 GroupName="level"/>
+                    <RadioButton Style="{StaticResource RadioButtonStyle2}" Name="tb1" Grid.Column="1" Grid.Row="0"
 						Content="1" HorizontalAlignment="Center" Height="25"
-						Style="{StaticResource ToggleButtonStyle1}" Width="25"
-						Click="ToggleButton_Click" />
-                    <ToggleButton Name="tb2" Grid.Column="2" Grid.Row="0"
+						 Width="25"
+						Click="ToggleButton_Click" GroupName="level"/>
+                    <RadioButton Style="{StaticResource RadioButtonStyle2}" Name="tb2" Grid.Column="2" Grid.Row="0"
 						Content="2" HorizontalAlignment="Center" Height="25"
-						Style="{StaticResource ToggleButtonStyle1}" Width="25"
-						Click="ToggleButton_Click" />
-                    <ToggleButton Name="tb3" Grid.Column="3" Grid.Row="0"
+						 Width="25"
+						Click="ToggleButton_Click" GroupName="level" />
+                    <RadioButton Style="{StaticResource RadioButtonStyle2}" Name="tb3" Grid.Column="3" Grid.Row="0"
 						Content="3" HorizontalAlignment="Center" Height="25"
-						Style="{StaticResource ToggleButtonStyle1}" Width="25"
-						Click="ToggleButton_Click" />
-                    <ToggleButton Name="tb4" Grid.Column="4" Grid.Row="0"
+						 Width="25"
+						Click="ToggleButton_Click"  GroupName="level"/>
+                    <RadioButton Style="{StaticResource RadioButtonStyle2}" Name="tb4" Grid.Column="4" Grid.Row="0"
 						Content="4" HorizontalAlignment="Center" Height="25"
-						Style="{StaticResource ToggleButtonStyle1}" Width="25"
-						Click="ToggleButton_Click" />
-                    <ToggleButton Name="tb5" Grid.Column="0" Grid.Row="2"
+						 Width="25"
+						Click="ToggleButton_Click" GroupName="level"/>
+                    <RadioButton Style="{StaticResource RadioButtonStyle2}" Name="tb5" Grid.Column="0" Grid.Row="2"
 						Content="5" HorizontalAlignment="Center" Height="25"
-						Style="{StaticResource ToggleButtonStyle1}" Width="25"
-						Click="ToggleButton_Click" />
-                    <ToggleButton Name="tb6" Grid.Column="1" Grid.Row="2"
+						 Width="25"
+						Click="ToggleButton_Click" GroupName="level"/>
+                    <RadioButton Style="{StaticResource RadioButtonStyle2}" Name="tb6" Grid.Column="1" Grid.Row="2"
 						Content="6" HorizontalAlignment="Center" Height="25"
-						Style="{StaticResource ToggleButtonStyle1}" Width="25"
-						Click="ToggleButton_Click" />
-                    <ToggleButton Name="tb7" Grid.Column="2" Grid.Row="2"
+						 Width="25"
+						Click="ToggleButton_Click" GroupName="level"/>
+                    <RadioButton Style="{StaticResource RadioButtonStyle2}" Name="tb7" Grid.Column="2" Grid.Row="2"
 						Content="7" HorizontalAlignment="Center" Height="25"
-						Style="{StaticResource ToggleButtonStyle1}" Width="25"
-						Click="ToggleButton_Click" />
-                    <ToggleButton Name="tb8" Grid.Column="3" Grid.Row="2"
+						 Width="25"
+						Click="ToggleButton_Click" GroupName="level"/>
+                    <RadioButton Style="{StaticResource RadioButtonStyle2}" Name="tb8" Grid.Column="3" Grid.Row="2"
 						Content="8" HorizontalAlignment="Center" Height="25"
-						Style="{StaticResource ToggleButtonStyle1}" Width="25"
-						Click="ToggleButton_Click" />
-                    <ToggleButton Name="tb9" Grid.Column="4" Grid.Row="2"
+						 Width="25"
+						Click="ToggleButton_Click" GroupName="level"/>
+                    <RadioButton Style="{StaticResource RadioButtonStyle2}" Name="tb9" Grid.Column="4" Grid.Row="2"
 						Content="9" HorizontalAlignment="Center" Height="25"
-						Style="{StaticResource ToggleButtonStyle1}" Width="25"
-						Click="ToggleButton_Click" />
+						 Width="25"
+						Click="ToggleButton_Click" GroupName="level"/>
                 </Grid>
 
                 <TextBlock Text="Anleitung:" FontSize="14" FontFamily="Comic Sans MS" FontWeight="Bold"

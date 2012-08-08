@@ -18,8 +18,7 @@ namespace TetrisHTW.View
         private Random rnd = new Random();
         private IndexView iv;
         private NormalTetrisView ntv;
-        //private SpecialTetrisView stv;
-        private int level = 0;
+        private int level;
 
         public OptionsView(IndexView iv)
         {
@@ -74,29 +73,19 @@ namespace TetrisHTW.View
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            tb0.IsChecked = false;
-            tb1.IsChecked = false;
-            tb2.IsChecked = false;
-            tb3.IsChecked = false;
-            tb4.IsChecked = false;
-            tb5.IsChecked = false;
-            tb6.IsChecked = false;
-            tb7.IsChecked = false;
-            tb8.IsChecked = false;
-            tb9.IsChecked = false;
 
             switch (((ToggleButton)sender).Name)
             {
-                case "tb0": tb0.IsChecked = true; level = 0; break;
-                case "tb1": tb1.IsChecked = true; level = 1; break;
-                case "tb2": tb2.IsChecked = true; level = 2; break;
-                case "tb3": tb3.IsChecked = true; level = 3; break;
-                case "tb4": tb4.IsChecked = true; level = 4; break;
-                case "tb5": tb5.IsChecked = true; level = 5; break;
-                case "tb6": tb6.IsChecked = true; level = 6; break;
-                case "tb7": tb7.IsChecked = true; level = 7; break;
-                case "tb8": tb8.IsChecked = true; level = 8; break;
-                case "tb9": tb9.IsChecked = true; level = 9; break; 
+                case "tb0": level = 0; break;
+                case "tb1": level = 1; break;
+                case "tb2": level = 2; break;
+                case "tb3": level = 3; break;
+                case "tb4": level = 4; break;
+                case "tb5": level = 5; break;
+                case "tb6": level = 6; break;
+                case "tb7": level = 7; break;
+                case "tb8": level = 8; break;
+                case "tb9": level = 9; break; 
             }
         }
 

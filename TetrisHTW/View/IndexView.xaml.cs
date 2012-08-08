@@ -25,6 +25,7 @@ namespace TetrisHTW.View
         {
             InitializeComponent();
 
+            /*hintergrundanim*/
             flyingAroundSB.Begin();
             rotatingSB.Begin();
         }
@@ -50,9 +51,7 @@ namespace TetrisHTW.View
 
         private void Highscore_Click(object sender, RoutedEventArgs e)
         {
-            getHighScoreView();
-            rootContainer.Child = hv;
-            hv.update(1);
+            rootContainer.Child = getHighScoreView();
         }
 
         private void Ueber_Click(object sender, RoutedEventArgs e)
@@ -64,6 +63,7 @@ namespace TetrisHTW.View
             rootContainer.Child = av;
         }
 
+        /*Zufällige Tos für Hintergrund*/
         void AnimCompleted(object sender, EventArgs e)
         {
             Point p = canvas.TransformToVisual(App.getInstance().RootVisual).Transform(new Point(0, 0));

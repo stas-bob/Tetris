@@ -14,6 +14,8 @@ using System.Collections.Generic;
 
 namespace TetrisHTW.Model
 {
+    /*im wesentlichen das ein 2d array aus farbwerten die figur manipuliert das 2d array. bei jeder manipulation bekommt die view eine kopie des bretts.
+     es muss eine kopie sein:da alle ui operationen innerhalb von dispatcher.beginInvoke sind, ist die ausführung asynchron. vor allem in der methode */
     public class DefaultBoardModel
     {
         private Random rnd = new Random();
@@ -76,6 +78,7 @@ namespace TetrisHTW.Model
 
         public void collapse(List<int> linesToRemove)
         {
+            /*es ist nicht immer der fall, dass die unterste zeile auch das erste element ist*/
             linesToRemove.Sort(delegate(int a, int b) {
                 return a.CompareTo(b);    
             });
@@ -302,11 +305,11 @@ namespace TetrisHTW.Model
             switch (random)
             {
                 case 0: figure = new I(this); break;
-                case 1: figure = new O(this); break;
+                case 1: figure = new J(this); break;
                 case 2: figure = new T(this); break;
-                case 3: figure = new Z(this); break;
+                case 3: figure = new O(this); break;
                 case 4: figure = new S(this); break;
-                case 5: figure = new J(this); break;
+                case 5: figure = new Z(this); break;
                 case 6: figure = new L(this); break;
             }
             return figure;

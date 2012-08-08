@@ -11,6 +11,8 @@ using System.Windows.Shapes;
 
 namespace TetrisHTW
 {
+    /*Der Fallworker und main thread(space, oben), Timer thread(links, rechts, runter)
+         * können gleichzeitig auf die Figurpunkte ändernd zugreifen. das wird mit dem lock unterbunden*/
     public class Lock
     {
 

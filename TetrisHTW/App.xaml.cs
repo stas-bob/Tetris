@@ -25,10 +25,11 @@ namespace TetrisHTW
     public partial class App : Application
     {
         
-
+        
         public static Lock myLock = new Lock();
         private DefaultBoardModel boardModel = new DefaultBoardModel();
         
+        /*auf app wird oft zugegrifen. aus gründen der einfachheit diese statische variable*/
         private static App instance;
 
         public event FigureFallenEventHandler FigureFallenEvent;

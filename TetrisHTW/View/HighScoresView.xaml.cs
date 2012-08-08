@@ -26,6 +26,7 @@ namespace TetrisHTW.View
             this.iv = iv;        
 
             InitializeComponent();
+            update(1);
         }
 
         public void update(ScoresData scoresData)

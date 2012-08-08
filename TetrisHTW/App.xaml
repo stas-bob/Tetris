@@ -35,11 +35,20 @@
                         <Grid>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal"/>
-                                    <VisualState x:Name="MouseOver"/>
+
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0:0:1" To="#FFE68AE6" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="rectangle" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0:0:1" To="LightCoral" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="rectangle" />
+                                        </Storyboard>
+                                    </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
-                                            <ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="rectangle"/>
+                                            <ColorAnimation Duration="0:0:1" To="Red" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="rectangle"/>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Disabled"/>
@@ -98,32 +107,21 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-
-        <Style x:Key="ToggleButtonStyle1" TargetType="ToggleButton">
+        
+        <Style x:Key="RadioButtonStyle2" TargetType="RadioButton">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ToggleButton">
+                    <ControlTemplate TargetType="RadioButton">
                         <Grid>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CheckStates">
                                     <VisualState x:Name="Checked">
                                         <Storyboard>
-                                            <ColorAnimation Duration="0" To="#FFFD1F09" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="rectangle" />
+                                            <ColorAnimation Duration="0:0:1" To="Red" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="rectangle" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Unchecked"/>
                                     <VisualState x:Name="Indeterminate"/>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal"/>
-                                    <VisualState x:Name="MouseOver"/>
-                                    <VisualState x:Name="Pressed">
-                                        <Storyboard>
-                                            <ColorAnimation Duration="0" To="#FFFF0000" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="rectangle" />
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Disabled"/>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <Rectangle x:Name="rectangle" RadiusX="2" RadiusY="2" Height="25" VerticalAlignment="Bottom">
@@ -134,7 +132,11 @@
                                     </LinearGradientBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ContentPresenter >
+                                <ContentPresenter.Content>
+                                    <TextBlock Text="{TemplateBinding Content}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </ContentPresenter.Content>
+                            </ContentPresenter>
                             <Grid Opacity="0.6">
                                 <Rectangle x:Name="InnerShadow" RadiusX="2" RadiusY="2" Height="25" VerticalAlignment="Bottom">
                                     <Rectangle.Fill>
@@ -171,10 +173,8 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="White"/>
         </Style>
+        
 
         <Style x:Key="RadioButtonStyle1" TargetType="RadioButton">
             <Setter Property="Template">
@@ -185,7 +185,7 @@
                                 <VisualStateGroup x:Name="CheckStates">
                                     <VisualState x:Name="Checked">
                                         <Storyboard>
-                                            <ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="ellipse" />
+                                            <ColorAnimation Duration="0:0:1" To="Red" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="ellipse" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Unchecked"/>
