@@ -147,7 +147,8 @@ namespace TetrisHTW.Figures
             }
         }
 
-
+        /*es wird probiert die figur nach links/rechts zu verschieben, damit die drehung doch kalppt,
+         * auch wenn kein platz da ist. siehe doRotate()*/
         public Point[] hardRotate(int rotateState)
         {
             Point[] newPoints = new Point[4];

@@ -18,9 +18,9 @@ namespace TetrisHTW.Figures
     {
         protected DefaultBoardModel board;
         protected Color color;
-        protected Point[] points = new Point[4];
-        private Point[] ghostPoints = new Point[4];
-        protected int rotateState;
+        protected Point[] points = new Point[4]; /*die repräsentation der figur*/
+        private Point[] ghostPoints = new Point[4]; /*das ist die vorschaufigur, wo die figur landen wird*/
+        protected int rotateState; 
 
 
         public Figure(DefaultBoardModel boardModel)
@@ -43,7 +43,8 @@ namespace TetrisHTW.Figures
         }
 
    
-        /*Punkte vor dem Fall = previousPoints*/
+        /*Punkte vor dem Fall = previousPoints
+         eine neue figur wird erstellt*/
         private void FigureIsFallen(Point[] previousPoints)
         {
             ghostPoints = null;
@@ -74,6 +75,7 @@ namespace TetrisHTW.Figures
             
         }
 
+        /*um 1 nach unten bewegen*/
         public void fall() 
         {
             lock (App.myLock)
@@ -243,11 +245,13 @@ namespace TetrisHTW.Figures
         }
 
         
+        /*Hier geht es im wesentlichen darum, festzustellen, ob der neue stein (sollte neu sein),
+         * beim ersten zeichen aufs board bereits eine figur überschreiben würde.
+         * das würde bedeuten, dass es oben kein platz mehr für die figur gibt=>gameover*/
         public void newOnBoard()
         {
             lock (App.myLock)
             {
-                
                 bool fitsOnBoard = doPointsFit(points);
                 Point[] fallenPoints = simulatedFall();
                 this.ghostPoints = fallenPoints;
@@ -263,6 +267,7 @@ namespace TetrisHTW.Figures
             }
         }
 
+        /*versuch zu rotieren*/
         public void rotate()
         {
             //Wegen Fallthread
@@ -282,6 +287,7 @@ namespace TetrisHTW.Figures
             }
         }
 
+        /*kann jede figur überschreiben, der block (O) machts nicht*/
         protected virtual void doRotate()
         {
 
@@ -303,6 +309,7 @@ namespace TetrisHTW.Figures
             return color;
         }
 
+        /*für special mode*/
         internal void removeFromBoard()
         {
             if (this.ghostPoints != null)
@@ -312,7 +319,8 @@ namespace TetrisHTW.Figures
                
             }
             board.clearPoints(points);
-            Debug.WriteLine("removing " + toString());
+            if (App.DEBUG)
+                Debug.WriteLine("removing " + toString());
         }
     }
 }

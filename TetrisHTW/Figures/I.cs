@@ -19,6 +19,7 @@ namespace TetrisHTW.Figures
             setInitPoints();
         }
 
+        /*die figur initialisiert sich neu*/
         public override void setInitPoints()
         {
             rotateState = 0;
@@ -28,7 +29,7 @@ namespace TetrisHTW.Figures
             points[3] = new Point(board.getColumns() / 2, 3);
         }
 
-
+        /*figurspezifische drehung (versuch)*/
         protected override void doRotate()
         {
 
@@ -82,7 +83,7 @@ namespace TetrisHTW.Figures
                 {
                     Point[] newPointsHardRotated = hardRotate();
                     //links
-                    for (int j = 0; j < 2; j++) //j schleife wegen 2 herausstechenden punkten
+                    for (int j = 0; j < 2; j++) //j schleife wegen 2 herausstechenden punkten beim I
                     {
                         for (int i = 0; i < newPointsHardRotated.Length; i++)
                         {
@@ -116,7 +117,7 @@ namespace TetrisHTW.Figures
             
         }
 
-       
+       /*es wird probiert die figur nach links/rechts zu verschieben, damit die drehung doch kalppt, auch wenn kein platz da ist. siehe doRotate()*/
         public Point[] hardRotate()
         {
             Point[] newPoints = new Point[4];

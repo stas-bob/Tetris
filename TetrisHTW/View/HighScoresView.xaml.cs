@@ -19,7 +19,7 @@ namespace TetrisHTW.View
     {
         private SQLClient sqlClient = new SQLClient("http://stl-l-18.htw-saarland.de:8080/TetrisSQLProxy/SQLProxyServlet");
         private IndexView iv;
-        private ScoresData tmpScoresData;
+        private ScoresData tmpScoresData; //wird zur unterscheidung genutzt, ob man im gameover kontext ist oder im hauptmenü
 
         public HighScoresView(IndexView iv)
         {
@@ -29,6 +29,7 @@ namespace TetrisHTW.View
             update(1);
         }
 
+        /*highscores wenn man nach gameover auf scores drückt. hier wird noch der eigene score angezeigt*/
         public void update(ScoresData scoresData)
         {
             tmpScoresData = scoresData;
@@ -41,6 +42,7 @@ namespace TetrisHTW.View
             sqlClient.requestScoreEntry(callbackEntry, error, scoresData.score, scoresData.mode);
         }
 
+        /*highscores aus indexview*/
         public void update(int mode)
         {
             switch (mode)
@@ -59,6 +61,7 @@ namespace TetrisHTW.View
             });
         }
 
+        /*datagrid befüllen*/
         public void callback(System.Collections.Generic.List<string> playerNames,
             System.Collections.Generic.List<int> levels,
             System.Collections.Generic.List<int> scores,

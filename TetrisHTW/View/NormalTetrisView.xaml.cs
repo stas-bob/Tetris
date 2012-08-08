@@ -174,6 +174,7 @@ namespace TetrisHTW
             }
         }
 
+        /*timer stoppen*/
         void Page_KeyUp(object sender, KeyEventArgs e)
         {
             if (timer != null)
@@ -183,6 +184,7 @@ namespace TetrisHTW
             }
         }
 
+        /*Der Callback für den Timer, der die Tastaturverzögerung umgeht*/
         public void MoveFigure(Object stateInfo)
         {
             if (gameOver)
@@ -203,8 +205,7 @@ namespace TetrisHTW
 
         public void InitGame()
         {
-            /*Das sind die Listener für das Keyboard. TODO Das muss doch auch anders gehn!! this.keydown geht net.
-             Ich will dass dieses Objekt weggeraumt. dann braucht man kein onExit(), so muss ich nicht extra event -= machen*/
+            //wieso kann ich eigentlich nicht DIESEM usercontrol diese listener verpassen?*/
             App.getInstance().RootVisual.KeyDown += new KeyEventHandler(Page_KeyDown);
             App.getInstance().RootVisual.KeyUp += new KeyEventHandler(Page_KeyUp);
 
@@ -219,6 +220,7 @@ namespace TetrisHTW
             GameStart();
         }
 
+        /*spezialmodus*/
         private void handleSpecialMode()
         {
             lock (App.myLock) {
@@ -308,6 +310,7 @@ namespace TetrisHTW
             return b;
         }
 
+        /* jede boardmodel manipulation bewirkt diesen methodenaufruf*/
         public void OnBoardChanged(object sender, BoardEventArgs bea)
         {
             Dispatcher.BeginInvoke(delegate
@@ -385,6 +388,7 @@ namespace TetrisHTW
             });
         }
 
+        /*speicherrechtecke löschen*/
         private void clearMemoryBoard()
         {
             foreach (FrameworkElement frameWorkElement in memoryGrid.Children)
@@ -394,6 +398,8 @@ namespace TetrisHTW
             }
         }
 
+        /* es werden kopien der gui rechtecke erstellt, die demnächst gelöscht werden.
+         * diese rechtecke fliegen zuerst nach oben und dann nach unten, nach einer spline. dabei drehen sie sich.*/
         private void animateRemovedLinesHard(List<int> removedLines)
         {
             Storyboard sb = new Storyboard();
@@ -494,6 +500,7 @@ namespace TetrisHTW
             sb.Begin();
         }
 
+        /*selbes wie hard, hier werden die steine nicht ganz so wild herumgewirbelt*/
         private void animateRemovedLinesSoft(List<int> removedLines)
         {
             Storyboard sb = new Storyboard();
@@ -623,6 +630,10 @@ namespace TetrisHTW
 
         }
 
+        /*animationen fürs fallen der figur.
+         wenn die figur unten ankommt, blinkt sie durch opacity
+         wenn die figur durch fallcompeteley gefallen ist, dann wird ein rechteck von der letzten position bis unten erstellt.
+         *dieses rechteck verschwindet durch einen lin.gradienten mit transparenter farbe. dies macht den falleffekt aus.*/
         public void OnFigureFallen(object sender, FigureFallenEventArgs ffea)
         {
             Dispatcher.BeginInvoke(delegate
@@ -726,6 +737,7 @@ namespace TetrisHTW
 
         }
 
+        /*suche nach dem größten x/y wert der figur (für fall-effekt-rechteck)*/
         public int getMax(Util.Point[] points, bool x)
         {
             if (!x)
@@ -755,6 +767,7 @@ namespace TetrisHTW
             }
         }
 
+        /*suche nach dem kleinsten x/y wert der figur (für fall-effekt-rechteck)*/
         public int getMin(Util.Point[] points, bool x)
         {
             if (!x)
@@ -784,6 +797,7 @@ namespace TetrisHTW
             }
         }
 
+        /*gui rechteck nach punkt beziehen*/
         public Rectangle getRectangleAt(int x, int y)
         {
             foreach (FrameworkElement frameWorkElement in boardGrid.Children)
@@ -798,6 +812,7 @@ namespace TetrisHTW
             return null;
         }
 
+        /*board gui rechtecke beziehen nach figurpunkten*/
         public List<Rectangle> getBoardRectangles(Util.Point[] points)
         {
             List<Rectangle> rectangles = new List<Rectangle>();
@@ -808,6 +823,7 @@ namespace TetrisHTW
             return rectangles;
         }
 
+        /*vorschau gui rechtecke beziehen nach figurpunkten*/
         public List<Rectangle> getPreviewBoardRectangles(Util.Point[] points)
         {
             List<Rectangle> rectangles = new List<Rectangle>();
@@ -826,6 +842,7 @@ namespace TetrisHTW
             return rectangles;
         }
 
+        /*speicher gui rechtecke beziehen nach figurpunkten*/
         public List<Rectangle> getMemoryBoardRectangles(Util.Point[] points)
         {
             List<Rectangle> rectangles = new List<Rectangle>();
@@ -864,7 +881,7 @@ namespace TetrisHTW
             }
         }
 
-        public void OnGameOver(object sender, GameOverEventArgs goea)
+        public void OnGameOver(object sender, EventArgs e)
         {
             Dispatcher.BeginInvoke(delegate
             {
@@ -884,12 +901,13 @@ namespace TetrisHTW
             time = 0;
             foreach (long t in timeList)
             {
-                time += t;
+                time += t; //zeiten zwischen den pausen
             }
             time /= 2;
             sqlClient.writeScore(SQLClientError, playerName, boardModel.getScore(), boardModel.getLevel(), time, mod);
         }
 
+        /*alles neu initialisieren*/
         private void ExitGame()
         {
             Dispatcher.BeginInvoke(() =>
@@ -924,7 +942,7 @@ namespace TetrisHTW
                 scoreButton.Visibility = System.Windows.Visibility.Collapsed;
             });
         }
-
+        /*schwarze textbox*/
         private void showHint(string msg, int fontSize)
         {
             pause = true;

@@ -33,7 +33,7 @@ namespace TetrisHTW
         /*Ist die Methode, die die Steine fallen laesst*/
         public void InvokeFalling()
         { 
-            shouldStop = false;
+            shouldStop = true;
             while (!shouldStop) {
                 switch (level) {
                     case 0: Thread.Sleep(1000); break;

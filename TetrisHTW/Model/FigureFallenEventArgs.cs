@@ -21,8 +21,8 @@ namespace TetrisHTW.Model
         }
 
 
-         public Util.Point[] figurePoints { get; set; }
-         public Util.Point[] previousFigurePoints { get; set; }
+        public Util.Point[] figurePoints { get; set; }
+        public Util.Point[] previousFigurePoints { get; set; }
         public Color color { get; set; }
 
         public bool PointsAreEqual()

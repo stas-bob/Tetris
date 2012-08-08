@@ -15,7 +15,8 @@ using System.Collections.Generic;
 namespace TetrisHTW.Model
 {
     /*im wesentlichen das ein 2d array aus farbwerten die figur manipuliert das 2d array. bei jeder manipulation bekommt die view eine kopie des bretts.
-     es muss eine kopie sein:da alle ui operationen innerhalb von dispatcher.beginInvoke sind, ist die ausführung asynchron. vor allem in der methode */
+     es muss eine kopie sein:da alle ui operationen innerhalb von dispatcher.beginInvoke sind, ist die ausführung asynchron.
+     * vor allem beim visuellen darstellen des zeilenlöschens kommt es immerwieder zu verspäteter ausführung des ui threads sodass der effekt nicht stimmt. daher die kopie des boards.*/
     public class DefaultBoardModel
     {
         private Random rnd = new Random();
@@ -80,12 +81,10 @@ namespace TetrisHTW.Model
         {
             /*es ist nicht immer der fall, dass die unterste zeile auch das erste element ist*/
             linesToRemove.Sort(delegate(int a, int b) {
-                return a.CompareTo(b);    
+                return b.CompareTo(a);    
             });
-            for (int i = 0; i < linesToRemove.Count; i++)
-            {
-                shiftToLine(linesToRemove[i]);
-            }
+            if (linesToRemove.Count > 0)
+                shiftToLine(linesToRemove[0], linesToRemove.Count);
             for (int i = 0; i < linesToRemove.Count; i++)
             {
                 lines++;
@@ -332,6 +331,7 @@ namespace TetrisHTW.Model
             this.memoryFigure = figure;
         }
 
+        /*löschen der figurenpunkte*/
         public void clearPoints(Point[] points)
         {
             for (int i = 0; i < points.Length; i++)
@@ -345,13 +345,13 @@ namespace TetrisHTW.Model
             return previewFigure;
         }
 
-        public void shiftToLine(int y)
+        public void shiftToLine(int y, int rows)
         {
-            for (int i = y; i > 0; i--)
+            for (int i = y; i > rows; i--)
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    board[j, i] = board[j, i - 1];
+                    board[j, i] = board[j, i - rows];
                 }
             }
             for (int i = 0; i < columns; i++)
