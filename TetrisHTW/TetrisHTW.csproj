@@ -89,7 +89,6 @@
     <Compile Include="Figures\Figure.cs" />
     <Compile Include="Figures\O.cs" />
     <Compile Include="Model\BoardEventArgs.cs" />
-    <Compile Include="Model\GameOverEventArgs.cs" />
     <Compile Include="Model\FigureFallenEventArgs.cs" />
     <Compile Include="Model\LineEventArgs.cs" />
     <Compile Include="Util\Point.cs" />

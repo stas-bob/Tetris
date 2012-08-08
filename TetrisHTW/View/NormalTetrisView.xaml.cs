@@ -39,6 +39,7 @@ namespace TetrisHTW
         private OptionsView ov;
         private IndexView iv;
         private int mod;
+        private long keypressedTime;
 
         public NormalTetrisView(OptionsView ov, IndexView iv)
         {
@@ -149,22 +150,7 @@ namespace TetrisHTW
                                     if (timer == null)
                                     {
                                         lastKey = e.Key;
-                                        if (boardModel.getLevel() >= 9)
-                                        {
-                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 125);
-                                        }
-                                        else if (boardModel.getLevel() == 8)
-                                        {
-                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 130);
-                                        }
-                                        else if (boardModel.getLevel() == 7)
-                                        {
-                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 135);
-                                        }
-                                        else
-                                        {
-                                            timer = new Timer(MoveFigure, null, 0, e.Key == Key.Down ? 75 : 140);
-                                        }
+                                        timer = new Timer(MoveFigure, null, 0, 80);
                                     }
                                     break;
                             }
@@ -177,6 +163,7 @@ namespace TetrisHTW
         /*timer stoppen*/
         void Page_KeyUp(object sender, KeyEventArgs e)
         {
+            keypressedTime = 0;
             if (timer != null)
             {
                 timer.Dispose();
@@ -191,15 +178,34 @@ namespace TetrisHTW
             {
                 timer.Dispose();
                 timer = null;
+                keypressedTime = 0;
             }
             else
             {
-                switch (lastKey)
+                if (keypressedTime == 0)
                 {
-                    case Key.Left: boardModel.getCurrentFigure().left(); break;
-                    case Key.Right: boardModel.getCurrentFigure().right(); break;
-                    case Key.Down: boardModel.getCurrentFigure().fall(); break;
+                    keypressedTime = DateTime.Now.Ticks;
+                    switch (lastKey)
+                    {
+                        case Key.Left: boardModel.getCurrentFigure().left(); break;
+                        case Key.Right: boardModel.getCurrentFigure().right(); break;
+                        case Key.Down: boardModel.getCurrentFigure().fall(); break;
+                    }
                 }
+                else
+                {
+                    if (DateTime.Now.Ticks - keypressedTime > 1500000)
+                    {
+                        switch (lastKey)
+                        {
+                            case Key.Left: boardModel.getCurrentFigure().left(); break;
+                            case Key.Right: boardModel.getCurrentFigure().right(); break;
+                            case Key.Down: boardModel.getCurrentFigure().fall(); break;
+                        }
+                    }
+
+                }
+
             }
         }
 
@@ -917,6 +923,7 @@ namespace TetrisHTW
                     fallWorker.RequestStop();
                     fallWorker.setLevel(0);
                 }
+                keypressedTime = 0;
                 clearMemoryBoard();
                 timeList.Clear();
                 time = 0;

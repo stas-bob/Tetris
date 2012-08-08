@@ -19,7 +19,7 @@ namespace TetrisHTW
     public delegate void BoardChangedEventHandler(object sender, BoardEventArgs e);
     public delegate void ScoreChangedEventHandler(object sender, ScoreEventArgs e);
     public delegate void LineChangedEventHandler(object sender, LineEventArgs e);
-    public delegate void GameOverEventHandler(object sender, GameOverEventArgs e);
+    public delegate void GameOverEventHandler(object sender, EventArgs e);
     public delegate void FigureFallenEventHandler(object sender, FigureFallenEventArgs e);
 
     public partial class App : Application
@@ -34,7 +34,7 @@ namespace TetrisHTW
 
         public event FigureFallenEventHandler FigureFallenEvent;
         public event GameOverEventHandler GameOverEvent;
-        public static bool DEBUG = true;
+        public static bool DEBUG = false;
         
         public App()
         {
@@ -75,7 +75,7 @@ namespace TetrisHTW
         {
             if (GameOverEvent != null)
             {
-                GameOverEvent(this, new GameOverEventArgs());
+                GameOverEvent(this, EventArgs.Empty);
             }
         }
 

@@ -345,6 +345,7 @@ namespace TetrisHTW.Model
             return previewFigure;
         }
 
+        /*zeilen löschen*/
         public void shiftToLine(int y, int rows)
         {
             for (int i = y; i > rows; i--)
