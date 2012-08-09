@@ -80,11 +80,14 @@ namespace TetrisHTW.Model
         public void collapse(List<int> linesToRemove)
         {
             /*es ist nicht immer der fall, dass die unterste zeile auch das erste element ist*/
-            linesToRemove.Sort(delegate(int a, int b) {
-                return b.CompareTo(a);    
+            linesToRemove.Sort(delegate(int a, int b)
+            {
+                return a.CompareTo(b);
             });
-            if (linesToRemove.Count > 0)
-                shiftToLine(linesToRemove[0], linesToRemove.Count);
+            for (int i = 0; i < linesToRemove.Count; i++)
+            {
+                shiftToLine(linesToRemove[i]);
+            }
             for (int i = 0; i < linesToRemove.Count; i++)
             {
                 lines++;
@@ -346,24 +349,19 @@ namespace TetrisHTW.Model
         }
 
         /*zeilen löschen*/
-        public void shiftToLine(int y, int rows)
+        public void shiftToLine(int y)
         {
-            for (int i = y; i > rows; i--)
+            for (int i = y; i > 0; i--)
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    board[j, i] = board[j, i - rows];
+                    board[j, i] = board[j, i - 1];
                 }
             }
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < columns; i++)
             {
-                for (int j = 0; j < columns; j++)
-                {
-                    board[j, i] = boardColor;
-                }
+                board[i, 0] = boardColor;
             }
-
-            
         }
 
         
