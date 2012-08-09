@@ -355,10 +355,15 @@ namespace TetrisHTW.Model
                     board[j, i] = board[j, i - rows];
                 }
             }
-            for (int i = 0; i < columns; i++)
+            for (int i = 0; i < rows; i++)
             {
-                board[i, 0] = boardColor;
+                for (int j = 0; j < columns; j++)
+                {
+                    board[j, i] = boardColor;
+                }
             }
+
+            
         }
 
         
