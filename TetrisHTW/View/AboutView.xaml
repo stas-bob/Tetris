@@ -9,7 +9,6 @@
         <TextBlock HorizontalAlignment="Center" Name="textBlock1"
 			Text="{StaticResource AboutText}" VerticalAlignment="Top" Margin="130"
 			TextWrapping="Wrap" />
-
         <Button Content="Zurück" Style="{StaticResource ButtonStyle1}"
 			Click="BackButton_Click" />
     </StackPanel>

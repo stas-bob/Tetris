@@ -57,7 +57,7 @@ namespace TetrisHTW.View
         {
             Dispatcher.BeginInvoke(() =>
             {
-                ownScoreBlock.Text = "dein ergebnis: rank: " + rank + " score: " + tmpScoresData.score + " level " + tmpScoresData.level + " time " + tmpScoresData.time + " mode " + tmpScoresData.mode;
+                ownScoreBlock.Text = "Dein Ergebnis: Rang " + rank + " mit einem Score von " + tmpScoresData.score;
             });
         }
 
@@ -99,7 +99,7 @@ namespace TetrisHTW.View
             });
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             tmpScoresData = null;
             normalModeRadioButton.IsChecked = false;
@@ -112,38 +112,19 @@ namespace TetrisHTW.View
 
         private void spezialModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (tmpScoresData != null)
-            {
-                sqlClient.requestScores(callback, error, 10, 2);
-            }
-            else
-            {
                 sqlClient.requestScores(callback, error, 2);
-            }
         }
 
         private void normalModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (tmpScoresData != null)
-            {
-                sqlClient.requestScores(callback, error, 10, 1);
-            }
-            else
-            {
                 sqlClient.requestScores(callback, error, 1);
-            }
         }
 
         private void kretschmerModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (tmpScoresData != null)
-            {
-                sqlClient.requestScores(callback, error, 10, 3);
-            }
-            else
-            {
+
                 sqlClient.requestScores(callback, error, 3);
-            }
+      
         }
 
     }

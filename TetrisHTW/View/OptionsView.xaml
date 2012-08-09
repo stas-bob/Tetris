@@ -269,7 +269,7 @@
 						Text="Pfeiltaste rechts: Stein nach rechts bewegen" FontSize="12"
 						FontFamily="Comic Sans MS" TextWrapping="Wrap" />
                     <TextBlock Grid.Column="0" Grid.Row="1"
-						Text="Pfeiltaste oben: Stein drehen" FontSize="14" FontFamily="Comic Sans MS"
+						Text="Pfeiltaste oben: Stein drehen" FontSize="12" FontFamily="Comic Sans MS"
 						TextWrapping="Wrap" />
                     <TextBlock Grid.Column="1" Grid.Row="1"
 						Text="Pfeiltaste unten: Stein nach unten bewegen" FontSize="12"

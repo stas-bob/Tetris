@@ -5,9 +5,7 @@
 	mc:Ignorable="d"
 	xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
 	d:DesignHeight="515" d:DesignWidth="800">
-
-
-
+    
     <Canvas Name="canvas" HorizontalAlignment="Center"
 		VerticalAlignment="Center" Margin="0,0,250,400">
         <Canvas.Resources>
@@ -136,16 +134,12 @@
 			BorderThickness="5" CornerRadius="10" Margin="-200 -40 0 0"
 			BorderBrush="DarkBlue">
             <Grid x:Name="LayoutRoot" Height="400" Width="285">
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100" />
                     <RowDefinition Height="100" />
                     <RowDefinition Height="100" />
                     <RowDefinition Height="100" />
                 </Grid.RowDefinitions>
-
-
-
                 <Button Grid.Column="0" Grid.Row="1" Content="Spielen"
 					Height="75" Style="{StaticResource ButtonStyle1}" Width="150"
 					Foreground="White" FontSize="24" FontWeight="Bold" Click="Spielen_Click" />
@@ -232,6 +226,5 @@
                 </TextBlock>
             </Grid>
         </Border>
-
     </Canvas>
 </UserControl>
