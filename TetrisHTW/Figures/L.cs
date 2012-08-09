@@ -11,14 +11,23 @@ using TetrisHTW.Util;
 
 namespace TetrisHTW.Figures
 {
+    /**
+    * Klasse für die Figur "L"
+    */
     public class L : Figure
     {
+        /**
+        * Konstruktor
+        */
         public L(Model.DefaultBoardModel boardModel) : base(boardModel)
         {
             color = Colors.Orange;
             setInitPoints();
         }
 
+        /**
+        * Setzen der initialen Punkte der Figur
+        */
         public override void setInitPoints()
         {
             rotateState = 0;
@@ -28,9 +37,11 @@ namespace TetrisHTW.Figures
             points[3] = new Point(board.getColumns() / 2 + 1, 2);
         }
 
+        /**
+         * Figurspezifische Drehung
+         */
         protected override void doRotate()
         {
-
             Point[] newPoints = new Point[4];
 
             switch (rotateState)
@@ -147,8 +158,12 @@ namespace TetrisHTW.Figures
             }
         }
 
-        /*es wird probiert die figur nach links/rechts zu verschieben, damit die drehung doch kalppt,
-         * auch wenn kein platz da ist. siehe doRotate()*/
+        /**
+          * Es wird probiert die Figur nach links/rechts zu verschieben, 
+          * damit die Drehung doch kalppt, auch wenn kein platz da ist. 
+          * 
+          * siehe doRotate()
+          */ 
         public Point[] hardRotate(int rotateState)
         {
             Point[] newPoints = new Point[4];
@@ -178,6 +193,7 @@ namespace TetrisHTW.Figures
             return newPoints;
         }
 
+        // toString Methode
         public override string toString()
         {
             return "L";

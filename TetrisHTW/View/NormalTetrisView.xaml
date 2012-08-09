@@ -61,6 +61,23 @@
                 <ColumnDefinition Width="85" />
                 <ColumnDefinition Width="59*" />
             </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" Grid.Row="0">
+                <TextBlock Text="Vorschau" HorizontalAlignment="Center"
+					Height="16" Style="{StaticResource TextBlockStyle}" />
+                <Grid Name="previewGrid" HorizontalAlignment="Center" Margin="0 5 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="12" />
+                        <RowDefinition Height="12" />
+                        <RowDefinition Height="12" />
+                        <RowDefinition Height="12" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="12" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="1">
                 <StackPanel.Background>
                     <SolidColorBrush Color="#eee" />
@@ -103,24 +120,7 @@
 					</TextBlock.RenderTransform>
                 </TextBlock>
             </StackPanel>
-            <StackPanel Grid.Column="1" Grid.Row="4">
-                <TextBlock Text="Vorschau" HorizontalAlignment="Center"
-					Height="16" Style="{StaticResource TextBlockStyle}" />
-                <Grid Name="previewGrid" HorizontalAlignment="Center" Margin="0 5 0 0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="12" />
-                        <RowDefinition Height="12" />
-                        <RowDefinition Height="12" />
-                        <RowDefinition Height="12" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="12" />
-                        <ColumnDefinition Width="12" />
-                        <ColumnDefinition Width="12" />
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </StackPanel>
-            <StackPanel Name="memoryPanel" Grid.Column="1" Grid.Row="0"
+            <StackPanel Name="memoryPanel" Grid.Column="1" Grid.Row="4"
 				Visibility="Visible">
                 <TextBlock Text="Speicher" HorizontalAlignment="Center"
 					Height="16" Style="{StaticResource TextBlockStyle}" />

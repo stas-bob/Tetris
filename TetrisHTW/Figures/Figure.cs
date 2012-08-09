@@ -14,21 +14,33 @@ using System.Diagnostics;
 
 namespace TetrisHTW.Figures
 {
+    /**
+     * Abstrakte Klasse für die verschiedenen Figuren
+     */
     public abstract class Figure
     {
+        // Board
         protected DefaultBoardModel board;
+        // Farbe der Figur
         protected Color color;
-        protected Point[] points = new Point[4]; /*die repräsentation der figur*/
-        private Point[] ghostPoints = new Point[4]; /*das ist die vorschaufigur, wo die figur landen wird*/
-        protected int rotateState; 
+        // Punkte der Figur im Board
+        protected Point[] points = new Point[4];
+        // Punkte der Vorschaufigur im Board
+        private Point[] ghostPoints = new Point[4];
+        // Status der Figur
+        protected int rotateState;
 
-
+        /**
+         * Konstruktor
+         */
         public Figure(DefaultBoardModel boardModel)
         {
             this.board = boardModel;
         }
 
-        /* Testen ob die temporaere Figur in die Position passt*/
+        /**
+         * Testen, ob die temporaere Figur in die Position passt
+         */
         protected bool doPointsFit(Point[] points)
         {
             
@@ -43,8 +55,10 @@ namespace TetrisHTW.Figures
         }
 
    
-        /*Punkte vor dem Fall = previousPoints
-         eine neue figur wird erstellt*/
+        /**
+         * Figur kann nicht weiter fallen,
+         * entweder wird neue Figur erzeugt oder man ist Gameover
+         */
         private void FigureIsFallen(Point[] previousPoints)
         {
             ghostPoints = null;
@@ -75,7 +89,9 @@ namespace TetrisHTW.Figures
             
         }
 
-        /*um 1 nach unten bewegen*/
+        /**
+         * Bewegt die Figur eine Position nach unten
+         */
         public void fall() 
         {
             lock (App.myLock)
@@ -95,14 +111,16 @@ namespace TetrisHTW.Figures
                 }
                 else
                 {
-                    /*temporaere Figur wird aktuelle Figur (Punkten)*/
+                    /* temporaere Figur wird aktuelle Figur (Punkten)*/
                     points = newPoints;
                     board.writeCell(points, color);
                 }
             }
         }
 
-        /*Diese Methode stellt fest welche Zeilen zu loeschen sind*/
+        /**
+         * Diese Methode stellt fest welche Zeilen zu loeschen sind
+         */
         private List<int> getLinesToRemove()
         {
             lock (App.myLock)
@@ -142,7 +160,9 @@ namespace TetrisHTW.Figures
             }
         }
 
-        /* Hier wird die aktuelle Figur an den hoechst moeglichen y Wert gesetzt*/
+        /**
+         * Hier wird die aktuelle Figur an den hoechst moeglichen y Wert gesetzt
+         */
         public void fallCompletely()
         {
             lock (App.myLock)
@@ -159,10 +179,11 @@ namespace TetrisHTW.Figures
             }
         }
 
-        /*Hier wird geprueft, wie weit die temporaere Figur (Punkte) fallen kann*/
+        /**
+         * Hier wird geprueft, wie weit die temporaere Figur (Punkte) fallen kann
+         */
         private Point[] simulatedFall()
         {
-
             Point[] newPoints = new Point[4];
             
             for (int i = 0; i < points.Length; i++)
@@ -188,7 +209,9 @@ namespace TetrisHTW.Figures
             return newPoints;
         }
 
-        /* Es wird versucht, ob man die aktuelle Figur nach links verschieben kann*/
+        /**
+         * Es wird versucht, ob man die aktuelle Figur nach links verschieben kann
+         */
         public bool left()
         {
             lock (App.myLock)
@@ -216,7 +239,9 @@ namespace TetrisHTW.Figures
             }
         }
 
-        /* Es wird versucht, ob man die aktuelle Figur nach rechts verschieben kann*/
+        /**
+         * Es wird versucht, ob man die aktuelle Figur nach rechts verschieben kann
+         */
         public bool right()
         {
             lock (App.myLock)
@@ -245,9 +270,9 @@ namespace TetrisHTW.Figures
         }
 
         
-        /*Hier geht es im wesentlichen darum, festzustellen, ob der neue stein (sollte neu sein),
-         * beim ersten zeichen aufs board bereits eine figur überschreiben würde.
-         * das würde bedeuten, dass es oben kein platz mehr für die figur gibt=>gameover*/
+        /**
+         * Wird geprüft, ob der neue Stein überhaupt auf das Board passt
+         */
         public void newOnBoard()
         {
             lock (App.myLock)
@@ -267,7 +292,9 @@ namespace TetrisHTW.Figures
             }
         }
 
-        /*versuch zu rotieren*/
+        /**
+         * Prüft ob Figur gedreht werden kann
+         */
         public void rotate()
         {
             //Wegen Fallthread
@@ -287,29 +314,33 @@ namespace TetrisHTW.Figures
             }
         }
 
-        /*kann jede figur überschreiben, der block (O) machts nicht*/
+        /**
+         * Figur drehen
+         */
         protected virtual void doRotate()
         {
 
         }
 
-        public abstract string toString();
-
-        public abstract void setInitPoints();
- 
-
+        /**
+         * Gibt die Punkte der Figur zurück
+         */
         public Point[] getPoints()
         {
             return points;
         }
 
-
+        /**
+         * Gibt die Farbe der Figur zurück
+         */ 
         public Color getColor()
         {
             return color;
         }
 
-        /*für special mode*/
+        /**
+         * Methode für den Special Mode, der die Vorscahufigur löscht beim Speichern der Figur
+         */
         internal void removeFromBoard()
         {
             if (this.ghostPoints != null)
@@ -322,5 +353,11 @@ namespace TetrisHTW.Figures
             if (App.DEBUG)
                 Debug.WriteLine("removing " + toString());
         }
+
+        // Abstrakte toString Methode
+        public abstract string toString();
+
+        // Abstrakte Methode, um die Figur auf die Startposition zu setzen
+        public abstract void setInitPoints();
     }
 }

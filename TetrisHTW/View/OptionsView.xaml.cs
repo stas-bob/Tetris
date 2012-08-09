@@ -20,7 +20,7 @@ namespace TetrisHTW.View
         private NormalTetrisView ntv;
         private int level;
 
-        public OptionsView(IndexView iv)
+        public OptionsView(IndexView iv) 
         {
             InitializeComponent();
             this.iv = iv;

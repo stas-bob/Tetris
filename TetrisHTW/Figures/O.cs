@@ -12,14 +12,23 @@ using TetrisHTW.Util;
 
 namespace TetrisHTW.Figures
 {
+    /**
+     * Klasse für die Figur "O"
+     */
     public class O: Figure
     {
+        /**
+        * Konstruktor
+        */
         public O(Model.DefaultBoardModel boardModel): base(boardModel)
         {
             color = Colors.Yellow;
             setInitPoints();
         }
 
+        /**
+        * Setzen der initialen Punkte der Figur
+        */
         public override void setInitPoints()
         {
             rotateState = 0;
@@ -29,6 +38,7 @@ namespace TetrisHTW.Figures
             points[3] = new Point(board.getColumns() / 2 + 1, 1);
         }
 
+        // toString Methode
         public override string toString()
         {
             return "square";
