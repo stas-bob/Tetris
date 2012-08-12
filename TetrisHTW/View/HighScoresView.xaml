@@ -67,6 +67,7 @@
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
         <TextBlock Name="ownScoreBlock" HorizontalAlignment="Center" MaxHeight="30"/>
+        <TextBlock Name="highscoreBlock" HorizontalAlignment="Center" MaxHeight="30"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="70" BorderBrush="White">
             <TextBlock Name="errorBlock" HorizontalAlignment="Center"/>
         </ScrollViewer>

@@ -112,18 +112,18 @@ namespace TetrisHTW.View
 
         private void spezialModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-                sqlClient.requestScores(callback, error, 2);
+                sqlClient.requestScores(callback, error, 50, 2);
         }
 
         private void normalModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-                sqlClient.requestScores(callback, error, 1);
+                sqlClient.requestScores(callback, error, 50, 1);
         }
 
         private void kretschmerModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
 
-                sqlClient.requestScores(callback, error, 3);
+                sqlClient.requestScores(callback, error, 50, 3);
       
         }
 
