@@ -328,7 +328,7 @@ namespace TetrisHTW
                     {
                         if (mod == 3)
                         {
-                            animBoardRotate.To = animBoardRotate.To + 90;
+                            animBoardRotate.To = animBoardRotate.To + 180;
                             boardRotateSB.Begin();
                         }
                         if (hardFall)
