@@ -685,7 +685,7 @@ namespace TetrisHTW
 
 
                         double width = Math.Sqrt(Math.Pow(bottomRightPoint.X - bottomLeftPoint.X, 2) + Math.Pow(bottomRightPoint.Y - bottomLeftPoint.Y, 2)) + upperLeftRect.ActualWidth;
-                        double height = Math.Sqrt(Math.Pow(bottomRightPoint.X - upperRightPoint.X, 2) + Math.Pow(bottomRightPoint.Y - upperRightPoint.Y, 2));
+                        double height = Math.Sqrt(Math.Pow(bottomRightPoint.X - upperRightPoint.X, 2) + Math.Pow(bottomRightPoint.Y - upperRightPoint.Y, 2)) + bottomLeftRect.ActualHeight;
 
 
 
