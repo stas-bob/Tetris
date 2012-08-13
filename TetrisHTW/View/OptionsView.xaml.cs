@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -99,12 +99,12 @@ namespace TetrisHTW.View
             else if (spezialModeRadioButton.IsChecked == true)
             {
                 memoryKey.Visibility = Visibility.Visible;
-                anleitung.Text = "Dies ist das orginal Tetris mit der Erweiterung, dads man Steine speichern kann."; 
+                anleitung.Text = "Dies ist das orginal Tetris mit der Erweiterung, das man Steine speichern kann."; 
             }
             else 
             {
                 memoryKey.Visibility = Visibility.Collapsed;
-                anleitung.Text = "Dies ist das orginal Tetris mit der Erweiterung, dads sich das Spielfeld nach entfernen einer Zeile dreht."; 
+                anleitung.Text = "Dies ist das orginal Tetris mit der Erweiterung, das sich das Spielfeld nach entfernen einer Zeile dreht."; 
             }
         
         }
