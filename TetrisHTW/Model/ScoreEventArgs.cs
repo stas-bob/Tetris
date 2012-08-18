@@ -11,6 +11,9 @@ using System.Windows.Shapes;
 
 namespace TetrisHTW.Model
 {
+    /**
+    * Eventklassse für den Score und das Level
+    */
     public class ScoreEventArgs: EventArgs
     {
         

@@ -14,11 +14,14 @@ using System.Collections.Generic;
 
 namespace TetrisHTW.Model
 {
-    /*im wesentlichen das ein 2d array aus farbwerten die figur manipuliert das 2d array. bei jeder manipulation bekommt die view eine kopie des bretts.
-     es muss eine kopie sein:da alle ui operationen innerhalb von dispatcher.beginInvoke sind, ist die ausführung asynchron.
-     * vor allem beim visuellen darstellen des zeilenlöschens kommt es immerwieder zu verspäteter ausführung des ui threads sodass der effekt nicht stimmt. daher die kopie des boards.*/
+    /**
+     * Klasse die das Spielfeld zeichnet und auf Änderungen beim spielen reagiert
+     * 
+     * Wurde mit einer Kopie gelöst, da es sonst z.B. beim Zeilen löschen zu verspäteter Ausführung kam
+     */
     public class DefaultBoardModel
     {
+        // Attribute
         private Random rnd = new Random();
         private Color boardColor = Color.FromArgb(255, 200, 200, 200);
         private Color fallenPreviewColor = Color.FromArgb(255, 201, 201, 201);
@@ -32,11 +35,14 @@ namespace TetrisHTW.Model
         private const int rows = 20;
         private volatile Color[,] board = new Color[columns, rows];
 
-        
+        // Event-Handler
         public event BoardChangedEventHandler BoardChanged;
         public event ScoreChangedEventHandler ScoreChanged;
         public event LineChangedEventHandler LineChanged;
 
+        /**
+         * Löscht den Inhalt vom Board
+         */
         public void clearBoard()
         {
             lock (App.myLock)
@@ -57,29 +63,11 @@ namespace TetrisHTW.Model
             }
         }
 
-        public Color getBoardColor()
-        {
-            return boardColor;
-        }
-
-        public Color getFallenPreviewColor()
-        {
-            return fallenPreviewColor;
-        }
-
-        public DefaultBoardModel()
-        {
-            clearBoard();
-        }
-
-        public int getTempLines()
-        {
-            return tempLines;
-        }
-
+        /**
+         * Errechnet die zu löschenden Zeilen und löscht sie
+         */
         public void collapse(List<int> linesToRemove)
         {
-            /*es ist nicht immer der fall, dass die unterste zeile auch das erste element ist*/
             linesToRemove.Sort(delegate(int a, int b)
             {
                 return a.CompareTo(b);
@@ -166,15 +154,111 @@ namespace TetrisHTW.Model
             return board[x, y] != boardColor && board[x, y] != fallenPreviewColor;
         }
 
-        public int getColumns()
+        /**
+         * Erstellt die Punkte der Figur auf dem Board
+         */
+        public void writeCell(Point[] points, Color c)
         {
-            return columns;
+            for (int i = 0; i < points.Length; i++)
+            {
+                board[(int)points[i].X, (int)points[i].Y] = c;
+            }
+            NotifyBoardChanged(new BoardEventArgs(getBoardData()));
         }
 
-        public int getRows()
+        /**
+         * Erstellt die Punkte der Figur auf dem Board, wo sie hinkommen würde
+         */
+        public void writeCell(Point[] points, Point[] fallenPreviewPoints, Color pointsC, Color fppC)
         {
-            return rows;
+            for (int i = 0; i < fallenPreviewPoints.Length; i++)
+            {
+                board[(int)fallenPreviewPoints[i].X, (int)fallenPreviewPoints[i].Y] = fppC;
+            }
+            for (int i = 0; i < points.Length; i++)
+            {
+                board[(int)points[i].X, (int)points[i].Y] = pointsC;
+            }
+            
+            NotifyBoardChanged(new BoardEventArgs(getBoardData()));
         }
+
+        /**
+         * Fügt die erzielten Punkte des Schrittes zum Gesamtscore dazu
+         */
+        public void addScore(int score)
+        {
+            this.score += score;
+            ScoreEventArgs sea = new ScoreEventArgs();
+            sea.score = this.score;
+
+
+            if (lines >= tempLines)
+            {
+                int tmpLvl = (lines / 10);
+                if (tmpLvl > 9)
+                {
+                    tmpLvl = 9;
+                }
+                sea.level = tmpLvl;
+            }
+            else
+            {
+                sea.level = (this.tempLines / 10) - 1;
+            }
+            NotifyScoreChanged(sea);
+        }     
+
+        /**
+         * Generiert eine neue Figur
+         */
+        public Figure generateRandomFigure()
+        {
+            int random = rnd.Next(7);
+            Figure figure = null;
+            switch (random)
+            {
+                case 0: figure = new I(this); break;
+                case 1: figure = new J(this); break;
+                case 2: figure = new T(this); break;
+                case 3: figure = new O(this); break;
+                case 4: figure = new S(this); break;
+                case 5: figure = new Z(this); break;
+                case 6: figure = new L(this); break;
+            }
+            return figure;
+        }
+
+        /**
+         * Löscht die Punkte einer Figur
+         */
+        public void clearPoints(Point[] points)
+        {
+            for (int i = 0; i < points.Length; i++)
+            {
+                board[(int)points[i].X, (int)points[i].Y] = boardColor;
+            }
+        }
+
+        /**
+         * Löscht eien oder meherer Zeilen
+         */
+        public void shiftToLine(int y)
+        {
+            for (int i = y; i > 0; i--)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    board[j, i] = board[j, i - 1];
+                }
+            }
+            for (int i = 0; i < columns; i++)
+            {
+                board[i, 0] = boardColor;
+            }
+        }
+
+        /************************************************************** Notifier **************************************************************/
         public void NotifyBoardChanged(BoardEventArgs bea)
         {
             if (BoardChanged != null)
@@ -197,28 +281,45 @@ namespace TetrisHTW.Model
             }
         }
 
-        public void writeCell(Point[] points, Color c)
+        /************************************************************** Getter  und Setter Methoden **************************************************************/
+        public Color getBoardColor()
         {
-            for (int i = 0; i < points.Length; i++)
-            {
-                board[(int)points[i].X, (int)points[i].Y] = c;
-            }
-            NotifyBoardChanged(new BoardEventArgs(getBoardData()));
+            return boardColor;
         }
 
-        /*mit vorschaupunkten*/
-        public void writeCell(Point[] points, Point[] fallenPreviewPoints, Color pointsC, Color fppC)
+        public Color getFallenPreviewColor()
         {
-            for (int i = 0; i < fallenPreviewPoints.Length; i++)
-            {
-                board[(int)fallenPreviewPoints[i].X, (int)fallenPreviewPoints[i].Y] = fppC;
-            }
-            for (int i = 0; i < points.Length; i++)
-            {
-                board[(int)points[i].X, (int)points[i].Y] = pointsC;
-            }
-            
-            NotifyBoardChanged(new BoardEventArgs(getBoardData()));
+            return fallenPreviewColor;
+        }
+
+        public DefaultBoardModel()
+        {
+            clearBoard();
+        }
+
+        public int getColumns()
+        {
+            return columns;
+        }
+
+        public int getRows()
+        {
+            return rows;
+        }
+
+        public int getTempLines()
+        {
+            return tempLines;
+        }
+        
+        public Figure getPreviewFigure()
+        {
+            return previewFigure;
+        }
+
+        public int getLines()
+        {
+            return lines;
         }
 
         public Color[,] getBoardData()
@@ -245,7 +346,7 @@ namespace TetrisHTW.Model
         {
             if (lines > tempLines)
             {
-                if ((lines / 10) -1 > 9)
+                if ((lines / 10) - 1 > 9)
                 {
                     return 9;
                 }
@@ -257,41 +358,6 @@ namespace TetrisHTW.Model
             }
         }
 
-        public int getLines()
-        {
-            return lines;
-        }
-
-        public void setTempLines(int lines)
-        {
-            this.tempLines = lines;
-        }
-
-        public void addScore(int score)
-        {
-            this.score += score;
-            ScoreEventArgs sea = new ScoreEventArgs();
-            sea.score = this.score;
-
-
-            if (lines >= tempLines)
-            {
-                int tmpLvl = (lines / 10);
-                if (tmpLvl > 9)
-                {
-                    tmpLvl = 9;
-                }
-                sea.level = tmpLvl;
-            }
-            else
-            {
-                sea.level = (this.tempLines / 10) - 1;
-            }
-            NotifyScoreChanged(sea);
-        }     
-
-       
-
         public void setLines(int lines)
         {
             this.lines = lines;
@@ -300,23 +366,10 @@ namespace TetrisHTW.Model
             NotifyLineChanged(sea);
         }
 
-        public Figure generateRandomFigure()
+        public void setTempLines(int lines)
         {
-            int random = rnd.Next(7);
-            Figure figure = null;
-            switch (random)
-            {
-                case 0: figure = new I(this); break;
-                case 1: figure = new J(this); break;
-                case 2: figure = new T(this); break;
-                case 3: figure = new O(this); break;
-                case 4: figure = new S(this); break;
-                case 5: figure = new Z(this); break;
-                case 6: figure = new L(this); break;
-            }
-            return figure;
+            this.tempLines = lines;
         }
-
 
         public void setPreviewFigure(Figure figure)
         {
@@ -333,37 +386,5 @@ namespace TetrisHTW.Model
         {
             this.memoryFigure = figure;
         }
-
-        /*löschen der figurenpunkte*/
-        public void clearPoints(Point[] points)
-        {
-            for (int i = 0; i < points.Length; i++)
-            {
-                board[(int)points[i].X, (int)points[i].Y] = boardColor;
-            }
-        }
-
-        public Figure getPreviewFigure()
-        {
-            return previewFigure;
-        }
-
-        /*zeilen löschen*/
-        public void shiftToLine(int y)
-        {
-            for (int i = y; i > 0; i--)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    board[j, i] = board[j, i - 1];
-                }
-            }
-            for (int i = 0; i < columns; i++)
-            {
-                board[i, 0] = boardColor;
-            }
-        }
-
-        
     }
 }

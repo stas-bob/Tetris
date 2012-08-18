@@ -12,8 +12,18 @@ using System.Collections.Generic;
 
 namespace TetrisHTW.Model
 {
+    /**
+     * Eventklasse für alle Boardevents
+     */
     public class BoardEventArgs: EventArgs
     {
+        // Attribute
+        public List<int> removedLines { get; set; }
+        public Color[,] boardData { get; set; }
+
+        /**
+         * Konstruktor
+         */
         public BoardEventArgs(Color[,] boardData)
         {
             Color[,] newBoardData = new Color[boardData.GetLength(0), boardData.GetLength(1)];
@@ -27,9 +37,5 @@ namespace TetrisHTW.Model
             removedLines = new List<int>();
             this.boardData = newBoardData;
         }
-
-        
-        public List<int> removedLines { get; set; }
-        public Color[,] boardData { get; set; }
     }
 }

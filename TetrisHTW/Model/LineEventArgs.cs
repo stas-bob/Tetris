@@ -11,6 +11,9 @@ using System.Windows.Shapes;
 
 namespace TetrisHTW.Model
 {
+    /**
+    * Eventklassse für die Lines
+    */
     public class LineEventArgs: EventArgs
     {
         

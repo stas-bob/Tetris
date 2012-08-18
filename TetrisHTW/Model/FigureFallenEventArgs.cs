@@ -11,20 +11,31 @@ using System.Windows.Shapes;
 
 namespace TetrisHTW.Model
 {
+    /**
+     * Eventklasse für das Fallen einer Figur
+     */
     public class FigureFallenEventArgs: EventArgs
     {
+        // Punkte der Figur
+        public Util.Point[] figurePoints { get; set; }
+        // Punkte der vorherigen Figur
+        public Util.Point[] previousFigurePoints { get; set; }
+        // Farbe
+        public Color color { get; set; }
+
+        /**
+         * Konstruktor
+         */
         public FigureFallenEventArgs(Util.Point[] previousPoints, Util.Point[] points, Color c)
         {
             this.figurePoints = points;
             this.previousFigurePoints = previousPoints;
             this.color = c;
         }
-
-
-        public Util.Point[] figurePoints { get; set; }
-        public Util.Point[] previousFigurePoints { get; set; }
-        public Color color { get; set; }
-
+        
+        /**
+         * Überprüft ob die figurePoints mit den previousFigurePoints übereinstimmen
+         */
         public bool PointsAreEqual()
         {
             for (int i = 0; i < figurePoints.Length; i++)
