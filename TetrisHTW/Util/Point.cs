@@ -11,6 +11,9 @@ using System.Windows.Shapes;
 
 namespace TetrisHTW.Util
 {
+    /**
+     * Klasse für die Punkte der Figur
+     */
     public struct Point
     {
         private int x;

@@ -16,8 +16,12 @@ using System.Collections.Generic;
 
 namespace TetrisHTW.Util
 {
+    /**
+     * Klasse zum Abspeichern und Lesen der Highscore
+     */
     public class SQLClient
     {
+        // Attribute
         private string proxy;
         private string postData;
         private Random rnd = new Random();
@@ -25,16 +29,21 @@ namespace TetrisHTW.Util
         public delegate void SuccessCallbackEntry(int rank);
         public delegate void ErrorCallback(string msg);
 
-
         SuccessCallback cb;
         SuccessCallbackEntry cbe;
         ErrorCallback ecb;
 
+        /**
+         * Konstruktor
+         */
         public SQLClient(string proxy)
         {
             this.proxy = proxy;
         }
 
+        /**
+         * Speichert den Score
+         */
         public void writeScore(ErrorCallback ecb, string playerName, int score, int level, long time, int mode)
         {
             time /= 10000;
@@ -62,6 +71,9 @@ namespace TetrisHTW.Util
             
         }
 
+        /**
+         * Request Handler bei erfolgreichen DB Aufruf
+         */
         void RequestReady(IAsyncResult asyncResult)
         {
             try
@@ -81,6 +93,9 @@ namespace TetrisHTW.Util
             }
         }
 
+        /**
+         * Request Handler bei nicht erfolreichen DB Aufruf
+         */
         void ResponseReady(IAsyncResult asyncResult)
         {
             try
@@ -107,6 +122,9 @@ namespace TetrisHTW.Util
             }
         }
 
+        /**
+         * Liest den Highsore aus der Datenbank
+         */
         internal void requestScoreEntry(SuccessCallbackEntry cbe, ErrorCallback ecb, int score, int mode)
         {
             this.cbe = cbe;
@@ -123,6 +141,9 @@ namespace TetrisHTW.Util
             { if (App.DEBUG) Debug.WriteLine(e.Message); }
         }
 
+        /**
+         * Liest die ersten x Plätze aus der Datenbank
+         */
         internal void requestScores(SuccessCallback cb, ErrorCallback ecb, int rows, int mode)
         {
             this.cb = cb;
@@ -139,6 +160,9 @@ namespace TetrisHTW.Util
             { if (App.DEBUG) Debug.WriteLine(e.Message); }
         }
 
+        /**
+         * Erstellt die Liste zur Anzeige
+         */
         void client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error == null)
@@ -187,6 +211,9 @@ namespace TetrisHTW.Util
                 }
         }
 
+        /**
+         * Sucht den Rang für die Anzeige eines Spielers nach dem Spiel
+         */
         void client_DownloadStringCompletedEntry(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error == null)

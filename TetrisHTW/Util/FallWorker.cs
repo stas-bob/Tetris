@@ -13,24 +13,28 @@ using System.Diagnostics;
 
 namespace TetrisHTW
 {
+    /**
+     * Klasse für das Fallen der Figuren
+     */
     public class FallWorker
     {
+        // Attribute
         private volatile bool shouldStop;
         private static object syncRoot = new Object();
-
         private int level = 0;
 
+        /**
+         * Konstruktor
+         */
         public FallWorker(int level)
         {
             this.level = level;
         }
 
-        public void setLevel(int level)
-        {
-            this.level = level;
-        }
 
-        /*Ist die Methode, die die Steine fallen laesst*/
+        /**
+         * Lässt die Figuren fallen
+         */
         public void InvokeFalling()
         { 
             shouldStop = false;
@@ -64,6 +68,9 @@ namespace TetrisHTW
                 Debug.WriteLine("dead");
         }
 
+        /**
+         * Stopt den FallWorker Prozess
+         */
         public void RequestStop()
         {
             shouldStop = true;
@@ -71,6 +78,12 @@ namespace TetrisHTW
                 Debug.WriteLine("RequestStop()");
         }
 
-        
+        /**
+         * Setter Methode für das Level
+         */
+        public void setLevel(int level)
+        {
+            this.level = level;
+        }
     }
 }

@@ -11,6 +11,9 @@ using System.Windows.Shapes;
 
 namespace TetrisHTW.Util
 {
+    /**
+     * Klasse für die Highsore Daten
+     */
     public class ScoresData
     {
         public string playerName { get; set; }
