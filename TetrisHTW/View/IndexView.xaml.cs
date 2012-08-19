@@ -13,24 +13,32 @@ using System.Windows.Navigation;
 
 namespace TetrisHTW.View
 {
+    /**
+     * Klasse für den Hauptscreen von tetris
+     */
     public partial class IndexView : UserControl
     {
+        // Attribute
         private Random rnd = new Random();
         private OptionsView ov;
         private HighScoresView hv;
         private AboutView av;
 
-
+        /**
+         * Konstruktor
+         */
         public IndexView()
         {
             InitializeComponent();
 
-            /*hintergrundanim*/
+            // Hintergrundanimation
             flyingAroundSB.Begin();
             rotatingSB.Begin();
         }
 
-
+        /**
+         * Handler für Button "Spielen"
+         */
         private void Spielen_Click(object sender, RoutedEventArgs e)
         {
             if (ov == null)
@@ -40,15 +48,9 @@ namespace TetrisHTW.View
             rootContainer.Child = ov;
         }
 
-        public HighScoresView getHighScoreView()
-        {
-            if (hv == null)
-            {
-                hv = new HighScoresView(this);
-            }
-            return hv;
-        }
-
+        /**
+         * Handler für Button "Highscore"
+         */
         private void Highscore_Click(object sender, RoutedEventArgs e)
         {
             hv = getHighScoreView();
@@ -56,6 +58,9 @@ namespace TetrisHTW.View
             rootContainer.Child = getHighScoreView();
         }
 
+        /**
+         * Handler für Button "Über"
+         */
         private void Ueber_Click(object sender, RoutedEventArgs e)
         {
             if (av == null)
@@ -65,7 +70,9 @@ namespace TetrisHTW.View
             rootContainer.Child = av;
         }
 
-        /*Zufällige Tos für Hintergrund*/
+        /**
+         * Zufällige Figuren für die Hintergrund Animation
+         */
         void AnimCompleted(object sender, EventArgs e)
         {
             Point p = canvas.TransformToVisual(App.getInstance().RootVisual).Transform(new Point(0, 0));
@@ -85,6 +92,18 @@ namespace TetrisHTW.View
             animYZ.To = rnd.Next((int)App.getInstance().RootVisual.RenderSize.Height) - p.Y;
 
             flyingAroundSB.Begin();
+        }
+        
+        /**
+         * Highscore Getter Methode
+         */
+        public HighScoresView getHighScoreView()
+        {
+            if (hv == null)
+            {
+                hv = new HighScoresView(this);
+            }
+            return hv;
         }
 
     }

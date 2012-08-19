@@ -15,12 +15,19 @@ using System.Diagnostics;
 
 namespace TetrisHTW.View
 {
+    /**
+     * Klasse für den Highscore View
+     */
     public partial class HighScoresView : UserControl
     {
+        // Attribute
         private SQLClient sqlClient = new SQLClient("http://stl-l-18.htw-saarland.de:8080/TetrisSQLProxy/SQLProxyServlet");
         private IndexView iv;
         private ScoresData tmpScoresData; //wird zur unterscheidung genutzt, ob man im gameover kontext ist oder im hauptmenü
 
+        /**
+         * Konstruktor
+         */
         public HighScoresView(IndexView iv)
         {
             this.iv = iv;        
@@ -29,7 +36,11 @@ namespace TetrisHTW.View
             
         }
 
-        /*highscores wenn man nach gameover auf scores drückt. hier wird noch der eigene score angezeigt*/
+        /**
+         * Highscoreanzeige nach einem Spiel
+         * 
+         * Wird noch zusätzlich der erreichte Score angezeigt
+         */
         public void update(ScoresData scoresData)
         {
             tmpScoresData = scoresData;
@@ -42,7 +53,9 @@ namespace TetrisHTW.View
             sqlClient.requestScoreEntry(callbackEntry, error, scoresData.score, scoresData.mode);
         }
 
-        /*highscores aus indexview*/
+        /**
+         * Highscore nach dem Drücken des Highscore Button im Index View
+         */
         public void update(int mode)
         {
             switch (mode)
@@ -53,6 +66,9 @@ namespace TetrisHTW.View
             }
         }
 
+        /**
+         * Callback zur Abfrage des Spielerergebnisses
+         */
         public void callbackEntry(int rank)
         {
             Dispatcher.BeginInvoke(() =>
@@ -61,7 +77,9 @@ namespace TetrisHTW.View
             });
         }
 
-        /*datagrid befüllen*/
+        /**
+         * Füllen des Datagrid mit den Werten
+         */
         public void callback(System.Collections.Generic.List<string> playerNames,
             System.Collections.Generic.List<int> levels,
             System.Collections.Generic.List<int> scores,
@@ -89,8 +107,10 @@ namespace TetrisHTW.View
             });
             
         }
-
-
+        
+        /**
+         * Error Handler
+         */
         public void error(string msg)
         {
             Dispatcher.BeginInvoke(() =>
@@ -99,6 +119,9 @@ namespace TetrisHTW.View
             });
         }
 
+        /**
+         * Handler für das Dücken des "Zurück" Buttons
+         */
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             tmpScoresData = null;
@@ -110,20 +133,28 @@ namespace TetrisHTW.View
             iv.rootContainer.Child = iv.LayoutRoot;
         }
 
+        /**
+         * Handler für den Moduswechsel
+         */
         private void spezialModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-                sqlClient.requestScores(callback, error, 50, 2);
+            sqlClient.requestScores(callback, error, 50, 2);
         }
 
+        /**
+         * Handler für den Moduswechsel
+         */
         private void normalModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-                sqlClient.requestScores(callback, error, 50, 1);
+            sqlClient.requestScores(callback, error, 50, 1);
         }
 
+        /**
+         * Handler für den Moduswechsel
+         */
         private void kretschmerModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-
-                sqlClient.requestScores(callback, error, 50, 3);
+            sqlClient.requestScores(callback, error, 50, 3);
       
         }
 

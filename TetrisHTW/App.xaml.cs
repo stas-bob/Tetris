@@ -16,25 +16,31 @@ using TetrisHTW.View;
 
 namespace TetrisHTW
 {
+    // Delegates
     public delegate void BoardChangedEventHandler(object sender, BoardEventArgs e);
     public delegate void ScoreChangedEventHandler(object sender, ScoreEventArgs e);
     public delegate void LineChangedEventHandler(object sender, LineEventArgs e);
     public delegate void GameOverEventHandler(object sender, EventArgs e);
     public delegate void FigureFallenEventHandler(object sender, FigureFallenEventArgs e);
 
+    /**
+     * Hauptklasse App
+     */
     public partial class App : Application
     {
-
-        public static Lock myLock = new Lock();
+        // Attribute
         private DefaultBoardModel boardModel = new DefaultBoardModel();
-
-        /*auf app wird oft zugegrifen. aus gründen der einfachheit diese statische variable*/
-        private static App instance;
-
         public event FigureFallenEventHandler FigureFallenEvent;
         public event GameOverEventHandler GameOverEvent;
-        public static bool DEBUG = false;
 
+        // Static Attribute
+        private static App instance;
+        public static bool DEBUG = false;
+        public static Lock myLock = new Lock();
+        
+        /**
+         * Konstruktor
+         */
         public App()
         {
             if (DEBUG)
@@ -47,20 +53,11 @@ namespace TetrisHTW
             this.UnhandledException += this.Application_UnhandledException;
 
             InitializeComponent();
-
-
         }
 
-        public static App getInstance()
-        {
-            return instance;
-        }
-
-        public DefaultBoardModel getBoardModel()
-        {
-            return boardModel;
-        }
-
+        /**
+         * Notifier für das Fallen einer Figur
+         */
         public void NotifyFigureFallen(Util.Point[] previousPoints, Util.Point[] points, Color c)
         {
             if (FigureFallenEvent != null)
@@ -70,6 +67,9 @@ namespace TetrisHTW
             }
         }
 
+        /**
+         * GameOver Methode
+         */
         public void gameOver()
         {
             if (GameOverEvent != null)
@@ -78,16 +78,25 @@ namespace TetrisHTW
             }
         }
 
+        /**
+         * Startmethode für die Anwenung
+         */
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             this.RootVisual = new IndexView();
         }
 
+        /**
+         * Schließen der Anwendung
+         */
         private void Application_Exit(object sender, EventArgs e)
         {
 
         }
 
+        /**
+         * Handler fur nicht behandelete Exceptions
+         */
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
             // Wenn die Anwendung außerhalb des Debuggers ausgeführt wird, melden Sie die Ausnahme mithilfe
@@ -105,6 +114,9 @@ namespace TetrisHTW
             }
         }
 
+        /**
+         * Reportmethoden für Errors
+         */
         private void ReportErrorToDOM(ApplicationUnhandledExceptionEventArgs e)
         {
             try
@@ -117,6 +129,17 @@ namespace TetrisHTW
             catch (Exception)
             {
             }
+        }
+
+        /******************************************** Getter Methoden ***************************************************************/
+        public static App getInstance()
+        {
+            return instance;
+        }
+
+        public DefaultBoardModel getBoardModel()
+        {
+            return boardModel;
         }
     }
 }

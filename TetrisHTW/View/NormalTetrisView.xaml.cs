@@ -19,10 +19,12 @@ using TetrisHTW.View;
 
 namespace TetrisHTW
 {
-
+    /**
+     * Klasse für das Tetris
+     */
     public partial class NormalTetrisView : UserControl
     {
-
+        // Attribute
         private DefaultBoardModel boardModel;
         private FallWorker fallWorker;
         private Timer timer;
@@ -41,6 +43,9 @@ namespace TetrisHTW
         private int mod;
         private long keypressedTime;
 
+        /**
+         * Konstruktor
+         */
         public NormalTetrisView(OptionsView ov, IndexView iv)
         {
             this.iv = iv;
@@ -59,6 +64,9 @@ namespace TetrisHTW
             playerName = "Unbekannt";
         }
 
+        /**
+         * Initialisiert das Spielfeld
+         */
         void initBoard()
         {
             /*Hier werden die Columns und Rows definiert*/
@@ -110,7 +118,9 @@ namespace TetrisHTW
             }
         }
 
-        /*KeyboardListener fuer druecken einer Taste*/
+        /**
+         * KeyboardListener fuer das Druecken einer Taste
+         */
         void Page_KeyDown(object sender, KeyEventArgs e)
         {
             if (!gameOver)
@@ -160,7 +170,9 @@ namespace TetrisHTW
             }
         }
 
-        /*timer stoppen*/
+        /**
+         * Timer stopnne
+         */
         void Page_KeyUp(object sender, KeyEventArgs e)
         {
             keypressedTime = 0;
@@ -171,7 +183,9 @@ namespace TetrisHTW
             }
         }
 
-        /*Der Callback für den Timer, der die Tastaturverzögerung umgeht*/
+        /**
+         * Der Callback für den Timer, der die Tastaturverzögerung umgeht
+         */
         public void MoveFigure(Object stateInfo)
         {
             if (gameOver)
@@ -209,9 +223,11 @@ namespace TetrisHTW
             }
         }
 
+        /**
+         * Initialisiert ein neues Spiel
+         */
         public void InitGame()
         {
-            //wieso kann ich eigentlich nicht DIESEM usercontrol diese listener verpassen?*/
             App.getInstance().RootVisual.KeyDown += new KeyEventHandler(Page_KeyDown);
             App.getInstance().RootVisual.KeyUp += new KeyEventHandler(Page_KeyUp);
 
@@ -226,7 +242,9 @@ namespace TetrisHTW
             GameStart();
         }
 
-        /*spezialmodus*/
+        /**
+         * Methode für den Specialmode mit Speichern eines Steines
+         */
         private void handleSpecialMode()
         {
             lock (App.myLock) {
@@ -265,58 +283,10 @@ namespace TetrisHTW
                 }
             }
         }
-
-        private void setMeymoryPanel()
-        {
-            if (mod == 2)
-            {
-                memoryPanel.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                memoryPanel.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        public Brush getBrushByColor(Color currentCellColor)
-        {
-            Brush b = null;
-            if (currentCellColor == Colors.Blue)
-            {
-                b = Application.Current.Resources["BluePointBrush"] as Brush;
-            }
-            else if (currentCellColor == Colors.Yellow)
-            {
-                b = Application.Current.Resources["YellowPointBrush"] as Brush;
-            }
-            else if (currentCellColor == Colors.Green)
-            {
-                b = Application.Current.Resources["GreenPointBrush"] as Brush;
-            }
-            else if (currentCellColor == Colors.Red)
-            {
-                b = Application.Current.Resources["RedPointBrush"] as Brush;
-            }
-            else if (currentCellColor == Colors.Purple)
-            {
-                b = Application.Current.Resources["PurplePointBrush"] as Brush;
-            }
-            else if (currentCellColor == Colors.Cyan)
-            {
-                b = Application.Current.Resources["CyanPointBrush"] as Brush;
-            }
-            else if (currentCellColor == Colors.Orange)
-            {
-                b = Application.Current.Resources["OrangePointBrush"] as Brush;
-            }
-            else if (currentCellColor == boardModel.getFallenPreviewColor())
-            {
-                b = Application.Current.Resources["PreviewPointBrush"] as Brush;
-            }
-            return b;
-        }
-
-        /* jede boardmodel manipulation bewirkt diesen methodenaufruf*/
+              
+        /**
+         * Jede Änderungen auf dem Board wird durch diese Methode verarbeitet
+         */
         public void OnBoardChanged(object sender, BoardEventArgs bea)
         {
             Dispatcher.BeginInvoke(delegate
@@ -364,7 +334,7 @@ namespace TetrisHTW
                     }
                     Util.Point[] previewPoints = boardModel.getPreviewFigure().getPoints();
 
-                    List<Rectangle> previewRectangles = getPreviewBoardRectangles(previewPoints);
+                    List<Rectangle> previewRectangles = getPreOrMemBoardRectangles(previewPoints, previewGrid);
 
                     foreach (FrameworkElement frameWorkElement in previewGrid.Children)
                     {
@@ -383,7 +353,7 @@ namespace TetrisHTW
                         
                         clearMemoryBoard();
                         Util.Point[] memoryPoints = boardModel.getMemoryFigure().getPoints();
-                        List<Rectangle> memoryRectangles = getMemoryBoardRectangles(memoryPoints);
+                        List<Rectangle> memoryRectangles = getPreOrMemBoardRectangles(memoryPoints, memoryGrid);
                         Color currentMemoryFigureColor = boardModel.getMemoryFigure().getColor();
                         foreach (Rectangle rect in memoryRectangles)
                         {
@@ -394,7 +364,9 @@ namespace TetrisHTW
             });
         }
 
-        /*speicherrechtecke löschen*/
+        /**
+         * Speicherrechtecke löschen
+         */
         private void clearMemoryBoard()
         {
             foreach (FrameworkElement frameWorkElement in memoryGrid.Children)
@@ -404,8 +376,12 @@ namespace TetrisHTW
             }
         }
 
-        /* es werden kopien der gui rechtecke erstellt, die demnächst gelöscht werden.
-         * diese rechtecke fliegen zuerst nach oben und dann nach unten, nach einer spline. dabei drehen sie sich.*/
+        /**
+         * Animation nach entfernen einer Zeile
+         * 
+         * Es werden Kopien der GUI Rechtecke erstellt, die demnächst gelöscht werden.
+         * Eiese Rechtecke fliegen zuerst nach oben und dann nach unten, nach einer Spline. Dabei drehen sie sich.
+         */
         private void animateRemovedLinesHard(List<int> removedLines)
         {
             Storyboard sb = new Storyboard();
@@ -506,7 +482,11 @@ namespace TetrisHTW
             sb.Begin();
         }
 
-        /*selbes wie hard, hier werden die steine nicht ganz so wild herumgewirbelt*/
+        /**
+         * Animation nach einer entfernten Zeile
+         * 
+         * Fast wie die animateRemovedLinesHard, nur nicht explosiv.
+         */
         private void animateRemovedLinesSoft(List<int> removedLines)
         {
             Storyboard sb = new Storyboard();
@@ -607,6 +587,9 @@ namespace TetrisHTW
             sb.Begin();
         }
 
+        /**
+         * Score Event Handler
+         */
         public void OnScoreChanged(object sender, ScoreEventArgs bea)
         {
             Dispatcher.BeginInvoke(delegate
@@ -626,6 +609,9 @@ namespace TetrisHTW
             
         }
 
+        /**
+         * Lines Event Handler
+         */
         public void OnLineChanged(object sender, LineEventArgs lea)
         {
             Dispatcher.BeginInvoke(delegate
@@ -636,10 +622,13 @@ namespace TetrisHTW
 
         }
 
-        /*animationen fürs fallen der figur.
-         wenn die figur unten ankommt, blinkt sie durch opacity
-         wenn die figur durch fallcompeteley gefallen ist, dann wird ein rechteck von der letzten position bis unten erstellt.
-         *dieses rechteck verschwindet durch einen lin.gradienten mit transparenter farbe. dies macht den falleffekt aus.*/
+        /**
+         * Animationen für das Fallen der Figur
+         * 
+         * Wenn die figur unten ankommt, blinkt sie durch opacity.
+         * Wenn die figur durch fallcompeteley gefallen ist, dann wird ein Rechteck von der letzten Position bis unten erstellt
+         *  dieses Rechteck verschwindet durch einen lin.gradienten mit transparenter Farbe.
+         */
         public void OnFigureFallen(object sender, FigureFallenEventArgs ffea)
         {
             Dispatcher.BeginInvoke(delegate
@@ -743,7 +732,9 @@ namespace TetrisHTW
 
         }
 
-        /*suche nach dem größten x/y wert der figur (für fall-effekt-rechteck)*/
+        /**
+         * Suche nach dem größten x/y Wert der Figur (für fall-effekt-rechteck)
+         */
         public int getMax(Util.Point[] points, bool x)
         {
             if (!x)
@@ -773,7 +764,9 @@ namespace TetrisHTW
             }
         }
 
-        /*suche nach dem kleinsten x/y wert der figur (für fall-effekt-rechteck)*/
+        /**
+         * Suche nach dem kleinsten x/y Wert der Figur (für fall-effekt-rechteck)
+         */
         public int getMin(Util.Point[] points, bool x)
         {
             if (!x)
@@ -803,7 +796,9 @@ namespace TetrisHTW
             }
         }
 
-        /*gui rechteck nach punkt beziehen*/
+        /**
+         * GUI Rechteck nach Punkt beziehen
+         */
         public Rectangle getRectangleAt(int x, int y)
         {
             foreach (FrameworkElement frameWorkElement in boardGrid.Children)
@@ -818,7 +813,9 @@ namespace TetrisHTW
             return null;
         }
 
-        /*board gui rechtecke beziehen nach figurpunkten*/
+        /**
+         * Board GUI Rechtecke beziehen nach Figurpunkten
+         */
         public List<Rectangle> getBoardRectangles(Util.Point[] points)
         {
             List<Rectangle> rectangles = new List<Rectangle>();
@@ -829,15 +826,18 @@ namespace TetrisHTW
             return rectangles;
         }
 
-        /*vorschau gui rechtecke beziehen nach figurpunkten*/
-        public List<Rectangle> getPreviewBoardRectangles(Util.Point[] points)
+
+        /**
+         * GUI Rechtecke beziehen nach Figurpunkten für Preview oder Memory
+         */
+        public List<Rectangle> getPreOrMemBoardRectangles(Util.Point[] points, Grid grid)
         {
             List<Rectangle> rectangles = new List<Rectangle>();
             foreach (Util.Point point in points)
             {
-                foreach (FrameworkElement frameWorkElement in previewGrid.Children)
+                foreach (FrameworkElement frameWorkElement in grid.Children)
                 {
-                    int xx = Grid.GetColumn(frameWorkElement) + (boardGrid.ColumnDefinitions.Count/2 - previewGrid.ColumnDefinitions.Count/2);
+                    int xx = Grid.GetColumn(frameWorkElement) + (boardGrid.ColumnDefinitions.Count / 2 - grid.ColumnDefinitions.Count / 2);
                     int yy = Grid.GetRow(frameWorkElement);
                     if (xx == point.X && yy == point.Y)
                     {
@@ -848,25 +848,9 @@ namespace TetrisHTW
             return rectangles;
         }
 
-        /*speicher gui rechtecke beziehen nach figurpunkten*/
-        public List<Rectangle> getMemoryBoardRectangles(Util.Point[] points)
-        {
-            List<Rectangle> rectangles = new List<Rectangle>();
-            foreach (Util.Point point in points)
-            {
-                foreach (FrameworkElement frameWorkElement in memoryGrid.Children)
-                {
-                    int xx = Grid.GetColumn(frameWorkElement) + (boardGrid.ColumnDefinitions.Count / 2 - memoryGrid.ColumnDefinitions.Count / 2);
-                    int yy = Grid.GetRow(frameWorkElement);
-                    if (xx == point.X && yy == point.Y)
-                    {
-                        rectangles.Add((Rectangle)frameWorkElement);
-                    }
-                }
-            }
-            return rectangles;
-        }
-
+        /**
+         * Startmethode für das Spiel
+         */
         private void GameStart()
         {
             setFallWorker();
@@ -874,6 +858,9 @@ namespace TetrisHTW
             time = DateTime.Now.Ticks;
         }
 
+        /**
+         * Methode für das Weiterspielen
+         */
         private void GameResume()
         {
             if (!gameOver)
@@ -887,6 +874,9 @@ namespace TetrisHTW
             }
         }
 
+        /**
+         * Methode die auf das GameOver reagiert
+         */
         public void OnGameOver(object sender, EventArgs e)
         {
             Dispatcher.BeginInvoke(delegate
@@ -898,6 +888,9 @@ namespace TetrisHTW
             });
         }
 
+        /**
+         * Handler für das GameOver
+         */
         private void GameOver()
         {
             showHint("Game Over", 20);
@@ -913,7 +906,9 @@ namespace TetrisHTW
             sqlClient.writeScore(SQLClientError, playerName, boardModel.getScore(), boardModel.getLevel(), time, mod);
         }
 
-        /*alles neu initialisieren*/
+        /**
+         * Beim verlassen des Spiels wird alles neu initialisiert
+         */
         private void ExitGame()
         {
             Dispatcher.BeginInvoke(() =>
@@ -954,7 +949,10 @@ namespace TetrisHTW
                 scoreButton.Visibility = System.Windows.Visibility.Collapsed;
             });
         }
-        /*schwarze textbox*/
+
+        /**
+         * Zeigt die verstekcte Textbox an
+         */
         private void showHint(string msg, int fontSize)
         {
             pause = true;
@@ -968,6 +966,9 @@ namespace TetrisHTW
             HintBoxOnSB.Begin();
         }
 
+        /**
+         * SQLClient Error handler
+         */
         private void SQLClientError(string msg)
         {
             Dispatcher.BeginInvoke(() =>
@@ -976,12 +977,18 @@ namespace TetrisHTW
             });
         }
 
+        /**
+         * Handler für das Drücken des "Zurück" Button
+         */
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             ExitGame();
             iv.rootContainer.Child = ov;
         }
 
+        /**
+         * Handler für das Drücken des "Score" Button
+         */
         private void ScoreButton_Click(object sender, RoutedEventArgs e)
         {
             ExitGame();
@@ -993,6 +1000,57 @@ namespace TetrisHTW
             sd.time = new DateTime(time).ToLongTimeString();
             iv.getHighScoreView().update(sd);
             iv.rootContainer.Child = iv.getHighScoreView();
+        }
+
+        /************************************************** Getter und Setter Methoden ****************************************************************/
+        public Brush getBrushByColor(Color currentCellColor)
+        {
+            Brush b = null;
+            if (currentCellColor == Colors.Blue)
+            {
+                b = Application.Current.Resources["BluePointBrush"] as Brush;
+            }
+            else if (currentCellColor == Colors.Yellow)
+            {
+                b = Application.Current.Resources["YellowPointBrush"] as Brush;
+            }
+            else if (currentCellColor == Colors.Green)
+            {
+                b = Application.Current.Resources["GreenPointBrush"] as Brush;
+            }
+            else if (currentCellColor == Colors.Red)
+            {
+                b = Application.Current.Resources["RedPointBrush"] as Brush;
+            }
+            else if (currentCellColor == Colors.Purple)
+            {
+                b = Application.Current.Resources["PurplePointBrush"] as Brush;
+            }
+            else if (currentCellColor == Colors.Cyan)
+            {
+                b = Application.Current.Resources["CyanPointBrush"] as Brush;
+            }
+            else if (currentCellColor == Colors.Orange)
+            {
+                b = Application.Current.Resources["OrangePointBrush"] as Brush;
+            }
+            else if (currentCellColor == boardModel.getFallenPreviewColor())
+            {
+                b = Application.Current.Resources["PreviewPointBrush"] as Brush;
+            }
+            return b;
+        }
+
+        private void setMeymoryPanel()
+        {
+            if (mod == 2)
+            {
+                memoryPanel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                memoryPanel.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void setFallWorker()

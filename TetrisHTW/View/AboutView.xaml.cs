@@ -13,15 +13,26 @@ using System.Windows.Navigation;
 
 namespace TetrisHTW.View
 {
+    /**
+     * Klasse für den About-View
+     */
     public partial class AboutView : UserControl
     {
+        // Attribute
         private IndexView iv;
+
+        /**
+         * Konstruktor
+         */
         public AboutView(IndexView iv)
         {
             this.iv = iv;
             InitializeComponent();
         }
 
+        /**
+         * Handler für Buttpn "Zurück"
+         */
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             iv.rootContainer.Child = iv.LayoutRoot;

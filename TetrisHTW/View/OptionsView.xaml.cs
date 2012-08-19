@@ -13,13 +13,20 @@ using System.Windows.Controls.Primitives;
 
 namespace TetrisHTW.View
 {
+    /**
+     * Klasse für Option View
+     */
     public partial class OptionsView : UserControl
     {
+        // Attribute
         private Random rnd = new Random();
         private IndexView iv;
         private NormalTetrisView ntv;
         private int level;
 
+        /**
+         * Konstruktor
+         */
         public OptionsView(IndexView iv) 
         {
             InitializeComponent();
@@ -27,6 +34,9 @@ namespace TetrisHTW.View
             anleitung.Text = "Dies ist das orginale Tetris, wie man es vom Gameboy kennt!"; 
         }
 
+        /**
+         * Starte das Spiel nach dem auf den Button "Spielen" gedrückt wurde
+         */
         private void Spielen_Click(object sender, RoutedEventArgs e)
         {
             
@@ -62,18 +72,19 @@ namespace TetrisHTW.View
             iv.rootContainer.Child = ntv;
         }
 
-        
-
+        /**
+         * Handler für Button "Zurück"
+         */
         private void Zurueck_Click(object sender, RoutedEventArgs e)
         {
             iv.rootContainer.Child = iv.LayoutRoot;
         }
 
-        
-
+        /**
+         * Handler für das Auswählen eines Levels 
+         */
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-
             switch (((ToggleButton)sender).Name)
             {
                 case "tb0": level = 0; break;
@@ -89,6 +100,9 @@ namespace TetrisHTW.View
             }
         }
 
+        /**
+         * Handler für den Modus wechsel beim ändern der Radio Buttons
+         */
         private void RadioButton_Click(object sender, RoutedEventArgs e)
         {
             if (normalModeRadioButton.IsChecked == true)
