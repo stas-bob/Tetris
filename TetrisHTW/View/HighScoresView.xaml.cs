@@ -138,7 +138,14 @@ namespace TetrisHTW.View
          */
         private void spezialModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            sqlClient.requestScores(callback, error, 50, 2);
+            if (tmpScoresData == null)
+            {
+                sqlClient.requestScores(callback, error, 0, 2);
+            }
+            else
+            {
+                sqlClient.requestScores(callback, error, 50, 2);
+            }
         }
 
         /**
@@ -146,7 +153,14 @@ namespace TetrisHTW.View
          */
         private void normalModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            sqlClient.requestScores(callback, error, 50, 1);
+            if (tmpScoresData == null)
+            {
+                sqlClient.requestScores(callback, error, 0, 1);
+            }
+            else
+            {
+                sqlClient.requestScores(callback, error, 50, 1);
+            }
         }
 
         /**
@@ -154,9 +168,14 @@ namespace TetrisHTW.View
          */
         private void kretschmerModeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            sqlClient.requestScores(callback, error, 50, 3);
-      
+            if (tmpScoresData == null)
+            {
+                sqlClient.requestScores(callback, error, 0, 3);
+            }
+            else
+            {
+                sqlClient.requestScores(callback, error, 50, 3);
+            }
         }
-
     }
 }
