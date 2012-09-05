@@ -344,13 +344,13 @@ namespace TetrisHTW.Model
 
         public int getLevel()
         {
-            if (lines > tempLines)
+            if (lines >= tempLines)
             {
-                if ((lines / 10) - 1 > 9)
+                if ((lines / 10) > 9)
                 {
                     return 9;
                 }
-                return (lines / 10) - 1;
+                return (lines / 10);
             }
             else
             {
