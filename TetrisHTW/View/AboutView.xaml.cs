@@ -37,5 +37,11 @@ namespace TetrisHTW.View
         {
             iv.rootContainer.Child = iv.LayoutRoot;
         }
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            HyperlinkButton button = (HyperlinkButton)sender;
+            System.Windows.Browser.HtmlPage.Window.Navigate(new Uri(button.Tag.ToString()), "_blank");
+        }
     }
 }

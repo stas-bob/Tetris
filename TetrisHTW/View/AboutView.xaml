@@ -7,8 +7,10 @@
 	d:DesignWidth="673" d:DesignHeight="480">
     <StackPanel x:Name="LayoutRoot">
         <TextBlock HorizontalAlignment="Center" Name="textBlock1"
-			Text="{StaticResource AboutText}" VerticalAlignment="Top" Margin="130"
-			TextWrapping="Wrap" />
+			Text="{StaticResource AboutText}" VerticalAlignment="Top" Margin="130 130 130 0"
+			TextWrapping="Wrap"></TextBlock>
+        <HyperlinkButton Content="Dokumentation" Tag="https://docs.google.com/document/pub?id=1k8aYLYSe3aafsM6CynZ9oWY1-5u2Gm9_48xQvFaNofY" FontSize="14" Click="HyperlinkButton_Click"
+                         HorizontalAlignment="Center" Margin="10 10 10 50"/>
         <Button Content="Zurück" Style="{StaticResource ButtonStyle1}"
 			Click="BackButton_Click" />
     </StackPanel>
