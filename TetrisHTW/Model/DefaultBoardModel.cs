@@ -97,18 +97,10 @@ namespace TetrisHTW.Model
         {
             linesToRemove.Reverse();
             double tmpScore = 0;
-            int localLevel;
-            if (lines > tempLines)
-            {
-                localLevel = (lines / 10) - 1;
-            } else 
-            {
-                localLevel = (tempLines / 10) - 1;
-            }
 
             for (int i = 1; i <= linesToRemove.Count; i++)
             {
-                switch (localLevel)
+                switch (getLevel())
                 {
                     case 0: tmpScore += Math.Pow(50 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
                     case 1: tmpScore += Math.Pow(100 + calcHeight(linesToRemove[i - 1]), calcLines(i)); break;
@@ -192,20 +184,7 @@ namespace TetrisHTW.Model
             ScoreEventArgs sea = new ScoreEventArgs();
             sea.score = this.score;
 
-
-            if (lines >= tempLines)
-            {
-                int tmpLvl = (lines / 10);
-                if (tmpLvl > 9)
-                {
-                    tmpLvl = 9;
-                }
-                sea.level = tmpLvl;
-            }
-            else
-            {
-                sea.level = (this.tempLines / 10) - 1;
-            }
+            sea.level = getLevel();
             NotifyScoreChanged(sea);
         }     
 
